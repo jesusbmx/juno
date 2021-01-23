@@ -124,12 +124,20 @@ try {
 
 ### Formats
 ```java
-    System.out.println(Formats.date());
-    System.out.println(Formats.datetime());
+  System.out.println(Formats.date());
+  System.out.println(Formats.datetime());
     
-    System.out.println(Formats.date("yyyy"));
-    System.out.println(Formats.date("yyyy-MM", new Date()));
+  System.out.println(Formats.date("yyyy"));
+  System.out.println(Formats.date("yyyy-MM", new Date()));
 ```
+
+```markdown
+> 2021-01-23
+> 2021-01-23 11:29:58
+> 2021
+> 2021-01
+```
+
 
 ### Concurrent
 ```java
