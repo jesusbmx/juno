@@ -8,6 +8,7 @@ import static juno.util.Util.isNull;
 public final class Convert {
 
   static final int INT = 0;
+  static final byte BYTE = 0;
   static final long LONG = 0L;
   static final float FLOAT = 0F;
   static final double DOUBLE = 0D;
@@ -44,6 +45,29 @@ public final class Convert {
   public static String toString(byte[] bytes, Charset charset) throws IOException {
     if (isNull(bytes)) return null;
     return new String(bytes, charset);
+  }
+  
+  public static byte toByte(CharSequence str, byte defaultValue) {
+    if (isEmpty(str)) return defaultValue;
+    try {
+      return Byte.parseByte(str.toString());
+    } catch (NumberFormatException ignore) {
+      return defaultValue;
+    }
+  }
+  
+  public static byte toByte(CharSequence str) {
+    return toByte(str, BYTE);
+  }
+  
+  public static byte toByte(Object o, byte defaultVal) {
+    if (isNull(o)) return defaultVal;
+    if (o instanceof Byte) return ((Byte) o);
+    return toByte(o.toString(), defaultVal);
+  }
+  
+  public static byte toByte(Object str) {
+    return toByte(str, BYTE);
   }
   
   /**
