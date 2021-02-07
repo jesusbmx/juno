@@ -2,8 +2,8 @@
 import java.util.Date;
 import juno.util.Collect;
 import juno.util.Convert;
-import juno.util.Formats;
-import juno.util.Texts;
+import juno.text.Formats;
+import juno.text.Texts;
 import juno.util.Util;
 
 public class Test {
@@ -62,5 +62,6 @@ public class Test {
     
     System.out.println(Formats.date("yyyy"));
     System.out.println(Formats.date("yyyy-MM", new Date()));
+    System.out.println(Formats.f("dd").format(new Date()));
   }
 }

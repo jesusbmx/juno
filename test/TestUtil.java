@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import juno.util.Collect;
 import juno.util.Fun;
-import juno.util.Texts;
+import juno.text.Texts;
 import juno.util.Util;
 
 
