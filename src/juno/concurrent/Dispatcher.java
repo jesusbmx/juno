@@ -49,17 +49,38 @@ public final class Dispatcher implements ThreadFactory {
     executorService = es;
   }
   
+  private static Class<?>[] types(Object... params) {
+    Class<?>[] types = new Class<?>[params.length];
+    for (int i = 0; i < params.length; i++) {
+      types[i] = params[i].getClass();
+    }
+    return types;
+  }
+  
   public static <V> AsyncCall<V> callUserfun(final Object obj, final String method, final Object... params) {
     Dispatcher dispatcher = Dispatcher.get(); 
     return new AsyncCall<V>(dispatcher) {
       @Override 
       public V doInBackground() throws Exception {
-        Class<?>[] types = new Class<?>[params.length];
-        for (int i = 0; i < params.length; i++) {
-          types[i] = params[i].getClass();
-        }
-        java.lang.reflect.Method instanceMethod = obj.getClass().getMethod(method, types);
+        Class<?>[] types = types(params);
+        java.lang.reflect.Method instanceMethod = obj.getClass()
+                .getDeclaredMethod(method, types);
+        
         return (V) instanceMethod.invoke(obj, params);
+      }
+    };
+  }
+  
+  public static <V> AsyncCall<V> callUserfun(final Class clazz, final String method, final Object... params) {
+    Dispatcher dispatcher = Dispatcher.get(); 
+    return new AsyncCall<V>(dispatcher) {
+      @Override 
+      public V doInBackground() throws Exception {
+        Class<?>[] types = types(params);
+        java.lang.reflect.Method instanceMethod = clazz
+                .getDeclaredMethod(method, types);
+        
+        return (V) instanceMethod.invoke(null, params);
       }
     };
   }
