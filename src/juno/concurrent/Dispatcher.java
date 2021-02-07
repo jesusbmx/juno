@@ -73,6 +73,7 @@ public final class Dispatcher implements ThreadFactory {
       }
       @Override
       public void onFailure(Exception e) {
+        super.onFailure(e);
         e.printStackTrace();
       }
     };
@@ -91,6 +92,7 @@ public final class Dispatcher implements ThreadFactory {
       }
       @Override
       public void onFailure(Exception e) {
+        super.onFailure(e);
         e.printStackTrace();
       }
     };
