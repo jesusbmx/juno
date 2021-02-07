@@ -1,9 +1,9 @@
 package juno.text;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  *
@@ -11,26 +11,30 @@ import java.util.HashMap;
  */
 public final class Formats {
     
-    private static final HashMap<String, SimpleDateFormat> CACHE =
-            new HashMap<String, SimpleDateFormat>();
+//    private static final HashMap<String, DateFormat> CACHE =
+//            new HashMap<String, DateFormat>();
+//    
+//    public static DateFormat datef(String format) {
+//        DateFormat dateFormat = CACHE.get(format);
+//        if (dateFormat == null) {
+//            dateFormat = new SimpleDateFormat(format);
+//            CACHE.put(format, dateFormat);
+//        }
+//        return dateFormat;
+//    }
     
-    public static SimpleDateFormat f(String format) {
-        SimpleDateFormat dateFormat = CACHE.get(format);
-        if (dateFormat == null) {
-            dateFormat = new SimpleDateFormat(format);
-            CACHE.put(format, dateFormat);
-        }
-        return dateFormat;
+    public static DateFormat datef(String format) {
+        return new SimpleDateFormat(format);
     }
     
     public static String date(String format, Date date) {
-        return f(format).format(date);
+        return datef(format).format(date);
     }
     public static String date(String format, long date) {
-        return f(format).format(new Date(date));
+        return datef(format).format(new Date(date));
     }
     public static String date(String format, Calendar date) {
-        return f(format).format(date.getTime());
+        return datef(format).format(date.getTime());
     }
     
     public static String date(String format) {

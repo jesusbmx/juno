@@ -1,5 +1,6 @@
 package juno.concurrent;
 
+import java.lang.reflect.Method;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -66,7 +67,7 @@ public final class Dispatcher implements ThreadFactory {
       @Override 
       public V doInBackground() throws Exception {
         Class<?>[] types = types(params);
-        java.lang.reflect.Method instanceMethod = obj.getClass()
+        Method instanceMethod = obj.getClass()
                 .getDeclaredMethod(method, types);
         
         return (V) instanceMethod.invoke(obj, params);
@@ -85,7 +86,7 @@ public final class Dispatcher implements ThreadFactory {
       @Override 
       public V doInBackground() throws Exception {
         Class<?>[] types = types(params);
-        java.lang.reflect.Method instanceMethod = clazz
+        Method instanceMethod = clazz
                 .getDeclaredMethod(method, types);
         
         return (V) instanceMethod.invoke(null, params);
