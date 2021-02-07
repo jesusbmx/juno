@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import juno.Platform;
+import juno.util.Util;
 
 public final class Dispatcher implements ThreadFactory {
   private static Dispatcher instance;
@@ -52,7 +53,9 @@ public final class Dispatcher implements ThreadFactory {
   private static Class<?>[] types(Object... params) {
     Class<?>[] types = new Class<?>[params.length];
     for (int i = 0; i < params.length; i++) {
-      types[i] = params[i].getClass();
+      Class<?> type = params[i].getClass();
+      Class<?> primitiveType = Util.getPrimitiveType(type);
+      types[i] = primitiveType == null ? type : primitiveType;
     }
     return types;
   }
@@ -68,6 +71,10 @@ public final class Dispatcher implements ThreadFactory {
         
         return (V) instanceMethod.invoke(obj, params);
       }
+      @Override
+      public void onFailure(Exception e) {
+        e.printStackTrace();
+      }
     };
   }
   
@@ -81,6 +88,10 @@ public final class Dispatcher implements ThreadFactory {
                 .getDeclaredMethod(method, types);
         
         return (V) instanceMethod.invoke(null, params);
+      }
+      @Override
+      public void onFailure(Exception e) {
+        e.printStackTrace();
       }
     };
   }

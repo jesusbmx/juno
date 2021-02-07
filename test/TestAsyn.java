@@ -24,12 +24,12 @@ public class TestAsyn {
     if (call != null) {
       call.cancel(true);
     }
-    call = Dispatcher.callUserfun(this, "saludar");
+    call = Dispatcher.callUserfun(this, "saludar", 10);
     call.execute();
   }
   
-  public void saludar() {
-    for (int i = 0; i < 10; i++) {
+  public void saludar(int len) {
+    for (int i = 0; i < len; i++) {
       System.out.println("TestAsyn.saludar() : " + i);
     }
   }
