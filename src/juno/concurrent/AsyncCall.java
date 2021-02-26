@@ -1,6 +1,5 @@
 package juno.concurrent;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 
 public abstract class AsyncCall<T> 
@@ -10,6 +9,7 @@ public abstract class AsyncCall<T>
   Callback<T> callback;
   Future future;
   boolean cancel;
+  boolean running = false;
 
   public AsyncCall() {
     this(Dispatcher.get());
@@ -25,10 +25,11 @@ public abstract class AsyncCall<T>
   }
   
   public void execute() {
-    this.dispatcher.execute(this);
+    running = this.dispatcher.execute(this);
   }
 
   @Override public boolean cancel(boolean mayInterruptIfRunning) {
+    running = false;
     if (future != null) { 
       return future.cancel(mayInterruptIfRunning);
     } else { 
@@ -44,13 +45,18 @@ public abstract class AsyncCall<T>
   @Override public boolean isDone() {
     return (future != null) ? future.isDone() : Boolean.FALSE;
   }
-  
+
+  public boolean isRunning() {
+    return running;
+  }
   
   @Override public void onResponse(T result) throws Exception {
+    running = false;
     if (callback != null) callback.onResponse(result);
   }
 
   @Override public void onFailure(Exception e) {
+    running = false;
     if (callback != null) callback.onFailure(e);
   }
 
@@ -65,6 +71,6 @@ public abstract class AsyncCall<T>
   }
   
   public void delivery(Runnable run) {
-    dispatcher.executorDelivery().execute(run);
+    dispatcher.delivery(run);
   }
 }

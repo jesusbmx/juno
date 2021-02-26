@@ -114,10 +114,11 @@ public final class Dispatcher implements ThreadFactory {
   }
   
   /** Ejecuta la llamada en la cola de peticiones. */
-  public synchronized void execute(AsyncCall<?> task) { 
-    if (task.isCancelled() || task.isDone()) return;
+  public synchronized boolean execute(AsyncCall<?> task) { 
+    if (task.isCancelled() || task.isDone()) return false;
     // Propone una tarea Runnable para la ejecución y devuelve un Futuro.
-    task.future = executorService().submit(task); 
+    task.future = executorService().submit(task);
+    return true;
   }
     
   public Executor executorDelivery() {
@@ -130,11 +131,15 @@ public final class Dispatcher implements ThreadFactory {
     executorDelivery = executor;
   }
   
+  public void delivery(Runnable runnable) {
+    executorDelivery().execute(runnable);
+  }
+  
   /**
    * Metodo que se encarga de liverar la respuesta obtenida, al hilo de la UI.
    */
   public <V> void onResponse(final Callback<V> callback, final V result) {
-    executorDelivery().execute(new Runnable() {  
+    delivery(new Runnable() {  
       @Override public void run() {
         try {
           callback.onResponse(result);
@@ -149,7 +154,7 @@ public final class Dispatcher implements ThreadFactory {
    * Metodo que se encarga de liverar el error obtenido, al hilo de la UI.
    */
   public void onFailure(final Callback<?> callback, final Exception error) {
-    executorDelivery().execute(new Runnable() {
+    delivery(new Runnable() {
       @Override public void run() {
         callback.onFailure(error);
       }
