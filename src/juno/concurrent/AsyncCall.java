@@ -19,25 +19,6 @@ public abstract class AsyncCall<T>
     this.dispatcher = dispatcher;
   }
   
-  @Override public void execute(Callback<T> callback) {
-    this.callback = callback;
-    execute();
-  }
-  
-  public void execute() {
-    running = this.dispatcher.execute(this);
-  }
-
-  @Override public boolean cancel(boolean mayInterruptIfRunning) {
-    running = false;
-    if (future != null) { 
-      return future.cancel(mayInterruptIfRunning);
-    } else { 
-      cancel = Boolean.TRUE;
-      return Boolean.FALSE;
-    }
-  }
-
   @Override public boolean isCancelled() {
     return (future != null) ? future.isCancelled() : cancel;
   }
@@ -50,13 +31,34 @@ public abstract class AsyncCall<T>
     return running;
   }
   
-  @Override public void onResponse(T result) throws Exception {
+  public void onPreExecute() {
+  }
+  
+  @Override public void execute(Callback<T> callback) {
+    this.callback = callback;
+    execute();
+  }
+  
+  public final void execute() {
+    onPreExecute();
+    running = this.dispatcher.execute(this);
+  }
+
+  @Override public boolean cancel(boolean mayInterruptIfRunning) {
     running = false;
+    if (future != null) { 
+      return future.cancel(mayInterruptIfRunning);
+    } else { 
+      cancel = Boolean.TRUE;
+      return Boolean.FALSE;
+    }
+  }
+  
+  @Override public void onResponse(T result) throws Exception {
     if (callback != null) callback.onResponse(result);
   }
 
   @Override public void onFailure(Exception e) {
-    running = false;
     if (callback != null) callback.onFailure(e);
   }
 
@@ -67,7 +69,8 @@ public abstract class AsyncCall<T>
       dispatcher.onResponse(this, result);
     } catch (Exception e) {
       dispatcher.onFailure(this, e);
-    }  
+    }
+    running = false;
   }
   
   public void delivery(Runnable run) {
