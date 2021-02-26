@@ -31,16 +31,12 @@ public abstract class AsyncCall<T>
     return running;
   }
   
-  public void onPreExecute() {
-  }
-  
   @Override public void execute(Callback<T> callback) {
     this.callback = callback;
     execute();
   }
   
-  public final void execute() {
-    onPreExecute();
+  public void execute() {
     running = this.dispatcher.execute(this);
   }
 
