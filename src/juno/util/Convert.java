@@ -2,6 +2,9 @@ package juno.util;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.util.Date;
+import juno.text.Formats;
 import static juno.util.Util.isEmpty;
 import static juno.util.Util.isNull;
 
@@ -217,4 +220,17 @@ public final class Convert {
     return Base64.encode(inArray);
   }
   
+  public Date parseDate(String format, String date) throws ParseException {
+    return Formats.datef(format).parse(date);
+  }
+  public Date toDate(String format, String date, Date defaultVal) {
+    try {
+      return parseDate(format, date);
+    } catch(Exception e) {
+      return defaultVal;
+    }
+  }
+  public Date toDate(String format, String date) {
+    return toDate(format, date, null);
+  }
 }
