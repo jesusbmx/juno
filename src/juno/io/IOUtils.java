@@ -2,9 +2,6 @@ package juno.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,40 +30,7 @@ public final class IOUtils {
     POOL.returnBuf(buffer);
   }
 
-  public static void copy(File from, File to) throws IOException {
-    OutputStream out = null;
-    try {
-      out = new FileOutputStream(to);
-      copy(from, out);
-    } finally {
-      closeQuietly(out);
-    }
-  }
   
-  public static void copy(File from, OutputStream out) throws IOException {
-    FileInputStream in = null;
-    byte[] buffer = null;
-    try {
-      in = new FileInputStream(from);
-      int bytesAvailable = in.available();
-      
-      int maxBufferSize = 1024 * 1024;
-      int bufferSize = Math.min(bytesAvailable, maxBufferSize);
-      buffer = getBuf(bufferSize);
-      
-      int count = in.read(buffer, 0, bufferSize);
-      while (count > 0) {
-        out.write(buffer, 0, bufferSize);
-        bytesAvailable = in.available();
-        bufferSize = Math.min(bytesAvailable, maxBufferSize);
-        count = in.read(buffer, 0, bufferSize);
-      }
-    } finally {
-      returnBuf(buffer);
-      closeQuietly(in);
-    }
-  }
-
   public static void copy(InputStream from, OutputStream out) throws IOException {
     if (from == null) throw new IOException("source == null");
     byte[] buffer = getBuf(1024);
@@ -113,59 +77,30 @@ public final class IOUtils {
       bytes.close();
     }
   }
-  public static byte[] toByteArray(File file) throws IOException {
-    FileInputStream in = null;
-    try {
-      in = new FileInputStream(file);
-      return toByteArray(in);
-    } finally {
-      closeQuietly(in);
+  
+  public static char[] toCharArray(InputStream in) throws IOException {
+    byte[] data = toByteArray(in);
+    char[] chars = new char[data.length];
+    for (int i = 0; i < data.length; i++) {
+      chars[i] = (char) data[i];      
     }
+    return chars;
   }
   
   public static String toString(InputStream in) throws IOException {
     byte[] data = toByteArray(in);
     return new String(data);
   }
+   
+  public static String toString(InputStream in, String charset) throws IOException {
+    return IOUtils.toString(in, Charset.forName(charset));
+  }
+  
   public static String toString(InputStream in, Charset charset) throws IOException {
     byte[] data = toByteArray(in);
     return new String(data, charset);
   }
-  public static String toString(InputStream in, String charset) throws IOException {
-    return toString(in, Charset.forName(charset));
-  }
   
-  public static String toString(File file) throws IOException {
-    FileInputStream in = null;
-    try {
-      in = new FileInputStream(file);
-      return toString(in);
-    } finally {
-      closeQuietly(in);
-    }
-  }
-  public static String toString(File file, Charset charset) throws IOException {
-    FileInputStream in = null;
-    try {
-      in = new FileInputStream(file);
-      return toString(in, charset);
-    } finally {
-      closeQuietly(in);
-    }
-  }
-  public static String toString(File file, String charset) throws IOException {
-    return toString(file, Charset.forName(charset));
-  }
-  
-  /** Obtiene la extencion de un archivo. */
-  public static String ext(File file) {
-    String fileName = file.getName();
-    int i = fileName.lastIndexOf('.');
-    int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
-    if (i > p) return fileName.substring(i + 1);
-    return null;
-  }
-
   public static void closeQuietly(Closeable closeable) {
     if (closeable == null) return;
     try {

@@ -82,16 +82,19 @@ System.out.println(Collect.joinToStr(array, new Fun<Object, String>() {
 ```
 
 ### IO
-FileInputStream a bytes.
 ```java
-FileInputStream in = null;
-try {
-  in = new FileInputStream("/etc/hola.txt");
-  byte[] bytes = IOUtils.toByteArray(in);
+File f = new File("/etc/hola.txt");
+Files.write(f, "Hola mundo\n", true);
+```
 
-} finally {
-  IOUtils.closeQuietly(in);
-}
+Read bytes.
+```java
+byte[] bytes = Files.toByteArray(new File("/etc/hola.txt"));
+```
+
+Copiar
+```java
+Files.copy(new File("/etc/hola.txt"), new File("/etc/hola-copy.txt"));
 ```
 
 Copiar
@@ -101,24 +104,11 @@ FileOutputStream out = null;
 try {
   in = new FileInputStream("/etc/hola.txt");
   out = new FileOutputStream("/etc/hola-copy.txt");
-  IOUtils.copy(in, out);
+  Files.copy(in, out);
 
 } finally {
-  IOUtils.closeQuietly(in);
-  IOUtils.closeQuietly(out);
-}
-```
-
-Copiar
-```java
-File in = new File("/etc/hola.txt");
-FileOutputStream out = null;
-try {
-  out = new FileOutputStream("/etc/hola-copy.txt");
-  IOUtils.copy(in, out);
-
-} finally {
-  IOUtils.closeQuietly(out);
+  Files.closeQuietly(in);
+  Files.closeQuietly(out);
 }
 ```
 
