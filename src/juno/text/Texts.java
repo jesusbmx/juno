@@ -21,19 +21,19 @@ public final class Texts {
    * @param texto a convertir `hello world!`
    * @return cadena formateada `Hello world!`
    */
-  public static String capitalize(CharSequence texto) {
+  public static String capitalize(String texto) {
     if (isEmpty(texto)) return EMPTY;
     for (int i = 0; i < texto.length(); i++) {
       char c = texto.charAt(i);
       if (Character.isUpperCase(c)) break;
 
       if (Character.isLetter(c)) {
-        char[] chars = texto.toString().toCharArray();
+        char[] chars = texto.toCharArray();
         chars[i] = Character.toUpperCase(c);
         return new String(chars);
       }
     }
-    return texto.toString();
+    return texto;
   }
   
   /**

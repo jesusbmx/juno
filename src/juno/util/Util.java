@@ -137,6 +137,10 @@ public final class Util {
   public static CharSequence ifEmpty(CharSequence obj, CharSequence altValue) {
     return isEmpty(obj) ? altValue : obj;
   }
+  
+  public static String ifEmpty(String obj, String altValue) {
+    return isEmpty(obj) ? altValue : obj;
+  }
 
   /**
    * <p>Limpia los espacios en blanco de una cadena.</p>
