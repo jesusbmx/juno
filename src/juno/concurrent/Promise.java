@@ -3,7 +3,7 @@ package juno.concurrent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-public class Promise<T> implements Runnable, Sender<T> {
+public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
 
     protected final Dispatcher dispatcher;
     protected final Executor<T> executor;
@@ -26,7 +26,7 @@ public class Promise<T> implements Runnable, Sender<T> {
     public Promise(Executor<T> executor) {
         this(executor, Dispatcher.get());
     }
-
+    
     public Promise<T> then(OnResponse<T> responseListener) {
         this.responseListener = responseListener;
         return this;
@@ -41,8 +41,8 @@ public class Promise<T> implements Runnable, Sender<T> {
     public void enqueue() {
         if (this.isCancelled() || this.isDone()) return;
 
-        ExecutorService executorService = dispatcher.executorService();
-        future = executorService.submit(this);
+        ExecutorService service = dispatcher.executorService();
+        future = service.submit(this);
         isRunning = true;
     }
 
@@ -58,9 +58,13 @@ public class Promise<T> implements Runnable, Sender<T> {
         throw new Exception("No sender");
     }
 
+    @Override public void execute(Sender<T> sender) throws Exception {
+        executor.execute(this);
+    }
+    
     @Override public void run() {
         try {
-            executor.execute(this);
+            execute(this);
         } catch (Exception e) {
             reject(e);
         }
