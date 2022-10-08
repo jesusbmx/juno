@@ -10,6 +10,14 @@ public interface Call<T> {
   void execute(Callback<T> callback);
   
   /**
+   * Envíe de forma asíncrona la solicitud y notifica su respuesta o si se 
+   * produjo un error al crear la solicitud o al procesar la respuesta.
+   * @param onResponse
+   * @param onError
+   */
+  void execute(OnResponse<T> onResponse, OnError onError);
+  
+  /**
    * Trata de cancelar la ejecución de esta tarea.
    *
    * @param mayInterruptIfRunning {@code true} valida se el hilo que se ejecuta 

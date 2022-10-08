@@ -127,12 +127,4 @@ public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
             return false;
         }
     }
-    
-    public interface OnResponse<V> {
-        void onResponse(V resposne) throws Exception;
-    }
-
-    public interface OnError {
-        void onFailure(Exception error);
-    }
 }
