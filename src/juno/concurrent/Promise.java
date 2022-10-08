@@ -12,7 +12,7 @@ public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
     Exception error;
 
     protected OnResponse<T> responseListener;
-    protected onError errorListener;
+    protected OnError errorListener;
 
     Future future;
     boolean isCancel;
@@ -32,7 +32,7 @@ public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
         return this;
     }
 
-    public Promise<T> error(onError errorListener) {
+    public Promise<T> error(OnError errorListener) {
         this.errorListener = errorListener;
         return this;
     }
@@ -132,7 +132,7 @@ public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
         void onResponse(V resposne) throws Exception;
     }
 
-    public interface onError {
+    public interface OnError {
         void onFailure(Exception error);
     }
 }
