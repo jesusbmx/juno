@@ -72,6 +72,16 @@ public final class Files {
     }
   }
   
+   public static void writeByteArray(File file, byte[] data) throws IOException {
+    OutputStream out = null;
+    try {
+      out = new FileOutputStream(file);
+      out.write(data, 0, data.length);
+    } finally {
+      closeQuietly(out);
+    }
+  }
+  
   /** Obtiene la extencion de un archivo. */
   public static String ext(File file) {
     String fileName = file.getName();
