@@ -96,9 +96,9 @@ public final class Collect {
    * La colección devuelta es una vista en vivo de {@code fromCollection};
    * los cambios a uno afectan al otros.
    */
-   public static <F, T> TransformedCollect<F, T> transform(
-      Collection<F> fromCollection, Fun<? super F, T> function) {
-    return new TransformedCollect<F, T>(fromCollection, function);
+   public static <P, R> TransformedCollect<P, R> transform(
+      Collection<P> fromCollection, Fun<? super P, R> function) {
+    return new TransformedCollect<P, R>(fromCollection, function);
   }
   
   
@@ -291,11 +291,11 @@ public final class Collect {
     return fill(array, value, 0, array.length);
   }
   
-  public static <T, R> List<R> map(List<T> list, Fun<T, R> fun) {
+  public static <P, R> List<R> map(List<P> list, Fun<P, R> fun) {
     if (isNull(list)) return null;
     final List<R> result = new ArrayList<R>(list.size());
     for (int i = 0; i < list.size(); i++) {
-      T object = list.get(i);
+      P object = list.get(i);
       result.add(fun.apply(object));
     }
     return result;
