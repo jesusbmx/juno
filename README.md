@@ -70,12 +70,17 @@ System.out.println(Collect.join(array));
 
 System.out.println(Collect.join(array, (String it) -> "\"" + it.toString() + "\"" ));
 
-System.out.println(Collect.some(array, (String it) -> t.equals("b") ));
+boolean some = Collect.some(array, (String it) -> t.equals("b") );
+System.out.println(some);
 
-System.out.println(Collect.find(array, (String it) -> t.equals("c") ));
+String find = Collect.find(array, (String it) -> t.equals("c") );
+System.out.println(find);
     
 String[] fill = Collect.fill(array, "z");
 System.out.println(Collect.join(fill, ","));
+
+String[] filter = Collect.filter(array, (String it) -> it.contains("a") || it.contains("b") );
+System.out.println(Collect.join(filter, ","));
 ```
 
 ```markdown
@@ -85,6 +90,7 @@ System.out.println(Collect.join(fill, ","));
 > true
 > c
 > z,z,z
+> a,b
 ```
 
 

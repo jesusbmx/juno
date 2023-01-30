@@ -61,28 +61,37 @@ public class Test {
       System.out.println("array is empty");
     }
     
-    
     System.out.println(Collect.join(array, ","));
     
-    
-    System.out.println(Collect.some(array, new Fun<String, Boolean>() {
+    boolean some = Collect.some(array, new Fun<String, Boolean>() {
         @Override
         public Boolean apply(String t) {
             return t.equals("b");
         }
-    }));
+    });
+    System.out.println(some);
     
-    System.out.println(Collect.find(array, new Fun<String, Boolean>() {
+    String find = Collect.find(array, new Fun<String, Boolean>() {
         @Override
         public Boolean apply(String t) {
             return t.equals("c");
         }
-    }));
+    });
+    System.out.println(find);
     
     
     String[] fill = Collect.fill(array, "z");
     System.out.println(Collect.join(fill, ","));
     
+    String[] filter = Collect.filter(array, new Fun<String, Boolean>() {
+        @Override
+        public Boolean apply(String t) {
+            return t.contains("a") || t.contains("b");
+        }
+    });
+    System.out.println(Collect.join(filter, ","));
+    
+    // Formats
     System.out.println(Formats.date());
     System.out.println(Formats.datetime());
     

@@ -292,6 +292,41 @@ public final class Collect {
     return fill(array, value, 0, array.length);
   }
   
+  public static <T, R> List<R> map(List<T> list, Fun<T, R> fun) {
+    final List<R> result = new ArrayList<R>(list.size());
+    for (int i = 0; i < list.size(); i++) {
+      T object = list.get(i);
+      result.add(fun.apply(object));
+    }
+    return result;
+  }
+  
+  public static <V> List<V> filter(List<V> list, Fun<V, Boolean> fun) {
+    final List<V> result = new ArrayList<V>(list.size());
+    for (int i = 0; i < list.size(); i++) {
+      V object = list.get(i);
+      if (fun.apply(object)) {
+        result.add(object);
+      }
+    }
+    return result;
+  }
+  
+  public static <V> V[] filter(V[] array, Fun<V, Boolean> fun) {
+    Class<V> componentType = (Class<V>) array.getClass().getComponentType();
+    
+    final List<V> result = new ArrayList<V>(array.length);
+    for (int i = 0; i < array.length; i++) {
+      V object = array[i];
+      if (fun.apply(object)) {
+        result.add(object);
+      }
+    }
+    
+    V[] newArray = (V[]) Array.newInstance(componentType, 0);
+    return result.toArray(newArray);
+  }
+  
   public static <V> boolean some(List<V> list, Fun<V, Boolean> fun) {
     for (int i = 0; i < list.size(); i++) {
       V object = list.get(i);
