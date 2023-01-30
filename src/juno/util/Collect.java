@@ -187,13 +187,10 @@ public final class Collect {
   }
   
   public static List<String> toListString(List list, Fun<Object, String> fun) {
-    if (isNull(list)) return null;
-    List<String> result = new ArrayList<String>(list.size());
-    for (int i = 0; i < list.size(); i++)  result.add( fun.apply(list.get(i)) );
-    return result;
+    return map(list, fun);
   }
   public static List<String> toListString(List list) {
-    return toListString(list, Fun.OBJ_TO_STR);
+    return map(list, Fun.OBJ_TO_STR);
   }
   
   public static String[] toArrayString(Object[] array, Fun<Object, String> fun) {
@@ -261,6 +258,7 @@ public final class Collect {
   }
   
   public static <V> List<V> fill(List<V> list, V value, int start, int end) {
+    if (isNull(list)) return null;
     final List<V> result = new ArrayList<V>(end);
     for (int i = start; i < end; i++) {
       result.add(value);
@@ -277,6 +275,7 @@ public final class Collect {
   }
   
   public static <V> V[] fill(V[] array, V value, int start, int end) {
+    if (isNull(array)) return null;
     final V[] result = (V[]) Array.newInstance(value.getClass(), end);
     for (int i = start; i < end; i++) {
       result[i] = value;
@@ -293,6 +292,7 @@ public final class Collect {
   }
   
   public static <T, R> List<R> map(List<T> list, Fun<T, R> fun) {
+    if (isNull(list)) return null;
     final List<R> result = new ArrayList<R>(list.size());
     for (int i = 0; i < list.size(); i++) {
       T object = list.get(i);
@@ -302,6 +302,7 @@ public final class Collect {
   }
   
   public static <V> List<V> filter(List<V> list, Fun<V, Boolean> fun) {
+    if (isNull(list)) return null;
     final List<V> result = new ArrayList<V>(list.size());
     for (int i = 0; i < list.size(); i++) {
       V object = list.get(i);
@@ -313,6 +314,7 @@ public final class Collect {
   }
   
   public static <V> V[] filter(V[] array, Fun<V, Boolean> fun) {
+    if (isNull(array)) return null;
     Class<V> componentType = (Class<V>) array.getClass().getComponentType();
     
     final List<V> result = new ArrayList<V>(array.length);
@@ -368,6 +370,7 @@ public final class Collect {
   }
   
   public static <V> V find(List<V> list, Fun<V, Boolean> fun) {
+    if (isNull(list)) return null;
     for (int i = 0; i < list.size(); i++) {
       V object = list.get(i);
       if (fun.apply(object)) {
@@ -378,6 +381,7 @@ public final class Collect {
   }
   
   public static <V> V find(V[] array, Fun<V, Boolean> fun) {
+    if (isNull(array)) return null;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
       if (fun.apply(object)) {
