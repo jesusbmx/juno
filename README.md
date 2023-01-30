@@ -62,10 +62,6 @@ if (Collect.hasIndex(array, 2)) {
   System.out.printf("array[2] = '%s'\n", array[2]);
 }
 
-System.out.println(Collect.some(array, (String it) -> t.equals("b") ));
-
-System.out.println(Collect.find(array, (String it) ->  t.equals("c") ));
-    
 if (Collect.isEmpty(array)) {
   System.out.println("array is empty");
 }
@@ -73,14 +69,22 @@ if (Collect.isEmpty(array)) {
 System.out.println(Collect.join(array));
 
 System.out.println(Collect.join(array, (String it) -> "\"" + it.toString() + "\"" ));
+
+System.out.println(Collect.some(array, (String it) -> t.equals("b") ));
+
+System.out.println(Collect.find(array, (String it) ->  t.equals("c") ));
+    
+String[] fill = Collect.fill(array, "z");
+System.out.println(Collect.join(fill, ","));
 ```
 
 ```markdown
 > array[2] = 'c'
-> true
-> c
 > a, b, c
 > "a", "b", "c"
+> true
+> c
+> z,z,z
 ```
 
 ### IO

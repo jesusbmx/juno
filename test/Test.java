@@ -44,10 +44,18 @@ public class Test {
     
     
     
-    String[] array = {"a","b", "c"};
+    String[] array = {"a", "b", "c"};
     if (Collect.hasIndex(array, 2)) {
       System.out.printf("array[2] = '%s'\n", array[2]);
     }
+    
+    if (Collect.isEmpty(array)) {
+      System.out.println("array is empty");
+    }
+    
+    
+    System.out.println(Collect.join(array, ","));
+    
     
     System.out.println(Collect.some(array, new Fun<String, Boolean>() {
         @Override
@@ -63,14 +71,9 @@ public class Test {
         }
     }));
     
-    if (Collect.isEmpty(array)) {
-      System.out.println("array is empty");
-    }
     
-    
-    System.out.println(Collect.join(array, ","));
-    
-    
+    String[] fill = Collect.fill(array, "z");
+    System.out.println(Collect.join(fill, ","));
     
     System.out.println(Formats.date());
     System.out.println(Formats.datetime());

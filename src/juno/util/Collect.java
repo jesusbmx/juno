@@ -1,6 +1,7 @@
 package juno.util;
 
 import static java.lang.Boolean.FALSE;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -273,6 +274,22 @@ public final class Collect {
   
   public static <V> List<V> fill(List<V> list, V value) {
     return fill(list, value, 0, list.size());
+  }
+  
+  public static <V> V[] fill(V[] array, V value, int start, int end) {
+    final V[] result = (V[]) Array.newInstance(value.getClass(), end);
+    for (int i = start; i < end; i++) {
+      result[i] = value;
+    }
+    return result;
+  }
+  
+  public static <V> V[] fill(V[] array, V value, int start) {
+    return fill(array, value, start, array.length);
+  }
+  
+  public static <V> V[] fill(V[] array, V value) {
+    return fill(array, value, 0, array.length);
   }
   
   public static <V> boolean some(List<V> list, Fun<V, Boolean> fun) {
