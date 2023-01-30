@@ -39,17 +39,17 @@ public final class Collect {
    * @param index índice para verificar.
    * @return @true si el array contiene el indice.
    */
-  public static <T> boolean arrayHasIndex(T[] array, int index) {
+  public static <T> boolean hasIndex(T[] array, int index) {
     if (isNull(array)) return FALSE;
     return index > -1 && array.length > index;
   }
   
-  public static <T> T arrayGet(T[] array, int index, T defaultVal) {
-    return arrayHasIndex(array, index) ? array[index] : defaultVal;
+  public static <T> T get(T[] array, int index, T defaultVal) {
+    return hasIndex(array, index) ? array[index] : defaultVal;
   }
   
-  public static <T> T arrayGet(T[] array, int index) {
-    return arrayGet(array, index,  null);
+  public static <T> T get(T[] array, int index) {
+    return get(array, index,  null);
   }
 
   /**
@@ -61,25 +61,25 @@ public final class Collect {
    */
   public static <T> T[] arrayOf(T... elements) { return elements; }
 
-  public static void fill(StringBuilder out, Object... elements) {
+  public static void write(StringBuilder out, Object... elements) {
     if (isNotNull(elements))
       for (Object e : elements) 
         out.append(e);
   }
   
-  public static void fill(StringBuilder out, Collection elements) {
+  public static void write(StringBuilder out, Collection elements) {
     if (isNotNull(elements))
       for (Object e : elements) 
         out.append(e);
   }
   
-  public static <T> void fill(Collection<T> out, T... elements) { 
+  public static <T> void write(Collection<T> out, T... elements) { 
     if (isNotNull(elements))
       for (T e : elements) 
         out.add(e);
   }
   
-  public static <K, V> void fill(Map<K, V> out, Object... namesAndValues) {
+  public static <K, V> void write(Map<K, V> out, Object... namesAndValues) {
     if (isNull(namesAndValues)) return;
     for (int i = 0; i < namesAndValues.length; i += 2) {
       K name = (K) namesAndValues[i];
@@ -111,7 +111,7 @@ public final class Collect {
   public static <T> ArrayList<T> listOf(T... elements) {
     if (isNull(elements)) return null;
     ArrayList<T> list = new ArrayList<T>(elements.length);
-    fill(list, elements);
+    write(list, elements);
     return list;
   }
 
@@ -125,7 +125,7 @@ public final class Collect {
   public static <T> LinkedHashSet<T> setOf(T... elements) {
     if (isNull(elements)) return null;
     LinkedHashSet<T> list = new LinkedHashSet<T>(elements.length);
-    fill(list, elements);
+    write(list, elements);
     return list;
   }
 
@@ -144,7 +144,7 @@ public final class Collect {
       throw new IllegalArgumentException("Expected alternating header names and values");
     }
     LinkedHashMap<K, V> map = new LinkedHashMap<K, V>(namesAndValues.length / 2);
-    fill(map, namesAndValues);
+    write(map, namesAndValues);
     return map;
   }
   
@@ -213,7 +213,7 @@ public final class Collect {
    * @param fun función ha aplicar para cada elemento
    * @return String
    */
-  public static String joinToStr(Iterable args, String separator, Fun<Object, String> fun) {
+  public static String join(Iterable args, String separator, Fun<Object, String> fun) {
     StringBuilder sb = new StringBuilder();
     int i = 0;
     for (Object arg : args) {
@@ -223,14 +223,14 @@ public final class Collect {
     }
     return sb.toString();
   }
-  public static String joinToStr(Iterable args, String separator) {
-    return joinToStr(args, separator, Fun.OBJ_TO_STR);
+  public static String join(Iterable args, String separator) {
+    return join(args, separator, Fun.OBJ_TO_STR);
   }
-  public static String joinToStr(Iterable args, Fun<Object, String> fun) {
-    return joinToStr(args, ", ", fun);
+  public static String join(Iterable args, Fun<Object, String> fun) {
+    return join(args, ", ", fun);
   }
-  public static String joinToStr(Iterable args) {
-    return joinToStr(args, ", ");
+  public static String join(Iterable args) {
+    return join(args, ", ");
   }
   
   /**
@@ -241,7 +241,7 @@ public final class Collect {
    * @param fun función ha aplicar para cada elemento
    * @return String
    */
-  public static String joinToStr(Object[] args, String separator, Fun<Object, String> fun) {
+  public static String join(Object[] args, String separator, Fun<Object, String> fun) {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < args.length; i++) {
       if (i > 0) sb.append(separator);
@@ -249,13 +249,69 @@ public final class Collect {
     }
     return sb.toString();
   }
-  public static String joinToStr(Object[] args, String separator) {
-    return joinToStr(args, separator, Fun.OBJ_TO_STR);
+  public static String join(Object[] args, String separator) {
+    return join(args, separator, Fun.OBJ_TO_STR);
   }
-  public static String joinToStr(Object[] args, Fun<Object, String> fun) {
-    return joinToStr(args, ", ", fun);
+  public static String join(Object[] args, Fun<Object, String> fun) {
+    return join(args, ", ", fun);
   }
-  public static String joinToStr(Object[] args) {
-    return joinToStr(args, ", ");
+  public static String join(Object[] args) {
+    return join(args, ", ");
+  }
+  
+  public static <V> List<V> fill(List<V> list, V value, int start, int end) {
+    final List<V> result = new ArrayList<V>(end);
+    for (int i = start; i < end; i++) {
+      result.add(value);
+    }
+    return result;
+  }
+  
+  public static <V> List<V> fill(List<V> list, V value, int start) {
+    return fill(list, value, start, list.size());
+  }
+  
+  public static <V> List<V> fill(List<V> list, V value) {
+    return fill(list, value, 0, list.size());
+  }
+  
+  public static <V> boolean some(List<V> list, Fun<V, Boolean> fun) {
+    for (int i = 0; i < list.size(); i++) {
+      V object = list.get(i);
+      if (fun.apply(object)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public static <V> boolean some(V[] array, Fun<V, Boolean> fun) {
+    for (int i = 0; i < array.length; i++) {
+      V object = array[i];
+      if (fun.apply(object)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public static <V> V find(List<V> list, Fun<V, Boolean> fun) {
+    for (int i = 0; i < list.size(); i++) {
+      V object = list.get(i);
+      if (fun.apply(object)) {
+        return object;
+      }
+    }
+    return null;
+  }
+  
+  public static <V> V find(V[] array, Fun<V, Boolean> fun) {
+    for (int i = 0; i < array.length; i++) {
+      V object = array[i];
+      if (fun.apply(object)) {
+        return object;
+      }
+    }
+    return null;
   }
 }

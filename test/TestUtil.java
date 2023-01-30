@@ -21,7 +21,7 @@ public class TestUtil {
     };
     Collection<String> newList = Collect.transform(list, fun);
     
-    System.out.println(Collect.joinToStr(newList, new Fun<Object, String>() {
+    System.out.println(Collect.join(newList, new Fun<Object, String>() {
       @Override public String apply(Object t) {
         return "\"" + t.toString() + "\"";
       }

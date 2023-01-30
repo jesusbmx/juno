@@ -58,25 +58,37 @@ System.out.printf("f = '%f'\n", f);
 Validación para arreglos.
 ```java
 String[] array = {"a", "b", "c"};
-if (Collect.arrayHasIndex(array, 2)) {
+if (Collect.hasIndex(array, 2)) {
   System.out.printf("array[2] = '%s'\n", array[2]);
 }
+
+System.out.println(Collect.some(array, new Fun<String, Boolean>() {
+  @Override
+  public Boolean apply(String t) {
+    return t.equals("b");
+  }
+}));
+
+System.out.println(Collect.find(array, new Fun<String, Boolean>() {
+  @Override
+  public Boolean apply(String t) {
+    return t.equals("c");
+  }
+}));
     
 if (Collect.isEmpty(array)) {
   System.out.println("array is empty");
 }
 
-System.out.println(Collect.joinToStr(array));
+System.out.println(Collect.join(array));
 
-System.out.println(Collect.joinToStr(array, new Fun<Object, String>() {
-  @Override public String apply(Object t) {
-    return "\"" + t.toString() + "\"";
-  }
-}));
+System.out.println(Collect.join(array, (String it) -> "\"" + it.toString() + "\"");
 ```
 
 ```markdown
 > array[2] = 'c'
+> true
+> c
 > a, b, c
 > "a", "b", "c"
 ```

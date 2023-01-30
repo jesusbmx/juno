@@ -4,6 +4,7 @@ import juno.util.Collect;
 import juno.util.Convert;
 import juno.text.Formats;
 import juno.text.Texts;
+import juno.util.Fun;
 import juno.util.Util;
 
 public class Test {
@@ -44,16 +45,30 @@ public class Test {
     
     
     String[] array = {"a","b", "c"};
-    if (Collect.arrayHasIndex(array, 2)) {
+    if (Collect.hasIndex(array, 2)) {
       System.out.printf("array[2] = '%s'\n", array[2]);
     }
+    
+    System.out.println(Collect.some(array, new Fun<String, Boolean>() {
+        @Override
+        public Boolean apply(String t) {
+            return t.equals("b");
+        }
+    }));
+    
+    System.out.println(Collect.find(array, new Fun<String, Boolean>() {
+        @Override
+        public Boolean apply(String t) {
+            return t.equals("c");
+        }
+    }));
     
     if (Collect.isEmpty(array)) {
       System.out.println("array is empty");
     }
     
     
-    System.out.println(Collect.joinToStr(array, ","));
+    System.out.println(Collect.join(array, ","));
     
     
     
