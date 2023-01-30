@@ -83,13 +83,22 @@ public class Test {
     String[] fill = Collect.fill(array, "z");
     System.out.println(Collect.join(fill, ","));
     
-    String[] filter = Collect.filter(array, new Fun<String, Boolean>() {
+    Integer[] intArray = {1, 2, 3, 7, 9};
+    Integer[] filter = Collect.filter(intArray, new Fun<Integer, Boolean>() {
         @Override
-        public Boolean apply(String t) {
-            return t.contains("a") || t.contains("b");
+        public Boolean apply(Integer t) {
+            return t > 0;
         }
     });
     System.out.println(Collect.join(filter, ","));
+    
+    boolean every = Collect.every(intArray, new Fun<Integer, Boolean>() {
+        @Override
+        public Boolean apply(Integer t) {
+            return t % 2 == 0;
+        }
+    });
+    System.out.println(every);
     
     // Formats
     System.out.println(Formats.date());

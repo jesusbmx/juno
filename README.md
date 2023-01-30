@@ -79,8 +79,12 @@ System.out.println(find);
 String[] fill = Collect.fill(array, "z");
 System.out.println(Collect.join(fill, ","));
 
-String[] filter = Collect.filter(array, (String it) -> it.contains("a") || it.contains("b") );
+Integer[] intArray = {1, 2, 3, 7, 9};
+Integer[] filter = Collect.filter(intArray, (Integer it) -> it > 0 );
 System.out.println(Collect.join(filter, ","));
+
+boolean every = Collect.every(intArray, (Integer it) -> it % 2 == 0 );
+System.out.println(every);
 ```
 
 ```markdown
@@ -90,7 +94,8 @@ System.out.println(Collect.join(filter, ","));
 > true
 > c
 > z,z,z
-> a,b
+> 1,2,3,7,9
+> false
 ```
 
 

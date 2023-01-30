@@ -327,6 +327,26 @@ public final class Collect {
     return result.toArray(newArray);
   }
   
+  public static <V> boolean every(List<V> list, Fun<V, Boolean> fun) {
+    for (int i = 0; i < list.size(); i++) {
+      V object = list.get(i);
+      if (!fun.apply(object)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  public static <V> boolean every(V[] array, Fun<V, Boolean> fun) {
+    for (int i = 0; i < array.length; i++) {
+      V object = array[i];
+      if (!fun.apply(object)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
   public static <V> boolean some(List<V> list, Fun<V, Boolean> fun) {
     for (int i = 0; i < list.size(); i++) {
       V object = list.get(i);
