@@ -220,6 +220,15 @@ public final class Convert {
     return Base64.encode(inArray);
   }
   
+  public static String fromBase64(String s) {
+    byte[] decode = Base64.decode(s);
+    return new String(decode);
+  }
+  
+  public static String toBase64(String inArray) {
+    return Base64.encode(inArray.getBytes());
+  }
+  
   public Date parseDate(String format, String date) throws ParseException {
     return Formats.datef(format).parse(date);
   }

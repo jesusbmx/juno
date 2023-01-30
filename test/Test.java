@@ -10,6 +10,7 @@ import juno.util.Util;
 public class Test {
   
   public static void main(String[] args) {
+    // Strings
     String txt = null;
     if (Util.isEmpty(txt)) {
       System.out.println("txt is empty");
@@ -26,7 +27,7 @@ public class Test {
     System.out.printf("name = '%s'\n", name);
     
     
-    
+    // Numbers
     String number = "-892768237.50";
     if (Util.isNumber(number)) {
       System.out.printf("'%f' is number\n", Convert.toDouble(number));
@@ -43,7 +44,14 @@ public class Test {
     System.out.printf("f = '%f'\n", f);
     
     
+    // Base64
+    String encodeBase64 = Convert.toBase64("Hola mundo");
+    System.out.println(encodeBase64);
     
+    String decodeBase64 = Convert.fromBase64(encodeBase64);
+    System.out.println(decodeBase64);
+    
+    // Arrays
     String[] array = {"a", "b", "c"};
     if (Collect.hasIndex(array, 2)) {
       System.out.printf("array[2] = '%s'\n", array[2]);

@@ -72,7 +72,7 @@ System.out.println(Collect.join(array, (String it) -> "\"" + it.toString() + "\"
 
 System.out.println(Collect.some(array, (String it) -> t.equals("b") ));
 
-System.out.println(Collect.find(array, (String it) ->  t.equals("c") ));
+System.out.println(Collect.find(array, (String it) -> t.equals("c") ));
     
 String[] fill = Collect.fill(array, "z");
 System.out.println(Collect.join(fill, ","));
@@ -85,6 +85,21 @@ System.out.println(Collect.join(fill, ","));
 > true
 > c
 > z,z,z
+```
+
+
+### Base64
+```java
+String encodeBase64 = Convert.toBase64("Hola mundo");
+System.out.println(encodeBase64);
+
+String decodeBase64 = Convert.fromBase64(encodeBase64);
+System.out.println(decodeBase64);
+```
+
+```markdown
+> SG9sYSBtdW5kbw==
+> Hola mundo
 ```
 
 ### IO
