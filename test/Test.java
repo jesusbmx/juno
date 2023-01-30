@@ -53,6 +53,8 @@ public class Test {
     
     // Arrays
     String[] array = {"a", "b", "c"};
+    Integer[] intArray = {1, 2, 3, 7, 9};
+        
     if (Collect.hasIndex(array, 2)) {
       System.out.printf("array[2] = '%s'\n", array[2]);
     }
@@ -83,7 +85,6 @@ public class Test {
     String[] fill = Collect.fill(array, "z");
     System.out.println(Collect.join(fill, ","));
     
-    Integer[] intArray = {1, 2, 3, 7, 9};
     Integer[] filter = Collect.filter(intArray, new Fun<Integer, Boolean>() {
         @Override
         public Boolean apply(Integer t) {

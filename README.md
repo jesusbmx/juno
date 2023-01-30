@@ -58,6 +58,8 @@ System.out.printf("f = '%f'\n", f);
 Validación para arreglos.
 ```java
 String[] array = {"a", "b", "c"};
+Integer[] intArray = {1, 2, 3, 7, 9};
+
 if (Collect.hasIndex(array, 2)) {
   System.out.printf("array[2] = '%s'\n", array[2]);
 }
@@ -73,18 +75,17 @@ System.out.println(Collect.join(array, (String it) -> "\"" + it.toString() + "\"
 boolean some = Collect.some(array, (String it) -> t.equals("b") );
 System.out.println(some);
 
+boolean every = Collect.every(intArray, (Integer it) -> it % 2 == 0 );
+System.out.println(every);
+
 String find = Collect.find(array, (String it) -> t.equals("c") );
 System.out.println(find);
     
 String[] fill = Collect.fill(array, "z");
 System.out.println(Collect.join(fill, ","));
 
-Integer[] intArray = {1, 2, 3, 7, 9};
 Integer[] filter = Collect.filter(intArray, (Integer it) -> it > 0 );
 System.out.println(Collect.join(filter, ","));
-
-boolean every = Collect.every(intArray, (Integer it) -> it % 2 == 0 );
-System.out.println(every);
 ```
 
 ```markdown
@@ -92,10 +93,10 @@ System.out.println(every);
 > a, b, c
 > "a", "b", "c"
 > true
+> false
 > c
 > z,z,z
 > 1,2,3,7,9
-> false
 ```
 
 
