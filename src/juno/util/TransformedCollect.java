@@ -8,11 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class TransformedCollect<P, R> extends AbstractCollection<R> {
-  final Collection<P> fromCollection;
-  final Fun<? super P, ? extends R> function;
+public class TransformedCollect<Input, Result> extends AbstractCollection<Result> {
+  final Collection<Input> fromCollection;
+  final Fun<? super Input, ? extends Result> function;
 
-  public TransformedCollect(Collection<P> fromCollection, Fun<? super P, ? extends R> function) {
+  public TransformedCollect(Collection<Input> fromCollection, Fun<? super Input, ? extends Result> function) {
     this.fromCollection = fromCollection;
     this.function = function;
   }
@@ -25,9 +25,9 @@ public class TransformedCollect<P, R> extends AbstractCollection<R> {
     return fromCollection.isEmpty();
   }
 
-  @Override public Iterator<R> iterator() {
-    return new TransformedIterator<P, R>(fromCollection.iterator()) {
-      @Override R transform(P from) {
+  @Override public Iterator<Result> iterator() {
+    return new TransformedIterator<Input, Result>(fromCollection.iterator()) {
+      @Override Result transform(Input from) {
         return function.apply(from);
       }
     };
@@ -37,12 +37,12 @@ public class TransformedCollect<P, R> extends AbstractCollection<R> {
     return fromCollection.size();
   }
 
-  public List<R> toList() {
-    return new ArrayList<R>(this);
+  public List<Result> toList() {
+    return new ArrayList<Result>(this);
   }
   
-  public Set<R> toSet() {
-    return new HashSet<R>(this);
+  public Set<Result> toSet() {
+    return new HashSet<Result>(this);
   }
   
   
