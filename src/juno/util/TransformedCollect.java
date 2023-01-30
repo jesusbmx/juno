@@ -12,7 +12,10 @@ public class TransformedCollect<Input, Result> extends AbstractCollection<Result
   final Collection<Input> fromCollection;
   final Fun<? super Input, ? extends Result> function;
 
-  public TransformedCollect(Collection<Input> fromCollection, Fun<? super Input, ? extends Result> function) {
+  public TransformedCollect(
+        Collection<Input> fromCollection, 
+        Fun<? super Input, ? extends Result> function
+  ) {
     this.fromCollection = fromCollection;
     this.function = function;
   }
