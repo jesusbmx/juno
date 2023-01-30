@@ -97,7 +97,8 @@ public final class Collect {
    * los cambios a uno afectan al otros.
    */
    public static <I, R> TransformedCollect<I, R> transform(
-      Collection<I> fromCollection, Fun<? super I, R> function) {
+      Collection<I> fromCollection, Fun<? super I, R> function
+   ) {
     return new TransformedCollect<I, R>(fromCollection, function);
   }
   
