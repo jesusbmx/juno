@@ -96,9 +96,10 @@ public final class Collect {
    * La colección devuelta es una vista en vivo de {@code fromCollection};
    * los cambios a uno afectan al otros.
    */
-   public static <I, R> TransformedCollect<I, R> transform(
-      Collection<I> fromCollection, Fun<? super I, R> function
-   ) {
+  public static <I, R> TransformedCollect<I, R> transform(
+      Collection<I> fromCollection, 
+      Fun<? super I, R> function
+  ) {
     return new TransformedCollect<I, R>(fromCollection, function);
   }
   
@@ -195,13 +196,10 @@ public final class Collect {
   }
   
   public static String[] toArrayString(Object[] array, Fun<Object, String> fun) {
-    if (isNull(array)) return null;
-    String[] result = new String[array.length];
-    for (int i = 0; i < array.length; i++)  result[i] = fun.apply(array[i]);
-    return result;
+    return map(array, String.class, fun);
   }
   public static String[] toArrayString(Object... array) {
-    return toArrayString(array, Fun.OBJ_TO_STR);
+    return map(array, String.class, Fun.OBJ_TO_STR);
   }
   
   /**
@@ -241,7 +239,7 @@ public final class Collect {
    * @return String
    */
   public static String join(Object[] args, String separator, Fun<Object, String> fun) {
-    StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
     for (int i = 0; i < args.length; i++) {
       if (i > 0) sb.append(separator);
       sb.append(fun.apply(args[i]));
@@ -302,6 +300,17 @@ public final class Collect {
     return result;
   }
   
+  public static <I, R> R[] map(I[] array, Class<R> componentType, Fun<I, R> fun) {
+    if (isNull(array)) return null;
+    final List<R> result = new ArrayList<R>(array.length);
+    for (int i = 0; i < array.length; i++) {
+      I object = array[i];
+      result.add(fun.apply(object));
+    }
+    R[] newArray = (R[]) Array.newInstance(componentType, 0);
+    return result.toArray(newArray);
+  }
+  
   public static <V> List<V> filter(List<V> list, Fun<V, Boolean> fun) {
     if (isNull(list)) return null;
     final List<V> result = new ArrayList<V>(list.size());
@@ -316,9 +325,9 @@ public final class Collect {
   
   public static <V> V[] filter(V[] array, Fun<V, Boolean> fun) {
     if (isNull(array)) return null;
-    Class<V> componentType = (Class<V>) array.getClass().getComponentType();
+    final Class<V> componentType = (Class<V>) array.getClass().getComponentType();
     
-    final List<V> result = new ArrayList<V>(array.length);
+    final ArrayList<V> result = new ArrayList<V>(array.length);
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
       if (fun.apply(object)) {
