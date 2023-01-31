@@ -18,45 +18,45 @@ public final class Files {
   private Files() {
   }
   
-  public static byte[] toByteArray(File file) throws IOException {
+  public static byte[] readBytes(File file) throws IOException {
     FileInputStream in = null;
     try {
       in = new FileInputStream(file);
-      return IOUtils.toByteArray(in);
+      return IOUtils.readBytes(in);
     } finally {
       closeQuietly(in);
     }
   }
   
-  public static char[] toCharArray(File file) throws IOException {
+  public static char[] readChars(File file) throws IOException {
     FileInputStream in = null;
     try {
       in = new FileInputStream(file);
-      return IOUtils.toCharArray(in);
+      return IOUtils.readChars(in);
     } finally {
       closeQuietly(in);
     }
   }
   
-  public static String toString(File file, Charset charset) throws IOException {
+  public static String readString(File file, Charset charset) throws IOException {
     FileInputStream in = null;
     try {
       in = new FileInputStream(file);
-      return IOUtils.toString(in, charset);
+      return IOUtils.readString(in, charset);
     } finally {
       closeQuietly(in);
     }
   }
   
-  public static String toString(File file, String charset) throws IOException {
-    return toString(file, Charset.forName(charset));
+  public static String readString(File file, String charset) throws IOException {
+    return readString(file, Charset.forName(charset));
   }
   
-  public static String toString(File file) throws IOException {
+  public static String readString(File file) throws IOException {
     FileInputStream in = null;
     try {
       in = new FileInputStream(file);
-      return IOUtils.toString(in);
+      return IOUtils.readString(in);
     } finally {
       closeQuietly(in);
     }
@@ -72,7 +72,15 @@ public final class Files {
     }
   }
   
-   public static void writeByteArray(File file, byte[] data) throws IOException {
+  public static void write(File file, CharSequence cs) throws IOException {
+    write(file, cs, false);
+  }
+  
+  public static void append(File file, CharSequence cs) throws IOException {
+    write(file, cs, true);
+  }
+  
+   public static void writeBytes(File file, byte[] data) throws IOException {
     OutputStream out = null;
     try {
       out = new FileOutputStream(file);

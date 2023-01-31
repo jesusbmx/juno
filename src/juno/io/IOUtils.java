@@ -59,10 +59,10 @@ public final class IOUtils {
     };
   }
   
-  public static byte[] toByteArray(InputStream source) throws IOException {
-    return toByteArray(source, 1024);
+  public static byte[] readBytes(InputStream source) throws IOException {
+    return readBytes(source, 1024);
   }
-  public static byte[] toByteArray(InputStream source, int size) throws IOException {
+  public static byte[] readBytes(InputStream source, int size) throws IOException {
     if (source == null) throw new IOException("source == null");
     ByteArrayOutputStream bytes = arrayOutputStream(source.available());
     byte[] buffer = getBuf(size);
@@ -78,8 +78,8 @@ public final class IOUtils {
     }
   }
   
-  public static char[] toCharArray(InputStream in) throws IOException {
-    byte[] data = toByteArray(in);
+  public static char[] readChars(InputStream in) throws IOException {
+    byte[] data = readBytes(in);
     char[] chars = new char[data.length];
     for (int i = 0; i < data.length; i++) {
       chars[i] = (char) data[i];      
@@ -87,17 +87,17 @@ public final class IOUtils {
     return chars;
   }
   
-  public static String toString(InputStream in) throws IOException {
-    byte[] data = toByteArray(in);
+  public static String readString(InputStream in) throws IOException {
+    byte[] data = readBytes(in);
     return new String(data);
   }
    
-  public static String toString(InputStream in, String charset) throws IOException {
-    return IOUtils.toString(in, Charset.forName(charset));
+  public static String readString(InputStream in, String charset) throws IOException {
+    return IOUtils.readString(in, Charset.forName(charset));
   }
   
-  public static String toString(InputStream in, Charset charset) throws IOException {
-    byte[] data = toByteArray(in);
+  public static String readString(InputStream in, Charset charset) throws IOException {
+    byte[] data = readBytes(in);
     return new String(data, charset);
   }
   

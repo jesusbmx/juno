@@ -13,7 +13,7 @@ public class TestIO {
         File f = new File("C:\\Users\\jesus\\Documents\\archivo.txt");
         Files.write(f, "Hola mundo\n", true);
         
-        String data = Files.toString(f);
+        String data = Files.readString(f);
         System.out.println(data);
     }
 }

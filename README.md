@@ -118,11 +118,14 @@ System.out.println(decodeBase64);
 ```java
 File f = new File("/etc/hola.txt");
 Files.write(f, "Hola mundo\n", true);
+
+String str = Files.readString(f);
+System.out.println(str);
 ```
 
 Read bytes.
 ```java
-byte[] bytes = Files.toByteArray(new File("/etc/hola.txt"));
+byte[] bytes = Files.readBytes(new File("/etc/hola.txt"));
 ```
 
 Copiar
