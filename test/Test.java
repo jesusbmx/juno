@@ -68,6 +68,8 @@ public class Test {
       System.out.println("array is empty");
     }
     
+    System.out.println(Collect.get(strArray, 50, "defaultVal"));
+    
     System.out.println(Collect.join(strArray, ","));
     
     boolean some = Collect.some(strArray, new Fun<String, Boolean>() {

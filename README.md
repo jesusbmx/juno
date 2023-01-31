@@ -69,6 +69,8 @@ if (Collect.isEmpty(strArray)) {
   System.out.println("array is empty");
 }
 
+System.out.println(Collect.get(strArray, 50, "defaultVal"));
+
 System.out.println(Collect.join(strArray));
 
 System.out.println(Collect.join(strArray, (String it) -> "\"" + it.toString() + "\"" ));
@@ -91,6 +93,7 @@ System.out.println(Collect.join(filter, ","));
 
 ```markdown
 > array[2] = '3'
+> defaultVal
 > 1,2,3,7,9
 > "1", "2", "3", "7", "9"
 > true
