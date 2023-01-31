@@ -57,31 +57,31 @@ System.out.printf("f = '%f'\n", f);
 ### Arrays
 Validación para arreglos.
 ```java
-String[] array = {"a", "b", "c"};
-Integer[] intArray = {1, 2, 3, 7, 9};
+String[] strArray = {"1", "2", "3", "7", "9"};
+Integer[] intArray = Collect.map(strArray, Integer.class, (String it) -> Integer.parseInt(it) );
 
-if (Collect.hasIndex(array, 2)) {
-  System.out.printf("array[2] = '%s'\n", array[2]);
+if (Collect.hasIndex(strArray, 2)) {
+  System.out.printf("strArray[2] = '%s'\n", strArray[2]);
 }
 
-if (Collect.isEmpty(array)) {
+if (Collect.isEmpty(strArray)) {
   System.out.println("array is empty");
 }
 
-System.out.println(Collect.join(array));
+System.out.println(Collect.join(strArray));
 
-System.out.println(Collect.join(array, (String it) -> "\"" + it.toString() + "\"" ));
+System.out.println(Collect.join(strArray, (String it) -> "\"" + it.toString() + "\"" ));
 
-boolean some = Collect.some(array, (String it) -> t.equals("b") );
+boolean some = Collect.some(strArray, (String it) -> t.equals("7") );
 System.out.println(some);
 
 boolean every = Collect.every(intArray, (Integer it) -> it % 2 == 0 );
 System.out.println(every);
 
-String find = Collect.find(array, (String it) -> t.equals("c") );
+String find = Collect.find(strArray, (String it) -> t.equals("9") );
 System.out.println(find);
     
-String[] fill = Collect.fill(array, "z");
+String[] fill = Collect.fill(strArray, "z");
 System.out.println(Collect.join(fill, ","));
 
 Integer[] filter = Collect.filter(intArray, (Integer it) -> it > 0 );
@@ -89,13 +89,13 @@ System.out.println(Collect.join(filter, ","));
 ```
 
 ```markdown
-> array[2] = 'c'
-> a, b, c
-> "a", "b", "c"
+> array[2] = '3'
+> 1,2,3,7,9
+> "1", "2", "3", "7", "9"
 > true
 > false
-> c
-> z,z,z
+> 9
+> z,z,z,z,z
 > 1,2,3,7,9
 ```
 

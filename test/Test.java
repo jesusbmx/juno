@@ -52,37 +52,50 @@ public class Test {
     System.out.println(decodeBase64);
     
     // Arrays
-    String[] array = {"a", "b", "c"};
-    Integer[] intArray = {1, 2, 3, 7, 9};
+    String[] strArray = {"1", "2", "3", "7", "9"};
+    Integer[] intArray = Collect.map(strArray, Integer.class, new Fun<String, Integer>() {
+        @Override
+        public Integer apply(String it) {
+            return Integer.parseInt(it);
+        }
+    });
         
-    if (Collect.hasIndex(array, 2)) {
-      System.out.printf("array[2] = '%s'\n", array[2]);
+    if (Collect.hasIndex(strArray, 2)) {
+      System.out.printf("strArray[2] = '%s'\n", strArray[2]);
     }
     
-    if (Collect.isEmpty(array)) {
+    if (Collect.isEmpty(strArray)) {
       System.out.println("array is empty");
     }
     
-    System.out.println(Collect.join(array, ","));
+    System.out.println(Collect.join(strArray, ","));
     
-    boolean some = Collect.some(array, new Fun<String, Boolean>() {
+    boolean some = Collect.some(strArray, new Fun<String, Boolean>() {
         @Override
         public Boolean apply(String t) {
-            return t.equals("b");
+            return t.equals("7");
         }
     });
     System.out.println(some);
     
-    String find = Collect.find(array, new Fun<String, Boolean>() {
+    boolean every = Collect.every(intArray, new Fun<Integer, Boolean>() {
+        @Override
+        public Boolean apply(Integer t) {
+            return t % 2 == 0;
+        }
+    });
+    System.out.println(every);
+    
+    String find = Collect.find(strArray, new Fun<String, Boolean>() {
         @Override
         public Boolean apply(String t) {
-            return t.equals("c");
+            return t.equals("9");
         }
     });
     System.out.println(find);
     
     
-    String[] fill = Collect.fill(array, "z");
+    String[] fill = Collect.fill(strArray, "z");
     System.out.println(Collect.join(fill, ","));
     
     Integer[] filter = Collect.filter(intArray, new Fun<Integer, Boolean>() {
@@ -92,14 +105,6 @@ public class Test {
         }
     });
     System.out.println(Collect.join(filter, ","));
-    
-    boolean every = Collect.every(intArray, new Fun<Integer, Boolean>() {
-        @Override
-        public Boolean apply(Integer t) {
-            return t % 2 == 0;
-        }
-    });
-    System.out.println(every);
     
     // Formats
     System.out.println(Formats.date());
