@@ -45,12 +45,25 @@ public final class Collect {
     return index > -1 && array.length > index;
   }
   
+  public static <T> boolean hasIndex(List<T> list, int index) {
+    if (isNull(list)) return FALSE;
+    return index > -1 && list.size() > index;
+  }
+  
   public static <T> T get(T[] array, int index, T defaultVal) {
     return hasIndex(array, index) ? array[index] : defaultVal;
   }
   
   public static <T> T get(T[] array, int index) {
     return get(array, index,  null);
+  }
+  
+  public static <T> T get(List<T> list, int index, T defaultVal) {
+    return hasIndex(list, index) ? list.get(index) : defaultVal;
+  }
+  
+  public static <T> T get(List<T> list, int index) {
+    return get(list, index,  null);
   }
 
   /**
