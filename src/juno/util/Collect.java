@@ -269,7 +269,7 @@ public final class Collect {
     return join(args, ", ");
   }
   
-  public static <V> List<V> fill(List<V> list, V value, int start, int end) {
+  public static <V> List<V> fill(Collection<V> list, V value, int start, int end) {
     if (isNull(list)) return null;
     final List<V> result = new ArrayList<V>(end);
     for (int i = start; i < end; i++) {
@@ -278,11 +278,11 @@ public final class Collect {
     return result;
   }
   
-  public static <V> List<V> fill(List<V> list, V value, int start) {
+  public static <V> List<V> fill(Collection<V> list, V value, int start) {
     return fill(list, value, start, list.size());
   }
   
-  public static <V> List<V> fill(List<V> list, V value) {
+  public static <V> List<V> fill(Collection<V> list, V value) {
     return fill(list, value, 0, list.size());
   }
   
