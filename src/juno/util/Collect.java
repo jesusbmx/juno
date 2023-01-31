@@ -269,32 +269,28 @@ public final class Collect {
     return join(args, ", ");
   }
   
-  public static <V> List<V> fill(Collection<V> list, V value, int start, int end) {
+  public static <V> List<V> fill(List<V> list, V value, int start, int end) {
     if (isNull(list)) return null;
-    final List<V> result = new ArrayList<V>(end);
     for (int i = start; i < end; i++) {
-      result.add(value);
+      list.set(i, value);
     }
-    return result;
+    return list;
   }
   
-  public static <V> List<V> fill(Collection<V> list, V value, int start) {
+  public static <V> List<V> fill(List<V> list, V value, int start) {
     return fill(list, value, start, list.size());
   }
   
-  public static <V> List<V> fill(Collection<V> list, V value) {
+  public static <V> List<V> fill(List<V> list, V value) {
     return fill(list, value, 0, list.size());
   }
   
   public static <V> V[] fill(V[] array, V value, int start, int end) {
     if (isNull(array)) return null;
-    final Class<V> componentType = (Class<V>) array.getClass().getComponentType();
-    final List<V> result = new ArrayList<V>(end);
     for (int i = start; i < end; i++) {
-      result.add(value);
+      array[i] = value;
     }
-    V[] newArray = (V[]) Array.newInstance(componentType, 0);
-    return result.toArray(newArray);
+    return array;
   }
   
   public static <V> V[] fill(V[] array, V value, int start) {
@@ -322,8 +318,8 @@ public final class Collect {
       I object = array[i];
       result.add(fun.apply(object));
     }
-    R[] newArray = (R[]) Array.newInstance(componentType, 0);
-    return result.toArray(newArray);
+    R[] a = (R[]) Array.newInstance(componentType, 0);
+    return result.toArray(a);
   }
   
   public static <V> List<V> filter(List<V> list, Fun<V, Boolean> fun) {
@@ -340,8 +336,6 @@ public final class Collect {
   
   public static <V> V[] filter(V[] array, Fun<V, Boolean> fun) {
     if (isNull(array)) return null;
-    final Class<V> componentType = (Class<V>) array.getClass().getComponentType();
-    
     final List<V> result = new ArrayList<V>(array.length);
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
@@ -350,8 +344,9 @@ public final class Collect {
       }
     }
     
-    V[] newArray = (V[]) Array.newInstance(componentType, 0);
-    return result.toArray(newArray);
+    final Class<V> componentType = (Class<V>) array.getClass().getComponentType();
+    V[] a = (V[]) Array.newInstance(componentType, 0);
+    return result.toArray(a);
   }
   
   public static <V> boolean every(List<V> list, Fun<V, Boolean> fun) {
