@@ -90,6 +90,16 @@ public final class Files {
     if (i > p) return fileName.substring(i + 1);
     return null;
   }
+  
+  public static void copy(String from, String to) throws IOException {
+    OutputStream out = null;
+    try {
+      out = new FileOutputStream(to);
+      copy(new File(from), new File(to));
+    } finally {
+      closeQuietly(out);
+    }
+  }
     
   public static void copy(File from, File to) throws IOException {
     OutputStream out = null;

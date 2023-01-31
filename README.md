@@ -127,7 +127,7 @@ byte[] bytes = Files.toByteArray(new File("/etc/hola.txt"));
 
 Copiar
 ```java
-Files.copy(new File("/etc/hola.txt"), new File("/etc/hola-copy.txt"));
+Files.copy("/etc/hola.txt", "/etc/hola-copy.txt");
 ```
 
 Copiar
