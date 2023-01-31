@@ -84,7 +84,7 @@ System.out.println(find);
 String[] fill = Collect.fill(strArray, "z");
 System.out.println(Collect.join(fill, ","));
 
-Integer[] filter = Collect.filter(intArray, (Integer it) -> it > 0 );
+Integer[] filter = Collect.filter(intArray, (Integer it) -> it > 5 );
 System.out.println(Collect.join(filter, ","));
 ```
 
@@ -96,7 +96,7 @@ System.out.println(Collect.join(filter, ","));
 > false
 > 9
 > z,z,z,z,z
-> 1,2,3,7,9
+> 7,9
 ```
 
 

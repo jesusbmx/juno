@@ -101,7 +101,7 @@ public class Test {
     Integer[] filter = Collect.filter(intArray, new Fun<Integer, Boolean>() {
         @Override
         public Boolean apply(Integer t) {
-            return t > 0;
+            return t > 5;
         }
     });
     System.out.println(Collect.join(filter, ","));
