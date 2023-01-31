@@ -197,12 +197,12 @@ public final class Util {
    */
   public static String concat(Object... elements) {
     StringBuilder sb = new StringBuilder();
-    Collect.write(sb, elements);
+    Collect.append(sb, elements);
     return sb.toString();
   }
   public static String concat(Collection elements) {
     StringBuilder sb = new StringBuilder();
-    Collect.write(sb, elements);
+    Collect.append(sb, elements);
     return sb.toString();
   }
 

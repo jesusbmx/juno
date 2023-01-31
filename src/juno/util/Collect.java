@@ -75,25 +75,25 @@ public final class Collect {
    */
   public static <T> T[] arrayOf(T... elements) { return elements; }
 
-  public static void write(StringBuilder out, Object... elements) {
+  public static void append(StringBuilder out, Object... elements) {
     if (isNotNull(elements))
       for (Object e : elements) 
         out.append(e);
   }
   
-  public static void write(StringBuilder out, Collection elements) {
+  public static void append(StringBuilder out, Collection elements) {
     if (isNotNull(elements))
       for (Object e : elements) 
         out.append(e);
   }
   
-  public static <T> void write(Collection<T> out, T... elements) { 
+  public static <T> void add(Collection<T> out, T... elements) { 
     if (isNotNull(elements))
       for (T e : elements) 
         out.add(e);
   }
   
-  public static <K, V> void write(Map<K, V> out, Object... namesAndValues) {
+  public static <K, V> void put(Map<K, V> out, Object... namesAndValues) {
     if (isNull(namesAndValues)) return;
     for (int i = 0; i < namesAndValues.length; i += 2) {
       K name = (K) namesAndValues[i];
@@ -127,7 +127,7 @@ public final class Collect {
   public static <T> ArrayList<T> listOf(T... elements) {
     if (isNull(elements)) return null;
     ArrayList<T> list = new ArrayList<T>(elements.length);
-    write(list, elements);
+    add(list, elements);
     return list;
   }
 
@@ -141,7 +141,7 @@ public final class Collect {
   public static <T> LinkedHashSet<T> setOf(T... elements) {
     if (isNull(elements)) return null;
     LinkedHashSet<T> list = new LinkedHashSet<T>(elements.length);
-    write(list, elements);
+    add(list, elements);
     return list;
   }
 
@@ -160,7 +160,7 @@ public final class Collect {
       throw new IllegalArgumentException("Expected alternating header names and values");
     }
     LinkedHashMap<K, V> map = new LinkedHashMap<K, V>(namesAndValues.length / 2);
-    write(map, namesAndValues);
+    put(map, namesAndValues);
     return map;
   }
   
