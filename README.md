@@ -58,7 +58,8 @@ System.out.printf("f = '%f'\n", f);
 Validación para arreglos.
 ```java
 String[] strArray = {"1", "2", "3", "7", "9"};
-Integer[] intArray = Collect.map(strArray, Integer.class, (String it) -> Integer.parseInt(it) );
+Integer[] intArray = Collect.map(strArray, Integer.class, 
+    (String it) -> Integer.parseInt(it) );
 
 if (Collect.hasIndex(strArray, 2)) {
   System.out.printf("strArray[2] = '%s'\n", strArray[2]);
