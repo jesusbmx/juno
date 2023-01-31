@@ -329,7 +329,7 @@ public final class Collect {
     if (isNull(array)) return null;
     final Class<V> componentType = (Class<V>) array.getClass().getComponentType();
     
-    final ArrayList<V> result = new ArrayList<V>(array.length);
+    final List<V> result = new ArrayList<V>(array.length);
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
       if (fun.apply(object)) {
