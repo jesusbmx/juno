@@ -91,12 +91,15 @@ public final class Files {
   }
   
   /** Obtiene la extencion de un archivo. */
-  public static String ext(File file) {
-    String fileName = file.getName();
+  public static String ext(String fileName) {
     int i = fileName.lastIndexOf('.');
     int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
     if (i > p) return fileName.substring(i + 1);
     return null;
+  }
+  
+  public static String ext(File file) {
+    return ext(file.getName());
   }
   
   public static void copy(String from, String to) throws IOException {
