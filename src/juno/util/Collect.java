@@ -275,11 +275,13 @@ public final class Collect {
   
   public static <V> V[] fill(V[] array, V value, int start, int end) {
     if (isNull(array)) return null;
-    final V[] result = (V[]) Array.newInstance(value.getClass(), end);
+    final Class<V> componentType = (Class<V>) array.getClass().getComponentType();
+    final List<V> result = new ArrayList<V>(end);
     for (int i = start; i < end; i++) {
-      result[i] = value;
+      result.add(value);
     }
-    return result;
+    V[] newArray = (V[]) Array.newInstance(componentType, 0);
+    return result.toArray(newArray);
   }
   
   public static <V> V[] fill(V[] array, V value, int start) {
