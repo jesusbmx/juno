@@ -129,7 +129,7 @@ System.out.println(str);
 
 Read bytes.
 ```java
-byte[] bytes = Files.readBytes(new File("/etc/hola.txt"));
+byte[] bytes = Files.readByteArray(new File("/etc/hola.txt"));
 ```
 
 Copiar
