@@ -1,6 +1,5 @@
 package juno.util;
 
-import static java.lang.Boolean.FALSE;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,29 +40,38 @@ public final class Collect {
    * @return @true si el array contiene el indice.
    */
   public static <T> boolean hasIndex(T[] array, int index) {
-    if (isNull(array)) return FALSE;
+    if (isNull(array)) return false;
     return index > -1 && array.length > index;
   }
   
   public static <T> boolean hasIndex(List<T> list, int index) {
-    if (isNull(list)) return FALSE;
+    if (isNull(list)) return false;
     return index > -1 && list.size() > index;
+  }
+  
+  public static <K, V> boolean hasKey(Map<K, V> map, K key) {
+    if (isNull(map)) return false;
+    return map.containsKey(key);
   }
   
   public static <T> T get(T[] array, int index, T defaultVal) {
     return hasIndex(array, index) ? array[index] : defaultVal;
   }
   
-  public static <T> T get(T[] array, int index) {
-    return get(array, index,  null);
-  }
-  
   public static <T> T get(List<T> list, int index, T defaultVal) {
     return hasIndex(list, index) ? list.get(index) : defaultVal;
   }
   
+  public static <T> T get(T[] array, int index) {
+    return get(array, index,  null);
+  }
+ 
   public static <T> T get(List<T> list, int index) {
     return get(list, index,  null);
+  }
+  
+  public static <K, V> V get(Map<K, V> map, K key, V defaultVal) {
+    return hasKey(map, key) ? map.get(key) : defaultVal;
   }
 
   /**
