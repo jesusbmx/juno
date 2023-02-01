@@ -28,6 +28,7 @@ public class Platform implements Executor {
     }
     return new Platform();
   }
+  
   @Override public void execute(Runnable command) {
     command.run();
   }

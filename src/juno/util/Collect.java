@@ -204,6 +204,7 @@ public final class Collect {
   public static List<String> toListString(List list, Fun<Object, String> fun) {
     return map(list, fun);
   }
+  
   public static List<String> toListString(List list) {
     return map(list, Fun.OBJ_TO_STR);
   }
@@ -211,6 +212,7 @@ public final class Collect {
   public static String[] toArrayString(Object[] array, Fun<Object, String> fun) {
     return map(array, String.class, fun);
   }
+  
   public static String[] toArrayString(Object... array) {
     return map(array, String.class, Fun.OBJ_TO_STR);
   }
@@ -233,12 +235,15 @@ public final class Collect {
     }
     return sb.toString();
   }
+  
   public static String join(Iterable args, String separator) {
     return join(args, separator, Fun.OBJ_TO_STR);
   }
+  
   public static String join(Iterable args, Fun<Object, String> fun) {
     return join(args, ", ", fun);
   }
+  
   public static String join(Iterable args) {
     return join(args, ", ");
   }
@@ -259,12 +264,15 @@ public final class Collect {
     }
     return sb.toString();
   }
+  
   public static String join(Object[] args, String separator) {
     return join(args, separator, Fun.OBJ_TO_STR);
   }
+  
   public static String join(Object[] args, Fun<Object, String> fun) {
     return join(args, ", ", fun);
   }
+  
   public static String join(Object[] args) {
     return join(args, ", ");
   }
