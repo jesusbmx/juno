@@ -121,7 +121,7 @@ System.out.println(decodeBase64);
 ### IO
 ```java
 File f = new File("/etc/hola.txt");
-Files.write(f, "Hola mundo\n", true);
+Files.append(f, "Hola mundo\n", true);
 
 String str = Files.readString(f);
 System.out.println(str);

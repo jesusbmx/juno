@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.Charset;
 
 /**
@@ -59,31 +61,43 @@ public final class Files {
     try {
       in = new FileInputStream(file);
       return IOUtils.readString(in);
+      
     } finally {
       closeQuietly(in);
     }
   }
   
-  public static void write(File file, CharSequence cs, boolean append) throws IOException {
-    FileWriter fw = null;
+  public static void append(File file, CharSequence cs, boolean append, String charset) throws IOException {
+    Writer w = null;
     try {
-      fw = new FileWriter(file, append);
-      fw.append(cs);
+      w = new OutputStreamWriter(new FileOutputStream(file, append), charset);
+      w.append(cs);
       
     } finally {
-      closeQuietly(fw);
+      closeQuietly(w);
     }
   }
   
+  public static void append(File file, CharSequence cs, boolean append) throws IOException {
+    Writer w = null;
+    try {
+      w = new FileWriter(file, append);
+      w.append(cs);
+      
+    } finally {
+      closeQuietly(w);
+    }
+  }
+  
+  public static void write(File file, CharSequence cs, String charset) throws IOException {
+    append(file, cs, false, charset);
+  }
+  
   public static void write(File file, CharSequence cs) throws IOException {
-    write(file, cs, false);
+    append(file, cs, false);
   }
   
-  public static void append(File file, CharSequence cs) throws IOException {
-    write(file, cs, true);
-  }
-  
-   public static void writeByteArray(File file, byte[] data) throws IOException {
+  public static void writeByteArray(File file, byte[] data) throws IOException {
     OutputStream out = null;
     try {
       out = new FileOutputStream(file);
