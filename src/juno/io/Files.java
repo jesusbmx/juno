@@ -67,7 +67,7 @@ public final class Files {
     }
   }
   
-  public static void append(File file, CharSequence cs, boolean append, String charset) throws IOException {
+  public static void write(File file, CharSequence cs, boolean append, Charset charset) throws IOException {
     Writer w = null;
     try {
       w = new OutputStreamWriter(new FileOutputStream(file, append), charset);
@@ -78,7 +78,11 @@ public final class Files {
     }
   }
   
-  public static void append(File file, CharSequence cs, boolean append) throws IOException {
+  public static void write(File file, CharSequence cs, boolean append, String charset) throws IOException {
+    write(file, cs, append, Charset.forName(charset));
+  }
+  
+  public static void write(File file, CharSequence cs, boolean append) throws IOException {
     Writer w = null;
     try {
       w = new FileWriter(file, append);
@@ -88,15 +92,7 @@ public final class Files {
       closeQuietly(w);
     }
   }
-  
-  public static void write(File file, CharSequence cs, String charset) throws IOException {
-    append(file, cs, false, charset);
-  }
-  
-  public static void write(File file, CharSequence cs) throws IOException {
-    append(file, cs, false);
-  }
-  
+
   public static void writeByteArray(File file, byte[] data) throws IOException {
     OutputStream out = null;
     try {
