@@ -77,27 +77,6 @@ public final class Collect {
   public static <K, V> V get(Map<K, V> map, K key) {
     return get(map, key, null);
   }
-
-  /**
-   * Devuelve un arreglo con los elementos dados.
-   *
-   * @param <T> tipo de array
-   * @param elements `1, 2, 3, 4, 5, 6, 7`
-   * @return </T> 
-   */
-  public static <T> T[] arrayOf(T... elements) { return elements; }
-
-  public static void append(StringBuilder out, Object... elements) {
-    if (isNotNull(elements))
-      for (Object e : elements) 
-        out.append(e);
-  }
-  
-  public static void append(StringBuilder out, Collection elements) {
-    if (isNotNull(elements))
-      for (Object e : elements) 
-        out.append(e);
-  }
   
   public static <T> void add(Collection<T> out, T... elements) { 
     if (isNotNull(elements))
@@ -114,20 +93,26 @@ public final class Collect {
     }
   }
   
-  /**
-   * Devuelve una colección que aplica {@code function} a cada elemento de 
-   * {@code fromCollection}.
-   *
-   * La colección devuelta es una vista en vivo de {@code fromCollection};
-   * los cambios a uno afectan al otros.
-   */
-  public static <I, R> TransformedCollect<I, R> transform(
-      Collection<I> fromCollection, 
-      Fun<? super I, R> function
-  ) {
-    return new TransformedCollect<I, R>(fromCollection, function);
+  public static void append(StringBuilder out, Object... elements) {
+    if (isNotNull(elements))
+      for (Object e : elements) 
+        out.append(e);
   }
   
+  public static void append(StringBuilder out, Collection elements) {
+    if (isNotNull(elements))
+      for (Object e : elements) 
+        out.append(e);
+  }
+  
+  /**
+   * Devuelve un arreglo con los elementos dados.
+   *
+   * @param <T> tipo de array
+   * @param elements `1, 2, 3, 4, 5, 6, 7`
+   * @return </T> 
+   */
+  public static <T> T[] arrayOf(T... elements) { return elements; }
   
   /**
    * Devuelve una nueva lista de elementos dados.
@@ -321,6 +306,20 @@ public final class Collect {
     return fill(array, value, 0, array.length);
   }
   
+  /**
+   * Devuelve una colección que aplica {@code function} a cada elemento de 
+   * {@code fromCollection}.
+   *
+   * La colección devuelta es una vista en vivo de {@code fromCollection};
+   * los cambios a uno afectan al otros.
+   */
+  public static <I, R> TransformedCollect<I, R> transform(
+      Collection<I> fromCollection, 
+      Fun<? super I, R> function
+  ) {
+    return new TransformedCollect<I, R>(fromCollection, function);
+  }
+   
   public static <I, R> List<R> map(List<I> list, Fun<I, R> fun) {
     if (isNull(list)) return null;
     final List<R> result = new ArrayList<R>(list.size());
