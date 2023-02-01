@@ -58,20 +58,24 @@ public final class Collect {
     return hasIndex(array, index) ? array[index] : defaultVal;
   }
   
+  public static <T> T get(T[] array, int index) {
+    return get(array, index,  null);
+  }
+    
   public static <T> T get(List<T> list, int index, T defaultVal) {
     return hasIndex(list, index) ? list.get(index) : defaultVal;
   }
   
-  public static <T> T get(T[] array, int index) {
-    return get(array, index,  null);
-  }
- 
   public static <T> T get(List<T> list, int index) {
     return get(list, index,  null);
   }
   
   public static <K, V> V get(Map<K, V> map, K key, V defaultVal) {
     return hasKey(map, key) ? map.get(key) : defaultVal;
+  }
+  
+  public static <K, V> V get(Map<K, V> map, K key) {
+    return get(map, key, null);
   }
 
   /**
