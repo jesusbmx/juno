@@ -85,9 +85,9 @@ public final class IOUtils {
   }
   
   public static char[] readCharArray(Reader in) throws IOException {
+    final CharArrayWriter chars = new PoolingCharArrayWriter(CHAR_ARRAY_POOL);
     char[] buffer = CHAR_ARRAY_POOL.getBuf(1024);
     try {
-        final CharArrayWriter chars = new CharArrayWriter();
         final BufferedReader reader = new BufferedReader(in);
         int len;
         while ((len = reader.read(buffer, 0, buffer.length)) != -1) {
@@ -97,6 +97,7 @@ public final class IOUtils {
    
     } finally {
         CHAR_ARRAY_POOL.returnBuf(buffer);
+        chars.close();
     }
   }
   
