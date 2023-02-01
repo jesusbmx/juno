@@ -13,7 +13,11 @@ public class Test {
     // Util
     double round = Util.roundAvoid(948.856099955012, 2);
     System.out.println(round);
-      
+    
+    String a = null;
+    String b = "b";
+    System.out.println(Util.eq(a, b));
+    
     // Strings
     String txt = null;
     if (Util.isEmpty(txt)) {
