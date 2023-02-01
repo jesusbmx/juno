@@ -53,8 +53,8 @@ public final class Dispatcher implements ThreadFactory {
   }
   
   public void setExecutorService(int threads) {
-    executorService = new ThreadPoolExecutor(threads, threads, 0L, TimeUnit.MILLISECONDS,
-          new LinkedBlockingQueue<Runnable>(), this);
+    setExecutorService(new ThreadPoolExecutor(threads, threads, 0L, TimeUnit.MILLISECONDS,
+          new LinkedBlockingQueue<Runnable>(), this));
   }
     
   public static <V> AsyncCall<V> callUserfun(final Object obj, final String method, final Object... params) {
