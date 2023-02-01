@@ -14,7 +14,7 @@ public final class Types {
   
   private static final Map<Class<?>, Class<?>> WRAPPER_TYPE_MAP;
   static {
-    WRAPPER_TYPE_MAP = new HashMap<Class<?>, Class<?>>(16);
+    WRAPPER_TYPE_MAP = new HashMap<Class<?>, Class<?>>(18);
     WRAPPER_TYPE_MAP.put(Integer.class, int.class);
     WRAPPER_TYPE_MAP.put(Byte.class, byte.class);
     WRAPPER_TYPE_MAP.put(Character.class, char.class);
