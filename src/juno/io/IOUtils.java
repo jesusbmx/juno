@@ -63,16 +63,16 @@ public final class IOUtils {
     }
   }
   
-  public static byte[] readByteArray(InputStream source) throws IOException {
-    return readByteArray(source, 1024);
+  public static byte[] readByteArray(InputStream in) throws IOException {
+    return readByteArray(in, 1024);
   }
-  public static byte[] readByteArray(InputStream source, int size) throws IOException {
-    if (source == null) throw new IOException("source == null");
-    ByteArrayOutputStream bytes = arrayOutputStream(source.available());
+  public static byte[] readByteArray(InputStream in, int size) throws IOException {
+    if (in == null) throw new IOException("source == null");
+    ByteArrayOutputStream bytes = arrayOutputStream(in.available());
     byte[] buffer = getBuf(size);
     try {
       int count;
-      while ((count = source.read(buffer)) != -1) {
+      while ((count = in.read(buffer)) != -1) {
         bytes.write(buffer, 0, count);
       }
       return bytes.toByteArray();
@@ -83,13 +83,13 @@ public final class IOUtils {
     }
   }
   
-  public static char[] readCharArray(Reader reader) throws IOException {
+  public static char[] readCharArray(Reader r) throws IOException {
     final CharArrayWriter chars = new PoolingCharArrayWriter(CHAR_ARRAY_POOL);
     char[] buffer = CHAR_ARRAY_POOL.getBuf(1024);
     try {
        
         int len;
-        while ((len = reader.read(buffer, 0, buffer.length)) != -1) {
+        while ((len = r.read(buffer, 0, buffer.length)) != -1) {
           chars.write(buffer, 0, len);
         }
         return chars.toCharArray();
@@ -104,12 +104,12 @@ public final class IOUtils {
     return readCharArray(new InputStreamReader(in));
   }
   
-  public static String readString(Reader reader) throws IOException {
+  public static String readString(Reader r) throws IOException {
     char[] buffer = CHAR_ARRAY_POOL.getBuf(1024);
     try {
         final StringBuilder result = new StringBuilder();
         int len;
-        while ((len = reader.read(buffer, 0, buffer.length)) != -1) {
+        while ((len = r.read(buffer, 0, buffer.length)) != -1) {
           result.append(buffer, 0, len);
         }
         return result.toString();
