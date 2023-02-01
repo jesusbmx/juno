@@ -84,11 +84,11 @@ System.out.println(every);
 String find = Collect.find(strArray, (String it) -> t.equals("9") );
 System.out.println(find);
     
-String[] fill = Collect.fill(strArray, "z");
-System.out.println(Collect.join(fill, ","));
-
 Integer[] filter = Collect.filter(intArray, (Integer it) -> it > 5 );
 System.out.println(Collect.join(filter, ","));
+
+String[] fill = Collect.fill(strArray, "z");
+System.out.println(Collect.join(fill, ","));
 ```
 
 ```markdown
@@ -99,8 +99,8 @@ System.out.println(Collect.join(filter, ","));
 > true
 > false
 > 9
-> z,z,z,z,z
 > 7,9
+> z,z,z,z,z
 ```
 
 
