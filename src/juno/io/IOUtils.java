@@ -84,11 +84,11 @@ public final class IOUtils {
     }
   }
   
-  public static char[] readCharArray(Reader in) throws IOException {
+  public static char[] readCharArray(Reader reader) throws IOException {
     final CharArrayWriter chars = new PoolingCharArrayWriter(CHAR_ARRAY_POOL);
     char[] buffer = CHAR_ARRAY_POOL.getBuf(1024);
     try {
-        final BufferedReader reader = new BufferedReader(in);
+       
         int len;
         while ((len = reader.read(buffer, 0, buffer.length)) != -1) {
           chars.write(buffer, 0, len);
@@ -105,11 +105,10 @@ public final class IOUtils {
     return readCharArray(new InputStreamReader(in));
   }
   
-  public static String readString(Reader in) throws IOException {
+  public static String readString(Reader reader) throws IOException {
     char[] buffer = CHAR_ARRAY_POOL.getBuf(1024);
     try {
         final StringBuilder result = new StringBuilder();
-        final BufferedReader reader = new BufferedReader(in);
         int len;
         while ((len = reader.read(buffer, 0, buffer.length)) != -1) {
           result.append(buffer, 0, len);
