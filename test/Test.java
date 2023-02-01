@@ -96,10 +96,6 @@ public class Test {
     });
     System.out.println(find);
     
-    
-    String[] fill = Collect.fill(strArray, "z");
-    System.out.println(Collect.join(fill, ","));
-    
     Integer[] filter = Collect.filter(intArray, new Fun<Integer, Boolean>() {
         @Override
         public Boolean apply(Integer t) {
@@ -107,6 +103,9 @@ public class Test {
         }
     });
     System.out.println(Collect.join(filter, ","));
+    
+    String[] fill = Collect.fill(strArray, "z");
+    System.out.println(Collect.join(fill, ","));
     
     // Formats
     System.out.println(Formats.date());
