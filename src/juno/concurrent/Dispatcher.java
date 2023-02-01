@@ -41,7 +41,7 @@ public final class Dispatcher implements ThreadFactory {
   
   public synchronized ExecutorService executorService() {
     if (executorService == null) {
-      int nThreads = 4; //4
+      int nThreads = 1; //4
       executorService = new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS,
           new LinkedBlockingQueue<Runnable>(), this);
     }
