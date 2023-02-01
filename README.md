@@ -2,6 +2,15 @@ Juno
 ========
 Herramientas de desarrollo para java y Android
 
+### Util
+```java
+double round = Util.roundAvoid(948.856099955012, 2);
+```
+
+```markdown
+> 948.86
+```
+
 ### Strings
 Validación para cadenas.
 ```java

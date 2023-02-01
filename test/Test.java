@@ -10,6 +10,10 @@ import juno.util.Util;
 public class Test {
   
   public static void main(String[] args) {
+    // Util
+    double round = Util.roundAvoid(948.856099955012, 2);
+    System.out.println(round);
+      
     // Strings
     String txt = null;
     if (Util.isEmpty(txt)) {
