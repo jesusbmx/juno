@@ -38,7 +38,7 @@ public final class Types {
     return isPrimitiveType(source.getClass());
   }
   
-  public static Class<?>[] paramsToTypes(Object... params) {
+  public static Class<?>[] getTypes(Object... params) {
     Class<?>[] types = new Class<?>[params.length];
     for (int i = 0; i < params.length; i++) {
       Class<?> type = params[i].getClass();
