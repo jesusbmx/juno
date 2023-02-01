@@ -18,21 +18,22 @@ public final class Files {
   private Files() {
   }
   
-  public static byte[] readBytes(File file) throws IOException {
+  public static byte[] readByteArray(File file) throws IOException {
     FileInputStream in = null;
     try {
       in = new FileInputStream(file);
-      return IOUtils.readBytes(in);
+      return IOUtils.readByteArray(in);
+      
     } finally {
       closeQuietly(in);
     }
   }
   
-  public static char[] readChars(File file) throws IOException {
+  public static char[] readCharArray(File file) throws IOException {
     FileInputStream in = null;
     try {
       in = new FileInputStream(file);
-      return IOUtils.readChars(in);
+      return IOUtils.readCharArray(in);
     } finally {
       closeQuietly(in);
     }
@@ -43,6 +44,7 @@ public final class Files {
     try {
       in = new FileInputStream(file);
       return IOUtils.readString(in, charset);
+      
     } finally {
       closeQuietly(in);
     }
@@ -67,6 +69,7 @@ public final class Files {
     try {
       fw = new FileWriter(file, append);
       fw.append(cs);
+      
     } finally {
       closeQuietly(fw);
     }
@@ -80,11 +83,12 @@ public final class Files {
     write(file, cs, true);
   }
   
-   public static void writeBytes(File file, byte[] data) throws IOException {
+   public static void writeByteArray(File file, byte[] data) throws IOException {
     OutputStream out = null;
     try {
       out = new FileOutputStream(file);
       out.write(data, 0, data.length);
+      
     } finally {
       closeQuietly(out);
     }
@@ -107,6 +111,7 @@ public final class Files {
     try {
       out = new FileOutputStream(to);
       copy(new File(from), new File(to));
+      
     } finally {
       closeQuietly(out);
     }
@@ -117,6 +122,7 @@ public final class Files {
     try {
       out = new FileOutputStream(to);
       copy(from, out);
+      
     } finally {
       closeQuietly(out);
     }
@@ -140,6 +146,7 @@ public final class Files {
         bufferSize = Math.min(bytesAvailable, maxBufferSize);
         count = in.read(buffer, 0, bufferSize);
       }
+      
     } finally {
       IOUtils.returnBuf(buffer);
       closeQuietly(in);
