@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import juno.Platform;
+import juno.util.Types;
 import juno.util.Util;
 
 public final class Dispatcher implements ThreadFactory {
@@ -55,7 +56,7 @@ public final class Dispatcher implements ThreadFactory {
     Class<?>[] types = new Class<?>[params.length];
     for (int i = 0; i < params.length; i++) {
       Class<?> type = params[i].getClass();
-      Class<?> primitiveType = Util.getPrimitiveType(type);
+      Class<?> primitiveType = Types.getPrimitiveType(type);
       types[i] = primitiveType == null ? type : primitiveType;
     }
     return types;

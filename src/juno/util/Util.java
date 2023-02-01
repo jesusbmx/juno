@@ -3,28 +3,12 @@ package juno.util;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public final class Util {
 
   /** Representación compilada de una expresión regular para números.  */
   private static final Pattern NUMBER = Pattern.compile("-?\\d+.\\d+");
-  
-  private static final Map<Class<?>, Class<?>> WRAPPER_TYPE_MAP;
-  static {
-    WRAPPER_TYPE_MAP = new HashMap<Class<?>, Class<?>>(16);
-    WRAPPER_TYPE_MAP.put(Integer.class, int.class);
-    WRAPPER_TYPE_MAP.put(Byte.class, byte.class);
-    WRAPPER_TYPE_MAP.put(Character.class, char.class);
-    WRAPPER_TYPE_MAP.put(Boolean.class, boolean.class);
-    WRAPPER_TYPE_MAP.put(Double.class, double.class);
-    WRAPPER_TYPE_MAP.put(Float.class, float.class);
-    WRAPPER_TYPE_MAP.put(Long.class, long.class);
-    WRAPPER_TYPE_MAP.put(Short.class, short.class);
-    WRAPPER_TYPE_MAP.put(Void.class, void.class);
-  }
   
   private Util() {}
           
@@ -240,16 +224,6 @@ public final class Util {
       Thread.sleep(millis);
     } catch(Exception ignore) {
     }
-  }
-  
-  public static Class<?> getPrimitiveType(Class clazz) {
-    return WRAPPER_TYPE_MAP.get(clazz);
-  }
-  public static boolean isPrimitiveType(Class clazz) {
-    return WRAPPER_TYPE_MAP.containsKey(clazz);
-  }
-  public static boolean isPrimitiveType(Object source) {
-    return isPrimitiveType(source.getClass());
   }
   
 //  /** Le da formato de tipo URL a una cadena.  */
