@@ -72,7 +72,6 @@ if (Collect.isEmpty(strArray)) {
 System.out.println(Collect.get(strArray, 50, "defaultVal"));
 
 System.out.println(Collect.join(strArray));
-
 System.out.println(Collect.join(strArray, (String it) -> "\"" + it.toString() + "\"" ));
 
 boolean some = Collect.some(strArray, (String it) -> t.equals("7") );
