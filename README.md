@@ -139,6 +139,16 @@ Files.write(f, "Hola mundo\n", /*append*/true);
 
 String str = Files.readString(f);
 System.out.println(str);
+
+System.out.println(Files.ext(f));
+System.out.println(Files.basename(f));
+```
+
+```markdown
+> Hola mundo
+>
+> txt
+> archivo
 ```
 
 Read bytes.

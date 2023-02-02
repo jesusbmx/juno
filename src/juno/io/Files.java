@@ -106,14 +106,25 @@ public final class Files {
   
   /** Obtiene la extencion de un archivo. */
   public static String ext(String fileName) {
-    int i = fileName.lastIndexOf('.');
-    int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
-    if (i > p) return fileName.substring(i + 1);
+    int dot = fileName.lastIndexOf('.');
+    int sep = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
+    if (dot > sep) return fileName.substring(dot + 1);
     return null;
   }
   
   public static String ext(File file) {
     return ext(file.getName());
+  }
+  
+  public static String basename(String fileName) {
+    int dot = fileName.lastIndexOf(".");
+    int sep = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
+    if (dot > sep) return fileName.substring(sep + 1, dot);
+    return null;
+  }
+  
+  public static String basename(File file) {
+    return basename(file.getName());
   }
   
   public static void copy(String from, String to) throws IOException {

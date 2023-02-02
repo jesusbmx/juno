@@ -15,5 +15,8 @@ public class TestIO {
         
         String data = Files.readString(f);
         System.out.println(data);
+        
+        System.out.println(Files.ext(f));
+        System.out.println(Files.basename(f));
     }
 }
