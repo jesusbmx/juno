@@ -40,7 +40,7 @@ public final class IOUtils {
   
   public static byte[] readByteArray(InputStream in, int size) throws IOException {
     if (in == null) throw new IOException("source == null");
-    ByteArrayOutputStream bytes = arrayOutputStream(in.available());
+    final ByteArrayOutputStream bytes = arrayOutputStream(in.available());
     byte[] buffer = getBuf(size);
     try {
       int count;

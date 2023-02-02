@@ -140,15 +140,17 @@ Files.write(f, "Hola mundo\n", /*append*/true, "UTF-8");
 String str = Files.readString(f);
 System.out.println(str);
 
-System.out.println(Files.ext(f));
-System.out.println(Files.basename(f));
+System.out.printf("name: %s\n",  Files.getName(f));
+System.out.printf("extension: %s\n", Files.getExtension(f));
+System.out.printf("base name: %s\n", Files.getBaseName(f));
 ```
 
 ```markdown
 > Hola mundo
 >
-> txt
-> archivo
+> name: archivo.txt
+> extension: txt
+> base name: archivo
 ```
 
 Read bytes.

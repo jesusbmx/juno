@@ -112,42 +112,56 @@ public final class Files {
     writeByteArray(file, data, false);
   }
   
+  public static int indexOfLastSeparator(String fileName) {
+    final int lastUnixPos = fileName.lastIndexOf('/');
+    final int lastWindowsPos = fileName.lastIndexOf('\\');
+    return Math.max(lastUnixPos, lastWindowsPos);
+  }
+  
   /** Obtiene la extencion de un archivo. */
-  public static String ext(String fileName) {
-    int dot = fileName.lastIndexOf('.');
-    int sep = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
-    if (dot > sep + 1) {
-      return fileName.substring(dot + 1);
+  public static String getExtension(String fileName) {
+    final int extensionPos = fileName.lastIndexOf('.');
+    final int lastSeparator = indexOfLastSeparator(fileName);
+    if (extensionPos > lastSeparator + 1) {
+      return fileName.substring(extensionPos + 1);
     }
     return null;
   }
   
-  public static String ext(File file) {
-    return ext(file.getName());
+  public static String getExtension(File file) {
+    return getExtension(file.getName());
   }
   
-  public static String basename(String fileName) {
-    int len = fileName.length();
-    int dot = fileName.lastIndexOf(".");
-    int sep = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
+  public static String getName(String fileName) {
+    return fileName.substring(indexOfLastSeparator(fileName) + 1);
+  }
+  
+  public static String getName(File file) {
+    return getName(file.getName());
+  }
+  
+  public static String getBaseName(String fileName) {
+    final int len = fileName.length();
+    final int extensionPos = fileName.lastIndexOf(".");
+    final int lastSeparator = indexOfLastSeparator(fileName);
     
-    if (dot > sep + 1) {
-      return fileName.substring(sep + 1, dot);
+    if (extensionPos > lastSeparator + 1) {
+      return fileName.substring(lastSeparator + 1, extensionPos);
     }
     
-    if (dot == -1) {
-      return fileName.substring(sep + 1, len);
+    if (extensionPos == -1) {
+      return fileName.substring(lastSeparator + 1, len);
     }
     
-    if (dot == sep + 1) {
-      return fileName.substring(sep + 1, len);
+    if (extensionPos == lastSeparator + 1) {
+      return fileName.substring(lastSeparator + 1, len);
     }
     
     return null;
   }
   
-  public static String basename(File file) {
-    return basename(file.getName());
+  public static String getBaseName(File file) {
+    return getBaseName(file.getName());
   }
   
   public static void copy(String from, String to) throws IOException {
@@ -179,7 +193,7 @@ public final class Files {
       in = new FileInputStream(from);
       int bytesAvailable = in.available();
       
-      int maxBufferSize = 1024 * 1024;
+      final int maxBufferSize = 1024 * 1024;
       int bufferSize = Math.min(bytesAvailable, maxBufferSize);
       buffer = IOUtils.getBuf(bufferSize);
       

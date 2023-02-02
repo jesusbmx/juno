@@ -223,7 +223,7 @@ public final class Collect {
    * @return String
    */
   public static String join(Iterable args, String separator, Fun<Object, String> fun) {
-    StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
     int i = 0;
     for (Object arg : args) {
       if (i > 0) sb.append(separator);
