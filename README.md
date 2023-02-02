@@ -135,7 +135,7 @@ System.out.println(decodeBase64);
 ### IO
 ```java
 File f = new File("/etc/hola.txt");
-Files.write(f, "Hola mundo\n", /*append*/true);
+Files.write(f, "Hola mundo\n", /*append*/true, "UTF-8");
 
 String str = Files.readString(f);
 System.out.println(str);
