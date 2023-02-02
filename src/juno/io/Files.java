@@ -116,7 +116,9 @@ public final class Files {
   public static String ext(String fileName) {
     int dot = fileName.lastIndexOf('.');
     int sep = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
-    if (dot > sep) return fileName.substring(dot + 1);
+    if (dot > sep + 1) {
+      return fileName.substring(dot + 1);
+    }
     return null;
   }
   
@@ -125,12 +127,23 @@ public final class Files {
   }
   
   public static String basename(String fileName) {
+    int len = fileName.length();
     int dot = fileName.lastIndexOf(".");
-    if (dot == -1) {
-      dot = fileName.length();
-    }
     int sep = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
-    return fileName.substring(sep + 1, dot);
+    
+    if (dot > sep + 1) {
+      return fileName.substring(sep + 1, dot);
+    }
+    
+    if (dot == -1) {
+      return fileName.substring(sep + 1, len);
+    }
+    
+    if (dot == sep + 1) {
+      return fileName.substring(sep + 1, len);
+    }
+    
+    return null;
   }
   
   public static String basename(File file) {
