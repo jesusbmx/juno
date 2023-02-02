@@ -67,34 +67,34 @@ public final class Files {
     }
   }
   
-  public static void write(File file, CharSequence cs, boolean append, Charset charset) throws IOException {
+  public static void write(File file, CharSequence str, boolean append, Charset charset) throws IOException {
     Writer w = null;
     try {
       w = new OutputStreamWriter(new FileOutputStream(file, append), charset);
-      w.append(cs);
+      w.append(str);
       
     } finally {
       closeQuietly(w);
     }
   }
   
-  public static void write(File file, CharSequence cs, boolean append, String charset) throws IOException {
-    write(file, cs, append, Charset.forName(charset));
+  public static void write(File file, CharSequence str, boolean append, String charset) throws IOException {
+    write(file, str, append, Charset.forName(charset));
   }
   
-  public static void write(File file, CharSequence cs, boolean append) throws IOException {
+  public static void write(File file, CharSequence str, boolean append) throws IOException {
     Writer w = null;
     try {
       w = new FileWriter(file, append);
-      w.append(cs);
+      w.append(str);
       
     } finally {
       closeQuietly(w);
     }
   }
   
-  public static void write(File file, CharSequence cs) throws IOException {
-    write(file, cs, false);
+  public static void write(File file, CharSequence str) throws IOException {
+    write(file, str, false);
   }
 
   public static void writeByteArray(File file, byte[] data, boolean append) throws IOException {

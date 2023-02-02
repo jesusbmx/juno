@@ -34,38 +34,10 @@ public final class IOUtils {
     BYTE_ARRAY_POOL.returnBuf(buffer);
   }
   
-  public static InputStream inputStream(final HttpURLConnection hurlc) {
-    InputStream inputStream;
-    try {
-      inputStream = hurlc.getInputStream();
-    } catch(IOException e) {
-      inputStream = hurlc.getErrorStream();
-    }
-    return new FilterInputStream(inputStream) {
-      @Override public void close() {
-        closeQuietly(in);
-        hurlc.disconnect();
-      }
-    };
-  }
-  
-  public static void copy(InputStream from, OutputStream out) throws IOException {
-    if (from == null) throw new IOException("source == null");
-    byte[] buffer = getBuf(1024);
-    try {
-      int count;
-      while ((count = from.read(buffer)) != -1) {
-        out.write(buffer, 0, count);
-      }
-      
-    } finally {
-      returnBuf(buffer);
-    }
-  }
-  
   public static byte[] readByteArray(InputStream in) throws IOException {
     return readByteArray(in, 1024);
   }
+  
   public static byte[] readByteArray(InputStream in, int size) throws IOException {
     if (in == null) throw new IOException("source == null");
     ByteArrayOutputStream bytes = arrayOutputStream(in.available());
@@ -129,6 +101,35 @@ public final class IOUtils {
   
   public static String readString(InputStream in, Charset charset) throws IOException {
     return readString(new InputStreamReader(in, charset));
+  }
+  
+  public static InputStream inputStream(final HttpURLConnection hurlc) {
+    InputStream inputStream;
+    try {
+      inputStream = hurlc.getInputStream();
+    } catch(IOException e) {
+      inputStream = hurlc.getErrorStream();
+    }
+    return new FilterInputStream(inputStream) {
+      @Override public void close() {
+        closeQuietly(in);
+        hurlc.disconnect();
+      }
+    };
+  }
+  
+  public static void copy(InputStream from, OutputStream out) throws IOException {
+    if (from == null) throw new IOException("source == null");
+    byte[] buffer = getBuf(1024);
+    try {
+      int count;
+      while ((count = from.read(buffer)) != -1) {
+        out.write(buffer, 0, count);
+      }
+      
+    } finally {
+      returnBuf(buffer);
+    }
   }
   
   public static void closeQuietly(Closeable closeable) {
