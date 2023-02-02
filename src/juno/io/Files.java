@@ -126,9 +126,11 @@ public final class Files {
   
   public static String basename(String fileName) {
     int dot = fileName.lastIndexOf(".");
+    if (dot == -1) {
+      dot = fileName.length();
+    }
     int sep = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
-    if (dot > sep) return fileName.substring(sep + 1, dot);
-    return null;
+    return fileName.substring(sep + 1, dot);
   }
   
   public static String basename(File file) {
