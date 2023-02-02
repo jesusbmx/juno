@@ -92,6 +92,10 @@ public final class Files {
       closeQuietly(w);
     }
   }
+  
+  public static void write(File file, CharSequence cs) throws IOException {
+    write(file, cs, false);
+  }
 
   public static void writeByteArray(File file, byte[] data, boolean append) throws IOException {
     OutputStream out = null;
