@@ -134,23 +134,27 @@ System.out.println(decodeBase64);
 
 ### IO
 ```java
-File f = new File("/etc/hola.txt");
+String path = "/etc/hola.txt";
+File f = new File(path);
+
 Files.write(f, "Hola mundo\n", /*append*/true, "UTF-8");
 
 String str = Files.readString(f);
 System.out.println(str);
 
-System.out.printf("name: %s\n",  Files.getName(f));
-System.out.printf("extension: %s\n", Files.getExtension(f));
-System.out.printf("base name: %s\n", Files.getBaseName(f));
+System.out.printf("parent: %s\n",  Files.getParent(path));
+System.out.printf("name: %s\n",  Files.getName(path));
+System.out.printf("extension: %s\n", Files.getExtension(path));
+System.out.printf("base name: %s\n", Files.getBaseName(path));
 ```
 
 ```markdown
 > Hola mundo
 >
-> name: archivo.txt
+> parent: /etc/
+> name: hola.txt
 > extension: txt
-> base name: archivo
+> base name: hola
 ```
 
 Read bytes.
