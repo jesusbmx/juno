@@ -199,6 +199,27 @@ try {
 ```
 
 
+### Promise
+
+```java
+Promise<String> saludar() {
+  return new Promise<>((Sender<String> sender) -> {
+    //sender.reject(new Exception("error"));
+    sender.resolve("Hola Mundo");
+  });
+}
+```
+
+```java
+saludar().then((String result) -> {
+  System.out.println(result);
+
+}).error((Exception error) -> {
+  System.err.println(error);
+
+}).enqueue();
+```
+
 ### Concurrent
 ```java
 class CopyAsyncTask extends AsyncCall<File> {

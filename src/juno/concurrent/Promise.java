@@ -8,15 +8,15 @@ public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
     protected final Dispatcher dispatcher;
     protected final Executor<T> executor;
 
-    T result;
-    Exception error;
+    protected T result;
+    protected Exception error;
 
     protected OnResponse<T> responseListener;
     protected OnError errorListener;
 
-    Future future;
-    boolean isCancel;
-    boolean isRunning;
+    protected Future future;
+    protected boolean isCancel;
+    protected boolean isRunning;
 
     public Promise(Executor<T> executor, Dispatcher dispatcher) {
         this.executor = executor;
@@ -37,15 +37,17 @@ public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
         return this;
     }
 
-    // queue
-    public void enqueue() {
-        if (this.isCancelled() || this.isDone()) return;
+    // async queue
+    public Promise<T> enqueue() {
+        if (this.isCancelled() || this.isDone()) return this;
 
         ExecutorService service = dispatcher.executorService();
         future = service.submit(this);
         isRunning = true;
+        return this;
     }
 
+    // sync
     public T await() throws Exception {
         run();
 
@@ -57,19 +59,20 @@ public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
 
         throw new Exception("No sender");
     }
-
-    @Override public void execute(Sender<T> sender) throws Exception {
-        executor.execute(this);
-    }
     
     @Override public void run() {
         try {
+            //Thread.sleep(this.initDelay);
             execute(this);
         } catch (Exception e) {
             reject(e);
         }
     }
-
+    
+    @Override public void execute(Sender<T> sender) throws Exception {
+        executor.execute(this);
+    }
+   
     @Override public void resolve(final T result) {
         this.result = result;
 
