@@ -266,14 +266,11 @@ class CopyAsyncTask extends AsyncCall<File> {
 ```java
 Call<File> call = new CopyAsyncTask();
 
-call.execute(new Callback<File>() {
-  @Override 
-  public void onResponse(File result) {   
-    Toast.makeText(getApplicationContext(), file.toString(), Toast.LENGTH_SHORT).show();
-  }    
-  @Override 
-  public void onFailure(Exception e) {
-    new AlertDialog.Builder(ActivityMain.this)
+call.execute((File result) -> {   
+  Toast.makeText(getApplicationContext(), file.toString(), Toast.LENGTH_SHORT).show();
+
+}, (Exception e) {
+  new AlertDialog.Builder(ActivityMain.this)
         .setTitle("Error")
         .setMessage(e.getMessage())
         .setNeutralButton("OK", new DialogInterface.OnClickListener() {
@@ -283,8 +280,7 @@ call.execute(new Callback<File>() {
         })
         .create()
         .show();
-    }
-  });
+});
 ```
 
 ```java
