@@ -36,8 +36,14 @@ public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
         this.errorListener = errorListener;
         return this;
     }
+    
+    public Promise<T> execute(OnResponse<T> responseListener, OnError errorListener) {
+      return this.then(responseListener).error(errorListener).enqueue();
+    }
+    
+    /////////////////////////////////////////////////////////////
 
-    // async queue
+    // async
     public Promise<T> enqueue() {
         if (this.isCancelled() || this.isDone()) return this;
 
@@ -59,6 +65,8 @@ public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
 
         throw new Exception("No sender");
     }
+    
+    /////////////////////////////////////////////////////////////
     
     @Override public void run() {
         try {

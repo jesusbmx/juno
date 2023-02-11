@@ -210,6 +210,7 @@ Promise<String> saludar() {
 }
 ```
 
+Async
 ```java
 saludar().then((String result) -> {
   System.out.println(result);
@@ -220,6 +221,18 @@ saludar().then((String result) -> {
 }).enqueue();
 ```
 
+Async
+```java
+saludar().execute((String result) -> {
+  System.out.println(result);
+
+}, (Exception error) -> {
+  System.err.println(error);
+
+});
+```
+
+Sync
 ```java
 try {
   String str = saludar().await();
