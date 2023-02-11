@@ -220,6 +220,16 @@ saludar().then((String result) -> {
 }).enqueue();
 ```
 
+```java
+ try {
+  String str = saludar().await();
+  System.out.println(str);
+
+} catch(Exception error) {
+  System.err.println(error);
+}
+```
+
 ### Concurrent
 ```java
 class CopyAsyncTask extends AsyncCall<File> {
