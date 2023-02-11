@@ -221,7 +221,7 @@ saludar().then((String result) -> {
 ```
 
 ```java
- try {
+try {
   String str = saludar().await();
   System.out.println(str);
 
