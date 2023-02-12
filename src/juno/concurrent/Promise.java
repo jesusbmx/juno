@@ -3,7 +3,7 @@ package juno.concurrent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
+public class Promise<T> implements Runnable, Sender<T> {
 
     protected final Dispatcher dispatcher;
     protected final Executor<T> executor;
@@ -71,14 +71,10 @@ public class Promise<T> implements Runnable, Executor<T>, Sender<T> {
     @Override public void run() {
         try {
             //Thread.sleep(this.initDelay);
-            execute(this);
+            executor.execute(this);
         } catch (Exception e) {
             reject(e);
         }
-    }
-    
-    @Override public void execute(Sender<T> sender) throws Exception {
-        executor.execute(this);
     }
    
     @Override public void resolve(final T result) {
