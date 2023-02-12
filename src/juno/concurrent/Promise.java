@@ -31,7 +31,7 @@ public class Promise<T> implements Runnable, Sender<T> {
         this.responseListener = responseListener;
         return this;
     }
-
+    
     public Promise<T> error(OnError errorListener) {
         this.errorListener = errorListener;
         return this;
@@ -70,7 +70,6 @@ public class Promise<T> implements Runnable, Sender<T> {
     
     @Override public void run() {
         try {
-            //Thread.sleep(this.initDelay);
             executor.execute(this);
         } catch (Exception e) {
             reject(e);
