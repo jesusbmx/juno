@@ -27,7 +27,7 @@ public class TestPromise {
           public void onResponse(String result) throws Exception {
               System.out.println(result);
           }
-      }).error(new OnError() {
+      }, new OnError() {
           @Override
           public void onFailure(Exception e) {
               e.printStackTrace();

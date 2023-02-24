@@ -26,19 +26,12 @@ public class Promise<T> implements Runnable, Sender<T> {
     public Promise(Executor<T> executor) {
         this(executor, Dispatcher.get());
     }
-    
-    public Promise<T> then(OnResponse<T> responseListener) {
+   
+    public Promise<T> then(OnResponse<T> responseListener, OnError errorListener) {
         this.responseListener = responseListener;
-        return this;
-    }
-    
-    public Promise<T> error(OnError errorListener) {
         this.errorListener = errorListener;
+        enqueue();
         return this;
-    }
-    
-    public Promise<T> execute(OnResponse<T> responseListener, OnError errorListener) {
-      return this.then(responseListener).error(errorListener).enqueue();
     }
     
     /////////////////////////////////////////////////////////////

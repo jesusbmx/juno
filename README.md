@@ -215,17 +215,6 @@ Async
 saludar().then((String result) -> {
   System.out.println(result);
 
-}).error((Exception error) -> {
-  System.err.println(error);
-
-}).enqueue();
-```
-
-Async
-```java
-saludar().execute((String result) -> {
-  System.out.println(result);
-
 }, (Exception error) -> {
   System.err.println(error);
 
