@@ -34,6 +34,7 @@ public class Test {
     name = Texts.capitalize(name);
     System.out.printf("name = '%s'\n", name);
     
+    System.out.println(Texts.subStr("[Hola mundo]", "[", "]"));
     
     // Numbers
     String number = "-892768237.50";

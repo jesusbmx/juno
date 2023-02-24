@@ -145,4 +145,20 @@ public final class Texts {
     return WORDS.split(str);
   }
 
+  /**
+   * Obtiene un subcadena  
+   * 
+   * @param str "[Hola mundo]"
+   * @param start "["
+   * @param end "]"
+   * @return "Hola mundo"
+   */
+  public static String subStr(String str, String start, String end) {
+    int beginIndex = str.indexOf(start);
+    if (beginIndex == -1) return null;
+    int offset = beginIndex + start.length();
+    int endIndex = str.indexOf(end, offset);
+    if (endIndex == -1) endIndex = str.length();
+    return str.substring(offset, endIndex);
+  }
 }

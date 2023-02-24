@@ -20,6 +20,8 @@ String name = "jesus   ";
 name = Util.trim(name);
 name = Texts.capitalize(name);
 System.out.printf("name = '%s'\n", name);
+
+System.out.println(Texts.subStr("[Hola mundo]", "[", "]"));
 ```
 
 ```markdown
@@ -27,6 +29,7 @@ System.out.printf("name = '%s'\n", name);
 > txt = 'hola mundo'
 > txt = 'hola...'
 > name = 'Jesus'
+> Hola mundo
 ```
 
 ### Numbers
