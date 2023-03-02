@@ -9,7 +9,9 @@ public class Promise<T> implements Runnable, Sender<T> {
     protected final Executor<T> executor;
 
     protected T result;
+    protected volatile boolean isResolve;
     protected Exception error;
+    protected volatile boolean isReject;
 
     protected OnResponse<T> responseListener;
     protected OnError errorListener;
@@ -47,16 +49,18 @@ public class Promise<T> implements Runnable, Sender<T> {
     }
 
     // sync
-    public T await() throws Exception {
+    public synchronized T await() throws Exception {
         run();
 
-        if (error != null)
-            throw error;
+        do {
+        
+            if (isReject)
+                throw error;
 
-        if (result != null)
-            return result;
+            if (isResolve)
+                return result;
 
-        throw new Exception("No sender");
+        } while(true);
     }
     
     /////////////////////////////////////////////////////////////
@@ -71,6 +75,7 @@ public class Promise<T> implements Runnable, Sender<T> {
    
     @Override public void resolve(final T result) {
         this.result = result;
+        this.isResolve = true;
 
         dispatcher.delivery(new Runnable() {
             @Override
@@ -86,6 +91,7 @@ public class Promise<T> implements Runnable, Sender<T> {
 
     @Override public void reject(final Exception error) {
         this.error = error;
+        this.isReject = true;
 
         dispatcher.delivery(new Runnable() {
             @Override
