@@ -101,10 +101,12 @@ public class Promise<T> implements Runnable, Sender<T> {
         dispatcher.delivery(new Runnable() {
             @Override
             public void run() {
-                try {
-                    onResponse(result);
-                } catch (Exception error) {
-                    onFailure(error);
+                if (callback != null) {
+                    try {
+                        callback.onResponse(result);
+                    } catch (Exception error) {
+                        callback.onFailure(error);
+                    }
                 }
             }
         });
@@ -117,7 +119,9 @@ public class Promise<T> implements Runnable, Sender<T> {
         dispatcher.delivery(new Runnable() {
             @Override
             public void run() {
-                onFailure(error);
+                if (callback != null) {
+                    callback.onFailure(error);
+                }
             }
         });
     }
@@ -137,16 +141,6 @@ public class Promise<T> implements Runnable, Sender<T> {
 
     public Callback<T> getCallback() {
         return callback;
-    }
-
-    public void onResponse(T response) throws Exception {
-        if (callback != null)
-            callback.onResponse(response);
-    }
-
-    public void onFailure(Exception error) {
-        if (callback != null)
-            callback.onFailure(error);
     }
 
     public boolean isCancelled() {
