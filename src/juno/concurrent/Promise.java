@@ -13,8 +13,7 @@ public class Promise<T> implements Runnable, Sender<T> {
     protected Exception error;
     protected volatile boolean isReject;
 
-    protected OnResponse<T> responseListener;
-    protected OnError errorListener;
+    protected Callback<T> callback;
 
     protected Future future;
     protected boolean isCancel;
@@ -29,10 +28,22 @@ public class Promise<T> implements Runnable, Sender<T> {
         this(executor, Dispatcher.get());
     }
    
-    public Promise<T> then(OnResponse<T> responseListener, OnError errorListener) {
-        this.responseListener = responseListener;
-        this.errorListener = errorListener;
-        enqueue();
+    public Promise<T> then(final OnResponse<T> responseListener, final OnError errorListener) {
+        return this.then(new Callback<T>() {
+            @Override
+            public void onResponse(T result) throws Exception {
+                responseListener.onResponse(result);
+            }
+            @Override
+            public void onFailure(Exception e) {
+                errorListener.onFailure(e);
+            }
+        });
+    }
+    
+    public Promise<T> then(Callback<T> callback) {
+        this.callback = callback;
+        this.enqueue();
         return this;
     }
     
@@ -102,13 +113,13 @@ public class Promise<T> implements Runnable, Sender<T> {
     }
 
     public void onResponse(T response) throws Exception {
-        if (responseListener != null)
-            responseListener.onResponse(response);
+        if (callback != null)
+            callback.onResponse(response);
     }
 
     public void onFailure(Exception error) {
-        if (errorListener != null)
-            errorListener.onFailure(error);
+        if (callback != null)
+            callback.onFailure(error);
     }
 
     public boolean isCancelled() {
