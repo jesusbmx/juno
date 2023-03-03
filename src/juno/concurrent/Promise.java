@@ -153,4 +153,16 @@ public class Promise<T> implements Runnable, Sender<T> {
             return false;
         }
     }
+
+    public Executor<T> getExecutor() {
+        return executor;
+    }
+
+    public Dispatcher getDispatcher() {
+        return dispatcher;
+    }
+
+    public Callback<T> getCallback() {
+        return callback;
+    }
 }
