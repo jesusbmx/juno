@@ -206,9 +206,9 @@ try {
 
 ```java
 Promise<String> saludar() {
-  return new Promise<>(() -> {
-    // throw new Exception("error");
-    return "Hola Mundo";
+  return new Promise<>((Sender<String> sender) -> {
+    //sender.reject(new Exception("error"));
+    sender.resolve("Hola Mundo");
   });
 }
 ```
@@ -232,15 +232,6 @@ try {
 
 } catch(Exception error) {
   System.err.println(error);
-}
-```
-
-```java
-PromiseExecutor<String> saludar() {
-  return new PromiseExecutor<>((Sender<String> sender) -> {
-    //sender.reject(new Exception("error"));
-    sender.resolve("Hola Mundo");
-  });
 }
 ```
 

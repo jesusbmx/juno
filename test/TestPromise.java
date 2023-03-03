@@ -2,7 +2,7 @@
 import juno.concurrent.Executor;
 import juno.concurrent.OnError;
 import juno.concurrent.OnResponse;
-import juno.concurrent.PromiseExecutor;
+import juno.concurrent.Promise;
 import juno.concurrent.Sender;
 
 /**
@@ -11,8 +11,8 @@ import juno.concurrent.Sender;
  */
 public class TestPromise {
     
-    PromiseExecutor<String> saludar() {
-      return new PromiseExecutor<String>(new Executor<String>() {
+    Promise<String> saludar() {
+      return new Promise<String>(new Executor<String>() {
         @Override
         public void execute(Sender<String> sender) throws Exception {
             sender.resolve("Hola Mundo");
