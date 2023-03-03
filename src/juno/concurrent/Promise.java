@@ -99,6 +99,7 @@ public class Promise<T> implements Runnable, Sender<T> {
         this.isResolve = true;
 
         dispatcher.delivery(new Runnable() {
+
             @Override
             public void run() {
                 if (callback != null) {
@@ -117,6 +118,7 @@ public class Promise<T> implements Runnable, Sender<T> {
         this.isReject = true;
 
         dispatcher.delivery(new Runnable() {
+
             @Override
             public void run() {
                 if (callback != null) {
