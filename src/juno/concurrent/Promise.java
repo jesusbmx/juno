@@ -122,6 +122,23 @@ public class Promise<T> implements Runnable, Sender<T> {
         });
     }
 
+    @Override
+    public Promise<T> getPromise() {
+        return this;
+    }
+    
+     public Executor<T> getExecutor() {
+        return executor;
+    }
+
+    public Dispatcher getDispatcher() {
+        return dispatcher;
+    }
+
+    public Callback<T> getCallback() {
+        return callback;
+    }
+
     public void onResponse(T response) throws Exception {
         if (callback != null)
             callback.onResponse(response);
@@ -152,17 +169,5 @@ public class Promise<T> implements Runnable, Sender<T> {
             isCancel = true;
             return false;
         }
-    }
-
-    public Executor<T> getExecutor() {
-        return executor;
-    }
-
-    public Dispatcher getDispatcher() {
-        return dispatcher;
-    }
-
-    public Callback<T> getCallback() {
-        return callback;
     }
 }
