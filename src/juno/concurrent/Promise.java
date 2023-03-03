@@ -28,6 +28,16 @@ public class Promise<T> implements Runnable, Sender<T> {
         this(executor, Dispatcher.get());
     }
    
+    public static <V> Promise<V> of(final Task<V> task) {
+        return new Promise<V>(new Executor<V>() {
+            @Override
+            public void execute(Sender<V> sender) throws Exception {
+                final V result = task.doInBackground();
+                sender.resolve(result);
+            }
+        });
+    }
+    
     public Promise<T> then(final OnResponse<T> responseListener, final OnError errorListener) {
         return this.then(new Callback<T>() {
             @Override
