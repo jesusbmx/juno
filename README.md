@@ -237,7 +237,7 @@ try {
 
 ```java
 PromiseExecutor<String> saludar() {
-  return new Promise<>((Sender<String> sender) -> {
+  return new PromiseExecutor<>((Sender<String> sender) -> {
     //sender.reject(new Exception("error"));
     sender.resolve("Hola Mundo");
   });
