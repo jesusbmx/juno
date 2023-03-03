@@ -97,35 +97,13 @@ public class Promise<T> implements Runnable, Sender<T> {
     @Override public void resolve(final T result) {
         this.result = result;
         this.isResolve = true;
-
-        dispatcher.delivery(new Runnable() {
-
-            @Override
-            public void run() {
-                if (callback != null) {
-                    try {
-                        callback.onResponse(result);
-                    } catch (Exception error) {
-                        callback.onFailure(error);
-                    }
-                }
-            }
-        });
+        this.dispatcher.onResponse(callback, result);
     }
 
     @Override public void reject(final Exception error) {
         this.error = error;
         this.isReject = true;
-
-        dispatcher.delivery(new Runnable() {
-
-            @Override
-            public void run() {
-                if (callback != null) {
-                    callback.onFailure(error);
-                }
-            }
-        });
+        this.dispatcher.onFailure(callback, error);
     }
 
     @Override
