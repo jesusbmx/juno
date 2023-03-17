@@ -31,7 +31,7 @@ public class Promise<T> implements Runnable, Sender<T> {
     public static <V> Promise<V> of(final Task<V> task) {
         return new Promise<V>(new Executor<V>() {
             @Override
-            public void execute(Sender<V> sender) throws Exception {
+            public void execute(final Sender<V> sender) throws Exception {
                 final V result = task.doInBackground();
                 sender.resolve(result);
             }
@@ -41,12 +41,16 @@ public class Promise<T> implements Runnable, Sender<T> {
     public Promise<T> then(final OnResponse<T> responseListener, final OnError errorListener) {
         return this.then(new Callback<T>() {
             @Override
-            public void onResponse(T result) throws Exception {
-                responseListener.onResponse(result);
+            public void onResponse(final T result) throws Exception {
+                if (responseListener != null) {
+                    responseListener.onResponse(result);
+                }
             }
             @Override
-            public void onFailure(Exception e) {
-                errorListener.onFailure(e);
+            public void onFailure(final Exception e) {
+                if (errorListener != null) {
+                    errorListener.onFailure(e);
+                }
             }
         });
     }
@@ -63,7 +67,7 @@ public class Promise<T> implements Runnable, Sender<T> {
     public void enqueue() {
         if (this.isCancelled() || this.isDone()) return;
 
-        ExecutorService service = dispatcher.executorService();
+        final ExecutorService service = dispatcher.executorService();
         future = service.submit(this);
         isRunning = true;
         return;
