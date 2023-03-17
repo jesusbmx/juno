@@ -8,9 +8,9 @@ public class Promise<T> implements Runnable, Sender<T> {
     protected final Dispatcher dispatcher;
     protected final Executor<T> executor;
 
-    protected T result;
+    protected volatile T result;
     protected volatile boolean isResolve;
-    protected Exception error;
+    protected volatile Exception error;
     protected volatile boolean isReject;
 
     protected Callback<T> callback;

@@ -135,6 +135,7 @@ public final class Dispatcher implements ThreadFactory {
    * Metodo que se encarga de liverar la respuesta obtenida, al hilo de la UI.
    */
   public <V> void onResponse(final Callback<V> callback, final V result) {
+    if (callback == null) return;
     delivery(new Runnable() {  
       @Override public void run() {
         try {
@@ -150,6 +151,7 @@ public final class Dispatcher implements ThreadFactory {
    * Metodo que se encarga de liverar el error obtenido, al hilo de la UI.
    */
   public void onFailure(final Callback<?> callback, final Exception error) {
+    if (callback == null) return;
     delivery(new Runnable() {
       @Override public void run() {
         callback.onFailure(error);
