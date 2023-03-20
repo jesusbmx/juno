@@ -37,24 +37,38 @@ public abstract class AsyncCall<T>
   }
 
   @Override public void execute(final OnResponse<T> onResponse, final OnError onError) {
-      this.execute(new Callback<T>() {
-          @Override
-          public void onResponse(T result) throws Exception {
-            onResponse.onResponse(result);
-          }
-          @Override
-          public void onFailure(Exception e) {
-            onError.onFailure(e);
-          }
-      });
+    this.execute(new Callback<T>() {
+        @Override
+        public void onResponse(T result) throws Exception {
+          onResponse.onResponse(result);
+        }
+        @Override
+        public void onFailure(Exception e) {
+          onError.onFailure(e);
+        }
+    });
   }
   
   public void execute() {
     future = this.dispatcher.submit(this);
     isRunning = true;
   }
-
-  @Override public boolean cancel(boolean mayInterruptIfRunning) {
+  
+  public synchronized T get() throws Exception {
+    return doInBackground();
+  }
+  
+  @Override public void run() {
+    try {
+      T result = doInBackground();
+      dispatcher.onResponse(this, result);
+    } catch (Exception e) {
+      dispatcher.onFailure(this, e);
+    }
+    isRunning = false;
+  }
+  
+   @Override public boolean cancel(boolean mayInterruptIfRunning) {
     isRunning = false;
     if (future != null) { 
       return future.cancel(mayInterruptIfRunning);
@@ -72,16 +86,6 @@ public abstract class AsyncCall<T>
     if (callback != null) callback.onFailure(e);
   }
 
-   
-  @Override public void run() {
-    try {
-      T result = doInBackground();
-      dispatcher.onResponse(this, result);
-    } catch (Exception e) {
-      dispatcher.onFailure(this, e);
-    }
-    isRunning = false;
-  }
   
   public void delivery(Runnable run) {
     dispatcher.delivery(run);
