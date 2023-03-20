@@ -2,7 +2,6 @@ Juno
 ========
 Herramientas de desarrollo para java y Android
 
-## Instalar
 Descargar [juno.jar](https://github.com/jesusbmx/juno/raw/master/dist/juno.jar)
 
 ### Strings
