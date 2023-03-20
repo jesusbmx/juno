@@ -64,8 +64,8 @@ public final class Dispatcher implements ThreadFactory {
     return new AsyncCall<V>(dispatcher) {
       @Override 
       public V doInBackground() throws Exception {
-        Class<?>[] types = Types.getTypes(params);
-        Method instanceMethod = obj.getClass()
+        final Class<?>[] types = Types.getTypes(params);
+        final Method instanceMethod = obj.getClass()
                 .getDeclaredMethod(method, types);
         
         return (V) instanceMethod.invoke(obj, params);
@@ -83,8 +83,8 @@ public final class Dispatcher implements ThreadFactory {
     return new AsyncCall<V>(dispatcher) {
       @Override 
       public V doInBackground() throws Exception {
-        Class<?>[] types = Types.getTypes(params);
-        Method instanceMethod = clazz
+        final Class<?>[] types = Types.getTypes(params);
+        final Method instanceMethod = clazz
                 .getDeclaredMethod(method, types);
         
         return (V) instanceMethod.invoke(null, params);
