@@ -15,8 +15,8 @@ public class Promise<T> implements Runnable, Sender<T> {
     protected Callback<T> callback;
 
     protected Future future;
-    protected boolean isCancel;
-    protected boolean isRunning;
+    protected volatile boolean isCancel;
+    protected volatile boolean isRunning;
 
     public Promise(Executor<T> executor, Dispatcher dispatcher) {
         this.executor = executor;
