@@ -54,7 +54,7 @@ public abstract class AsyncCall<T>
     isRunning = true;
   }
   
-  public synchronized T get() throws Exception {
+  public synchronized T await() throws Exception {
     return doInBackground();
   }
   
