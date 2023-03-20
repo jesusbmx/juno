@@ -12,7 +12,7 @@ import juno.concurrent.Sender;
  */
 public class TestPromise {
     
-    /*Promise<String> saludar() {
+    Promise<String> saludar() {
       return new Promise<String>(new Executor<String>() {
         @Override
         public void execute(final Sender<String> sender) throws Exception {
@@ -36,9 +36,9 @@ public class TestPromise {
             }.start();
         }
       });
-    }*/
+    }
     
-    Promise<String> saludar() {
+    /*Promise<String> saludar() {
       return new Promise<String>(new Executor<String>() {
         @Override
         public void execute(final Sender<String> sender1) throws Exception {
@@ -71,7 +71,7 @@ public class TestPromise {
             });
         }
       });
-    }
+    }*/
     
     public void async() {
       saludar().then(new OnResponse<String>() {
