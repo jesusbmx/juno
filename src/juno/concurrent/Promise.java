@@ -1,6 +1,5 @@
 package juno.concurrent;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 public class Promise<T> implements Runnable, Sender<T> {
@@ -65,12 +64,8 @@ public class Promise<T> implements Runnable, Sender<T> {
 
     // async
     public void enqueue() {
-        if (this.isCancelled() || this.isDone()) return;
-
-        final ExecutorService service = dispatcher.executorService();
-        future = service.submit(this);
+        future = dispatcher.submit(this);
         isRunning = true;
-        return;
     }
 
     // sync
@@ -98,13 +93,13 @@ public class Promise<T> implements Runnable, Sender<T> {
         }
     }
    
-    @Override public void resolve(final T result) {
+    @Override public void resolve(T result) {
         this.result = result;
         this.isResolve = true;
         this.dispatcher.onResponse(callback, result);
     }
 
-    @Override public void reject(final Exception error) {
+    @Override public void reject(Exception error) {
         this.error = error;
         this.isReject = true;
         this.dispatcher.onFailure(callback, error);

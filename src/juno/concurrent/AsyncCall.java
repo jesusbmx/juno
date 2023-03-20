@@ -8,8 +8,8 @@ public abstract class AsyncCall<T>
   final Dispatcher dispatcher;
   Callback<T> callback;
   Future future;
-  boolean isCancel;
-  boolean isRunning = false;
+  volatile boolean isCancel;
+  volatile boolean isRunning = false;
 
   public AsyncCall() {
     this(Dispatcher.get());
@@ -24,7 +24,7 @@ public abstract class AsyncCall<T>
   }
 
   @Override public boolean isDone() {
-    return (future != null) ? future.isDone() : Boolean.FALSE;
+    return (future != null) ? future.isDone() : false;
   }
 
   public boolean isRunning() {
@@ -50,7 +50,8 @@ public abstract class AsyncCall<T>
   }
   
   public void execute() {
-    isRunning = this.dispatcher.execute(this);
+    future = this.dispatcher.submit(this);
+    isRunning = true;
   }
 
   @Override public boolean cancel(boolean mayInterruptIfRunning) {

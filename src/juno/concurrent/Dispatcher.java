@@ -3,6 +3,7 @@ package juno.concurrent;
 import java.lang.reflect.Method;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -34,7 +35,7 @@ public final class Dispatcher implements ThreadFactory {
   }
   
   @Override public Thread newThread(Runnable runnable) {
-    Thread result = new Thread(runnable, "juno Dispatcher");
+    final Thread result = new Thread(runnable, "juno Dispatcher");
     result.setPriority(Thread.MIN_PRIORITY);
     return result;
   }
@@ -42,8 +43,9 @@ public final class Dispatcher implements ThreadFactory {
   public synchronized ExecutorService executorService() {
     if (executorService == null) {
       int nThreads = 4; //4
-      executorService = new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS,
-          new LinkedBlockingQueue<Runnable>(), this);
+      executorService = new ThreadPoolExecutor(nThreads, nThreads, 
+              0L, TimeUnit.MILLISECONDS, 
+              new LinkedBlockingQueue<Runnable>(), this);
     }
     return executorService;
   }
@@ -58,7 +60,7 @@ public final class Dispatcher implements ThreadFactory {
   }
     
   public static <V> AsyncCall<V> callUserfun(final Object obj, final String method, final Object... params) {
-    Dispatcher dispatcher = Dispatcher.get(); 
+    final Dispatcher dispatcher = Dispatcher.get(); 
     return new AsyncCall<V>(dispatcher) {
       @Override 
       public V doInBackground() throws Exception {
@@ -77,7 +79,7 @@ public final class Dispatcher implements ThreadFactory {
   }
   
   public static <V> AsyncCall<V> callUserfun(final Class clazz, final String method, final Object... params) {
-    Dispatcher dispatcher = Dispatcher.get(); 
+    final Dispatcher dispatcher = Dispatcher.get(); 
     return new AsyncCall<V>(dispatcher) {
       @Override 
       public V doInBackground() throws Exception {
@@ -100,7 +102,7 @@ public final class Dispatcher implements ThreadFactory {
    * @param task tarea propuesta para la ejecución.
    */
   public static <V> AsyncCall<V> newCall(final Task<V> task) {
-    Dispatcher dispatcher = Dispatcher.get(); 
+    final Dispatcher dispatcher = Dispatcher.get(); 
     return new AsyncCall<V>(dispatcher) {
       @Override 
       public V doInBackground() throws Exception {
@@ -110,11 +112,9 @@ public final class Dispatcher implements ThreadFactory {
   }
   
   /** Ejecuta la llamada en la cola de peticiones. */
-  public synchronized boolean execute(AsyncCall<?> task) { 
-    if (task.isCancelled() || task.isDone()) return false;
+  public Future<?> submit(Runnable task) { 
     // Propone una tarea Runnable para la ejecución y devuelve un Futuro.
-    task.future = executorService().submit(task);
-    return true;
+    return executorService().submit(task);
   }
     
   public Executor executorDelivery() {

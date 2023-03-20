@@ -28,8 +28,8 @@ public class TestPromise {
                             
                         }
                     }
-                    //sender.resolve("Hola mundo");
-                    sender.reject(new Exception("error"));
+                    sender.resolve("Hola mundo");
+                    //sender.reject(new Exception("error"));
                 }
                 
             }.start();
