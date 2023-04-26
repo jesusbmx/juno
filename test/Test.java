@@ -4,8 +4,8 @@ import juno.util.Collect;
 import juno.util.Convert;
 import juno.text.Formats;
 import juno.text.Texts;
-import juno.util.Fun;
 import juno.util.Util;
+import juno.util.Func;
 
 public class Test {
   
@@ -62,9 +62,9 @@ public class Test {
     
     // Arrays
     String[] strArray = {"1", "2", "3", "7", "9"};
-    Integer[] intArray = Collect.map(strArray, Integer.class, new Fun<String, Integer>() {
+    Integer[] intArray = Collect.map(strArray, Integer.class, new Func<String, Integer>() {
         @Override
-        public Integer apply(String it) {
+        public Integer call(String it) {
             return Integer.parseInt(it);
         }
     });
@@ -81,33 +81,33 @@ public class Test {
     
     System.out.println(Collect.join(strArray, ","));
     
-    boolean some = Collect.some(strArray, new Fun<String, Boolean>() {
+    boolean some = Collect.some(strArray, new Func<String, Boolean>() {
         @Override
-        public Boolean apply(String t) {
+        public Boolean call(String t) {
             return t.equals("7");
         }
     });
     System.out.println(some);
     
-    boolean every = Collect.every(intArray, new Fun<Integer, Boolean>() {
+    boolean every = Collect.every(intArray, new Func<Integer, Boolean>() {
         @Override
-        public Boolean apply(Integer t) {
+        public Boolean call(Integer t) {
             return t % 2 == 0;
         }
     });
     System.out.println(every);
     
-    String find = Collect.find(strArray, new Fun<String, Boolean>() {
+    String find = Collect.find(strArray, new Func<String, Boolean>() {
         @Override
-        public Boolean apply(String t) {
+        public Boolean call(String t) {
             return t.equals("9");
         }
     });
     System.out.println(find);
     
-    Integer[] filter = Collect.filter(intArray, new Fun<Integer, Boolean>() {
+    Integer[] filter = Collect.filter(intArray, new Func<Integer, Boolean>() {
         @Override
-        public Boolean apply(Integer t) {
+        public Boolean call(Integer t) {
             return t > 5;
         }
     });

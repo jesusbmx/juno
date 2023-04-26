@@ -10,11 +10,11 @@ import java.util.Set;
 
 public class TransformedCollect<Input, Result> extends AbstractCollection<Result> {
   final Collection<Input> fromCollection;
-  final Fun<? super Input, ? extends Result> function;
+  final Func<? super Input, ? extends Result> function;
 
   public TransformedCollect(
         Collection<Input> fromCollection, 
-        Fun<? super Input, ? extends Result> function
+        Func<? super Input, ? extends Result> function
   ) {
     this.fromCollection = fromCollection;
     this.function = function;
@@ -31,7 +31,7 @@ public class TransformedCollect<Input, Result> extends AbstractCollection<Result
   @Override public Iterator<Result> iterator() {
     return new TransformedIterator<Input, Result>(fromCollection.iterator()) {
       @Override Result transform(Input from) {
-        return function.apply(from);
+        return function.call(from);
       }
     };
   }

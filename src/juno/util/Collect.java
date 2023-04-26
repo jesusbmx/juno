@@ -198,20 +198,20 @@ public final class Collect {
     reverse(array, 0, array.length);
   }
   
-  public static List<String> toListString(List list, Fun<Object, String> fun) {
+  public static List<String> toListString(List list, Func<Object, String> fun) {
     return map(list, fun);
   }
   
   public static List<String> toListString(List list) {
-    return map(list, Fun.OBJ_TO_STR);
+    return map(list, Func.OBJ_TO_STR);
   }
   
-  public static String[] toArrayString(Object[] array, Fun<Object, String> fun) {
+  public static String[] toArrayString(Object[] array, Func<Object, String> fun) {
     return map(array, String.class, fun);
   }
   
   public static String[] toArrayString(Object... array) {
-    return map(array, String.class, Fun.OBJ_TO_STR);
+    return map(array, String.class, Func.OBJ_TO_STR);
   }
   
   /**
@@ -222,22 +222,22 @@ public final class Collect {
    * @param fun función ha aplicar para cada elemento
    * @return String
    */
-  public static String join(Iterable args, String separator, Fun<Object, String> fun) {
+  public static String join(Iterable args, String separator, Func<Object, String> fun) {
     final StringBuilder sb = new StringBuilder();
     int i = 0;
     for (Object arg : args) {
       if (i > 0) sb.append(separator);
-      sb.append(fun.apply(arg));
+      sb.append(fun.call(arg));
       i++;
     }
     return sb.toString();
   }
   
   public static String join(Iterable args, String separator) {
-    return join(args, separator, Fun.OBJ_TO_STR);
+    return join(args, separator, Func.OBJ_TO_STR);
   }
   
-  public static String join(Iterable args, Fun<Object, String> fun) {
+  public static String join(Iterable args, Func<Object, String> fun) {
     return join(args, ", ", fun);
   }
   
@@ -253,20 +253,20 @@ public final class Collect {
    * @param fun función ha aplicar para cada elemento
    * @return String
    */
-  public static String join(Object[] args, String separator, Fun<Object, String> fun) {
+  public static String join(Object[] args, String separator, Func<Object, String> fun) {
     final StringBuilder sb = new StringBuilder();
     for (int i = 0; i < args.length; i++) {
       if (i > 0) sb.append(separator);
-      sb.append(fun.apply(args[i]));
+      sb.append(fun.call(args[i]));
     }
     return sb.toString();
   }
   
   public static String join(Object[] args, String separator) {
-    return join(args, separator, Fun.OBJ_TO_STR);
+    return join(args, separator, Func.OBJ_TO_STR);
   }
   
-  public static String join(Object[] args, Fun<Object, String> fun) {
+  public static String join(Object[] args, Func<Object, String> fun) {
     return join(args, ", ", fun);
   }
   
@@ -315,50 +315,50 @@ public final class Collect {
    */
   public static <I, R> TransformedCollect<I, R> transform(
       Collection<I> fromCollection, 
-      Fun<? super I, R> function
+      Func<? super I, R> function
   ) {
     return new TransformedCollect<I, R>(fromCollection, function);
   }
    
-  public static <I, R> List<R> map(List<I> list, Fun<I, R> fun) {
+  public static <I, R> List<R> map(List<I> list, Func<I, R> fun) {
     if (isNull(list)) return null;
     final List<R> result = new ArrayList<R>(list.size());
     for (int i = 0; i < list.size(); i++) {
       I object = list.get(i);
-      result.add(fun.apply(object));
+      result.add(fun.call(object));
     }
     return result;
   }
   
-  public static <I, R> R[] map(I[] array, Class<R> componentType, Fun<I, R> fun) {
+  public static <I, R> R[] map(I[] array, Class<R> componentType, Func<I, R> fun) {
     if (isNull(array)) return null;
     final List<R> result = new ArrayList<R>(array.length);
     for (int i = 0; i < array.length; i++) {
       I object = array[i];
-      result.add(fun.apply(object));
+      result.add(fun.call(object));
     }
     R[] a = (R[]) Array.newInstance(componentType, 0);
     return result.toArray(a);
   }
   
-  public static <V> List<V> filter(List<V> list, Fun<V, Boolean> fun) {
+  public static <V> List<V> filter(List<V> list, Func<V, Boolean> fun) {
     if (isNull(list)) return null;
     final List<V> result = new ArrayList<V>(list.size());
     for (int i = 0; i < list.size(); i++) {
       V object = list.get(i);
-      if (fun.apply(object)) {
+      if (fun.call(object)) {
         result.add(object);
       }
     }
     return result;
   }
   
-  public static <V> V[] filter(V[] array, Fun<V, Boolean> fun) {
+  public static <V> V[] filter(V[] array, Func<V, Boolean> fun) {
     if (isNull(array)) return null;
     final List<V> result = new ArrayList<V>(array.length);
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
-      if (fun.apply(object)) {
+      if (fun.call(object)) {
         result.add(object);
       }
     }
@@ -368,66 +368,66 @@ public final class Collect {
     return result.toArray(a);
   }
   
-  public static <V> boolean every(List<V> list, Fun<V, Boolean> fun) {
+  public static <V> boolean every(List<V> list, Func<V, Boolean> fun) {
     if (isNull(list)) return false;
     for (int i = 0; i < list.size(); i++) {
       V object = list.get(i);
-      if (!fun.apply(object)) {
+      if (!fun.call(object)) {
         return false;
       }
     }
     return true;
   }
   
-  public static <V> boolean every(V[] array, Fun<V, Boolean> fun) {
+  public static <V> boolean every(V[] array, Func<V, Boolean> fun) {
     if (isNull(array)) return false;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
-      if (!fun.apply(object)) {
+      if (!fun.call(object)) {
         return false;
       }
     }
     return true;
   }
   
-  public static <V> boolean some(List<V> list, Fun<V, Boolean> fun) {
+  public static <V> boolean some(List<V> list, Func<V, Boolean> fun) {
     if (isNull(list)) return false;
     for (int i = 0; i < list.size(); i++) {
       V object = list.get(i);
-      if (fun.apply(object)) {
+      if (fun.call(object)) {
         return true;
       }
     }
     return false;
   }
   
-  public static <V> boolean some(V[] array, Fun<V, Boolean> fun) {
+  public static <V> boolean some(V[] array, Func<V, Boolean> fun) {
     if (isNull(array)) return false;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
-      if (fun.apply(object)) {
+      if (fun.call(object)) {
         return true;
       }
     }
     return false;
   }
   
-  public static <V> V find(List<V> list, Fun<V, Boolean> fun) {
+  public static <V> V find(List<V> list, Func<V, Boolean> fun) {
     if (isNull(list)) return null;
     for (int i = 0; i < list.size(); i++) {
       V object = list.get(i);
-      if (fun.apply(object)) {
+      if (fun.call(object)) {
         return object;
       }
     }
     return null;
   }
   
-  public static <V> V find(V[] array, Fun<V, Boolean> fun) {
+  public static <V> V find(V[] array, Func<V, Boolean> fun) {
     if (isNull(array)) return null;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
-      if (fun.apply(object)) {
+      if (fun.call(object)) {
         return object;
       }
     }

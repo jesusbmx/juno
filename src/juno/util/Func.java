@@ -12,10 +12,10 @@ package juno.util;
  *
  * @since 1.8
  */
-public interface Fun<Input, Result> {
+public interface Func<Input, Result> {
 
-  public static final Fun OBJ_TO_STR = new Fun<Object, String>() {
-    @Override public String apply(Object it) {
+  public static final Func OBJ_TO_STR = new Func<Object, String>() {
+    @Override public String call(Object it) {
       return Convert.toString(it, null);
     }
   };
@@ -26,6 +26,6 @@ public interface Fun<Input, Result> {
    * @param it the function argument
    * @return the function result
    */
-  Result apply(Input it);
+  Result call(Input it);
 
 }
