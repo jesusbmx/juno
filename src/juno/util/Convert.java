@@ -229,17 +229,17 @@ public final class Convert {
     return Base64.encode(inArray.getBytes());
   }
   
-  public Date parseDate(String format, String date) throws ParseException {
+  public static Date parseDate(String format, String date) throws ParseException {
     return Formats.datef(format).parse(date);
   }
-  public Date toDate(String format, String date, Date defaultVal) {
+  public static Date toDate(String format, String date, Date defaultVal) {
     try {
       return parseDate(format, date);
     } catch(Exception e) {
       return defaultVal;
     }
   }
-  public Date toDate(String format, String date) {
+  public static Date toDate(String format, String date) {
     return toDate(format, date, null);
   }
 }
