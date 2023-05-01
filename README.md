@@ -206,7 +206,8 @@ try {
 ### Date
 ```java
 Date date = Convert.toDate("yyyy-MM-dd", "2023-04-30");
-System.out.println(Formats.datetime(date));
+if (date != null)
+  System.out.println(Formats.datetime(date));
 ```
 
 ```markdown
