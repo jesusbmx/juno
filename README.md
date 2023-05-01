@@ -203,7 +203,7 @@ try {
 > 2021-01
 ```
 
-### Dates
+### Date
 ```java
 Date date = Convert.toDate("yyyy-MM-dd", "2023-04-30");
 System.out.println(Formats.datetime(date));
