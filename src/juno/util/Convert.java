@@ -230,7 +230,7 @@ public final class Convert {
   }
   
   public static Date parseDate(String format, String date) throws ParseException {
-    return Formats.datef(format).parse(date);
+    return Formats.newDateFormat(format).parse(date);
   }
   public static Date toDate(String format, String date, Date defaultVal) {
     try {

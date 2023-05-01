@@ -121,7 +121,7 @@ public class Test {
     System.out.println(Formats.datetime());
     
     System.out.println(Formats.date("yyyy"));
-    System.out.println(Formats.format("yyyy-MM", new Date()));
-    System.out.println(Formats.datef("dd").format(new Date()));
+    System.out.println(Formats.dateFormat("yyyy-MM", new Date()));
+    System.out.println(Formats.newDateFormat("dd").format(new Date()));
   }
 }
