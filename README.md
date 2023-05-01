@@ -193,7 +193,7 @@ try {
   System.out.println(Formats.datetime());
     
   System.out.println(Formats.date("yyyy"));
-  System.out.println(Formats.date("yyyy-MM", new Date()));
+  System.out.println(Formats.dateF("yyyy-MM", new Date()));
 ```
 
 ```markdown

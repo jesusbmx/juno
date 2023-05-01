@@ -27,41 +27,41 @@ public final class Formats {
         return new SimpleDateFormat(format);
     }
     
-    public static String date(String format, Date date) {
+    public static String dateF(String format, Date date) {
         return newDateFormat(format).format(date);
     }
-    public static String date(String format, long date) {
+    public static String dateF(String format, long date) {
         return newDateFormat(format).format(new Date(date));
     }
-    public static String date(String format, Calendar date) {
+    public static String dateF(String format, Calendar date) {
         return newDateFormat(format).format(date.getTime());
     }
     
     public static String date(String format) {
-        return date(format, new Date());
+        return dateF(format, new Date());
     }
     
     public static String date(Date date) {
-        return date("yyyy-MM-dd", date);
+        return dateF("yyyy-MM-dd", date);
     }
     public static String date(long date) {
-        return date("yyyy-MM-dd", date);
+        return dateF("yyyy-MM-dd", date);
     }
     public static String date(Calendar date) {
-        return date("yyyy-MM-dd", date);
+        return dateF("yyyy-MM-dd", date);
     }
     public static String date() {
         return date(new Date());
     }
     
     public static String datetime(Date date) {
-        return date("yyyy-MM-dd HH:mm:ss", date);
+        return dateF("yyyy-MM-dd HH:mm:ss", date);
     }
     public static String datetime(long date) {
-        return date("yyyy-MM-dd HH:mm:ss", date);
+        return dateF("yyyy-MM-dd HH:mm:ss", date);
     }
     public static String datetime(Calendar date) {
-        return date("yyyy-MM-dd HH:mm:ss", date);
+        return dateF("yyyy-MM-dd HH:mm:ss", date);
     }
     public static String datetime() {
         return datetime(new Date());
