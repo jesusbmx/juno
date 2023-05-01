@@ -36,8 +36,7 @@ public final class Formats {
     public static String dateF(String format, Calendar date) {
         return newDateFormat(format).format(date.getTime());
     }
-    
-    public static String date(String format) {
+    public static String dateF(String format) {
         return dateF(format, new Date());
     }
     
