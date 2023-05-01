@@ -18,6 +18,10 @@ public abstract class AsyncCall<T>
   public AsyncCall(Dispatcher dispatcher) {
     this.dispatcher = dispatcher;
   }
+
+  public Dispatcher getDispatcher() {
+    return dispatcher;
+  }
   
   @Override public boolean isCancelled() {
     return (future != null) ? future.isCancelled() : isCancel;
