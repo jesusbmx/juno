@@ -2,8 +2,8 @@
 import java.util.Date;
 import juno.util.Collect;
 import juno.util.Convert;
-import juno.text.Formats;
 import juno.text.Texts;
+import juno.util.Dates;
 import juno.util.Util;
 import juno.util.Func;
 
@@ -117,11 +117,10 @@ public class Test {
     System.out.println(Collect.join(fill, ","));
     
     // Formats
-    System.out.println(Formats.date());
-    System.out.println(Formats.datetime());
+    System.out.println(Dates.dateFormat());
+    System.out.println(Dates.dateTimeFormat());
     
-    System.out.println(Formats.dateF("yyyy"));
-    System.out.println(Formats.dateF("yyyy-MM", new Date()));
-    System.out.println(Formats.newDateFormat("dd").format(new Date()));
+    System.out.println(Dates.format("yyyy"));
+    System.out.println(Dates.format("yyyy-MM", new Date()));
   }
 }

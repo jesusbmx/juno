@@ -187,32 +187,30 @@ try {
 }
 ```
 
-### Formats
-```java
-  System.out.println(Formats.date());
-  System.out.println(Formats.datetime());
-    
-  System.out.println(Formats.dateF("yyyy"));
-  System.out.println(Formats.dateF("yyyy-MM", new Date()));
-```
-
-```markdown
-> 2021-01-23
-> 2021-01-23 11:29:58
-> 2021
-> 2021-01
-```
 
 ### Date
 ```java
-Date date = Convert.toDate("yyyy-MM-dd", "2023-04-30");
-if (date != null)
-  System.out.println(Formats.datetime(date));
+String sDate = "2023-04-30 19:10:02";
+        
+Date date = Dates.parse("yyyy-MM-dd", sDate);
+System.out.println(Dates.dateTimeFormat(date)); // 2023-04-30 00:00:00
+
+Date dateTime = Dates.parse("yyyy-MM-dd HH:mm:ss", sDate);
+System.out.println(Dates.dateTimeFormat(dateTime)); // 2023-04-30 19:10:02
+
+
+System.out.println(Dates.dateFormat(new Date())); // 2023-05-03
+System.out.println(Dates.dateTimeFormat(new Date())); // 2023-05-03 12:31:47
+System.out.println(Dates.format("yyyy-MM-dd HH:mm:ss", new Date())); // 2023-05-03 12:31:47
+
+
+Calendar cDate = Dates.calendarWithoutTime(); // get date without time
+System.out.println(Dates.dateTimeFormat(cDate)); // 2023-05-03 00:00:00
+
+Calendar cDateTime = Dates.calendarWithTime(); // get date and time
+System.out.println(Dates.dateTimeFormat(cDateTime)); // 2023-05-03 12:31:47
 ```
 
-```markdown
-> 2023-04-30 00:00:00
-```
 
 
 ### Promise

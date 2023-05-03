@@ -1,7 +1,6 @@
 
 import java.util.Arrays;
 import java.util.Date;
-import juno.text.Formats;
 import juno.util.Convert;
 
 /**
@@ -35,11 +34,6 @@ public class TestConvert {
     
     String to_b = "True";
     System.out.println(Convert.toBool(to_b));
-    
-    
-    Date date = Convert.toDate("yyyy-MM-dd", "2023-04-30");
-    if (date != null)
-        System.out.println(Formats.datetime(date));
     
     // Define a byte array.
     byte[] bytes = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
