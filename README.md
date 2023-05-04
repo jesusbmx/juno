@@ -28,9 +28,7 @@ System.out.printf("txt = '%s'\n", txt);
 txt = Texts.abbreviate(txt, 7);
 System.out.printf("txt = '%s'\n", txt);
 ```
-```markdown
-> txt = 'hola...'
-```
+```txt = 'hola...'```
 
 ```java 
 String name = "jesus   ";
