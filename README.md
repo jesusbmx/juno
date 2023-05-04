@@ -13,25 +13,17 @@ if (Util.isEmpty(txt)) {
 }
     
 txt = Util.ifNull(txt, "hola mundo");
-System.out.printf("txt = '%s'\n", txt);
+System.out.printf("txt = '%s'\n", txt); // txt = 'hola mundo'
 
 txt = Texts.abbreviate(txt, 7);
-System.out.printf("txt = '%s'\n", txt);
+System.out.printf("txt = '%s'\n", txt); // txt = 'hola...'
 
 String name = "jesus   ";
 name = Util.trim(name);
 name = Texts.capitalize(name);
-System.out.printf("name = '%s'\n", name);
+System.out.printf("name = '%s'\n", name); // name = 'Jesus'
 
-System.out.println(Texts.subStr("[Hola mundo]", "[", "]"));
-```
-
-```markdown
-> txt is empty
-> txt = 'hola mundo'
-> txt = 'hola...'
-> name = 'Jesus'
-> Hola mundo
+System.out.println(Texts.subStr("[Hola mundo]", "[", "]")) // Hola mundo;
 ```
 
 ### Numbers
