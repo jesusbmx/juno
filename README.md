@@ -11,40 +11,26 @@ String txt = null;
 if (Util.isEmpty(txt)) {
   System.out.println("txt is empty");
 }
-```
-```markdown
-> txt is empty
-```
-
-```java    
+    
 txt = Util.ifNull(txt, "hola mundo");
 System.out.printf("txt = '%s'\n", txt);
-```
-```markdown
-> txt = 'hola mundo'
-```
 
-```java 
 txt = Texts.abbreviate(txt, 7);
 System.out.printf("txt = '%s'\n", txt);
-```
-`txt = 'hola...'`
 
-```java 
 String name = "jesus   ";
 name = Util.trim(name);
 name = Texts.capitalize(name);
 System.out.printf("name = '%s'\n", name);
-```
-```markdown
-> name = 'Jesus'
+
+System.out.println(Texts.subStr("[Hola mundo]", "[", "]"));
 ```
 
-```java
-String str = Texts.subStr("[Hola mundo]", "[", "]");
-System.out.println(str);
-```
 ```markdown
+> txt is empty
+> txt = 'hola mundo'
+> txt = 'hola...'
+> name = 'Jesus'
 > Hola mundo
 ```
 
