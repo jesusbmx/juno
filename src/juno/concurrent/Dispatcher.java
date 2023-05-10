@@ -36,7 +36,7 @@ public final class Dispatcher implements ThreadFactory {
     return instance;
   }
 
-  public static void set(Dispatcher instance) {
+  public synchronized static void set(Dispatcher instance) {
     Dispatcher.instance = instance;
   }
   
