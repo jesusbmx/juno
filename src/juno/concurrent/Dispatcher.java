@@ -29,15 +29,15 @@ public final class Dispatcher implements ThreadFactory {
     this.threadLimit = threadLimit;
   }
   
-  public Dispatcher() {
-    this("Juno-Dispatcher", 4);
-  }
-  
   public synchronized static Dispatcher get() {
     if (instance == null) {
-      instance = new Dispatcher();
+      instance = new Dispatcher("Juno-Dispatcher", 4);
     }
     return instance;
+  }
+
+  public static void set(Dispatcher instance) {
+    Dispatcher.instance = instance;
   }
   
   @Override public Thread newThread(Runnable runnable) {
