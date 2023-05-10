@@ -13,6 +13,10 @@ import juno.util.Types;
 
 public final class Dispatcher implements ThreadFactory {
   private static Dispatcher instance;
+  
+  public final String poolName;
+  public final int threadLimit;
+  private int nextId;
 
   /** Livera las respuestas al hilo de la UI. */
   private Executor executorDelivery;
@@ -20,11 +24,13 @@ public final class Dispatcher implements ThreadFactory {
   /** Ejecuta las llamadas "Call". */
   private ExecutorService executorService;
   
-  public Dispatcher(ExecutorService executorService) {
-    this.executorService = executorService;
+  public Dispatcher(String poolName, int threadLimit) {
+    this.poolName = poolName;
+    this.threadLimit = threadLimit;
   }
-
+  
   public Dispatcher() {
+    this("Juno-Dispatcher", 4);
   }
   
   public synchronized static Dispatcher get() {
@@ -35,15 +41,15 @@ public final class Dispatcher implements ThreadFactory {
   }
   
   @Override public Thread newThread(Runnable runnable) {
-    final Thread result = new Thread(runnable, "juno Dispatcher");
+    final Thread result = new Thread(runnable, poolName + "-" + nextId);
+    nextId++;
     result.setPriority(Thread.MIN_PRIORITY);
     return result;
   }
   
   public synchronized ExecutorService executorService() {
     if (executorService == null) {
-      int nThreads = 4; //4
-      executorService = new ThreadPoolExecutor(nThreads, nThreads, 
+      executorService = new ThreadPoolExecutor(threadLimit, threadLimit, 
               0L, TimeUnit.MILLISECONDS, 
               new LinkedBlockingQueue<Runnable>(), this);
     }
@@ -52,11 +58,6 @@ public final class Dispatcher implements ThreadFactory {
   
   public void setExecutorService(ExecutorService es) {
     executorService = es;
-  }
-  
-  public void setExecutorService(int threads) {
-    setExecutorService(new ThreadPoolExecutor(threads, threads, 0L, TimeUnit.MILLISECONDS,
-          new LinkedBlockingQueue<Runnable>(), this));
   }
     
   public static <V> AsyncCall<V> callUserfun(final Object obj, final String method, final Object... params) {
