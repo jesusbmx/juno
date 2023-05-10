@@ -60,51 +60,14 @@ public final class Dispatcher implements ThreadFactory {
     executorService = es;
   }
     
-  public static <V> AsyncCall<V> callUserfun(final Object obj, final String method, final Object... params) {
-    final Dispatcher dispatcher = Dispatcher.get(); 
-    return new AsyncCall<V>(dispatcher) {
-      @Override 
-      public V doInBackground() throws Exception {
-        final Class<?>[] types = Types.getTypes(params);
-        final Method instanceMethod = obj.getClass()
-                .getDeclaredMethod(method, types);
-        
-        return (V) instanceMethod.invoke(obj, params);
-      }
-      @Override
-      public void onFailure(Exception e) {
-        super.onFailure(e);
-        e.printStackTrace();
-      }
-    };
-  }
-  
-  public static <V> AsyncCall<V> callUserfun(final Class clazz, final String method, final Object... params) {
-    final Dispatcher dispatcher = Dispatcher.get(); 
-    return new AsyncCall<V>(dispatcher) {
-      @Override 
-      public V doInBackground() throws Exception {
-        final Class<?>[] types = Types.getTypes(params);
-        final Method instanceMethod = clazz
-                .getDeclaredMethod(method, types);
-        
-        return (V) instanceMethod.invoke(null, params);
-      }
-      @Override
-      public void onFailure(Exception e) {
-        super.onFailure(e);
-        e.printStackTrace();
-      }
-    };
-  }
-  
   /** 
    * Crea una llamada. 
+   * @param <V>
    * @param task tarea propuesta para la ejecución.
+   * @return 
    */
-  public static <V> AsyncCall<V> newCall(final Task<V> task) {
-    final Dispatcher dispatcher = Dispatcher.get(); 
-    return new AsyncCall<V>(dispatcher) {
+  public <V> AsyncCall<V> newCall(final Task<V> task) {
+    return new AsyncCall<V>(this) {
       @Override 
       public V doInBackground() throws Exception {
         return task != null ? task.doInBackground() : null;
@@ -112,7 +75,31 @@ public final class Dispatcher implements ThreadFactory {
     };
   }
   
-  /** Ejecuta la llamada en la cola de peticiones. */
+  public static <V> AsyncCall<V> call(Task<V> task) {
+    return Dispatcher.get().newCall(task);
+  }
+  
+  /**
+   * Executa una tarea
+   * @param <V>
+   * @param task
+   * @param onResponse
+   * @param onError
+   * @return 
+   */
+  public <V> AsyncCall<V> execute(
+    Task<V> task,
+    OnResponse<V> onResponse,
+    OnError onError
+  ) {
+    final AsyncCall<V> asyncCall = newCall(task);
+    asyncCall.execute(onResponse, onError);
+    return asyncCall;
+  }
+  
+  /** 
+   * Ejecuta la llamada en la cola de peticiones.
+   */
   public Future<?> submit(Runnable task) { 
     // Propone una tarea Runnable para la ejecución y devuelve un Futuro.
     return executorService().submit(task);
@@ -124,6 +111,7 @@ public final class Dispatcher implements ThreadFactory {
     }
     return executorDelivery;
   }
+  
   public void setExecutorDelivery(Executor executor) {
     executorDelivery = executor;
   }
@@ -159,5 +147,66 @@ public final class Dispatcher implements ThreadFactory {
       }
     });
   }
+  
+   public <V> AsyncCall<V> newCallUserfunc(
+    final Object obj, 
+    final String method, 
+    final Object... params
+  ) { 
+    return new AsyncCall<V>(this) {
+      @Override 
+      public V doInBackground() throws Exception {
+        Class<?>[] types = Types.getTypes(params);
+        final Method instanceMethod = obj.getClass()
+                .getDeclaredMethod(method, types);
+        
+        return (V) instanceMethod.invoke(obj, params);
+      }
+      @Override
+      public void onFailure(Exception e) {
+        super.onFailure(e);
+        e.printStackTrace();
+      }
+    };
+  }
+  
+  public static <V> AsyncCall<V> callUserfunc(
+    final Object obj, 
+    final String method, 
+    final Object... params
+  ) { 
+    return Dispatcher.get().newCallUserfunc(obj, method, params);
+  }
+  
+  public <V> AsyncCall<V> newCallUserfunc(
+    final Class clazz, 
+    final String method, 
+    final Object... params
+  ) {
+    return new AsyncCall<V>(this) {
+      @Override 
+      public V doInBackground() throws Exception {
+        Class<?>[] types = Types.getTypes(params);
+        final Method instanceMethod = clazz
+                .getDeclaredMethod(method, types);
+        
+        return (V) instanceMethod.invoke(null, params);
+      }
+      @Override
+      public void onFailure(Exception e) {
+        super.onFailure(e);
+        e.printStackTrace();
+      }
+    };
+  }
+  
+  public static <V> AsyncCall<V> callUserfunc(
+    final Class clazz, 
+    final String method, 
+    final Object... params
+  ) {
+    return Dispatcher.get().newCallUserfunc(clazz, method, params);
+  }
+  
 
 }

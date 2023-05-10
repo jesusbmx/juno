@@ -24,7 +24,7 @@ public class TestAsyn {
     if (call != null) {
       call.cancel(true);
     }
-    call = Dispatcher.callUserfun(this, "saludar", 10);
+    call = Dispatcher.callUserfunc(this, "saludar", 10);
     call.execute();
   }
   
