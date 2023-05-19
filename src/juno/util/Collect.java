@@ -217,15 +217,16 @@ public final class Collect {
   /**
    * <p>Une todos los elementos de una colección en una cadena.</p>
    * 
+   * @param <V>
    * @param args elementos
    * @param separator delimitador entre elementos
    * @param func función ha aplicar para cada elemento
    * @return String
    */
-  public static String join(Iterable args, String separator, Func<Object, String> func) {
+  public static <V> String join(Iterable<V> args, String separator, Func<V, String> func) {
     final StringBuilder sb = new StringBuilder();
     int i = 0;
-    for (Object arg : args) {
+    for (V arg : args) {
       if (i > 0) sb.append(separator);
       sb.append(func.call(arg));
       i++;
@@ -233,15 +234,15 @@ public final class Collect {
     return sb.toString();
   }
   
-  public static String join(Iterable args, String separator) {
+  public static <V> String join(Iterable<V> args, String separator) {
     return join(args, separator, Func.OBJ_TO_STR);
   }
   
-  public static String join(Iterable args, Func<Object, String> func) {
+  public static <V> String join(Iterable<V> args, Func<V, String> func) {
     return join(args, ", ", func);
   }
   
-  public static String join(Iterable args) {
+  public static <V> String join(Iterable<V> args) {
     return join(args, ", ");
   }
   
@@ -253,7 +254,7 @@ public final class Collect {
    * @param func función ha aplicar para cada elemento
    * @return String
    */
-  public static String join(Object[] args, String separator, Func<Object, String> func) {
+  public static  String join(Object[] args, String separator, Func<Object, String> func) {
     final StringBuilder sb = new StringBuilder();
     for (int i = 0; i < args.length; i++) {
       if (i > 0) sb.append(separator);
@@ -262,15 +263,15 @@ public final class Collect {
     return sb.toString();
   }
   
-  public static String join(Object[] args, String separator) {
+  public static <V> String join(Object[] args, String separator) {
     return join(args, separator, Func.OBJ_TO_STR);
   }
   
-  public static String join(Object[] args, Func<Object, String> func) {
+  public static <V> String join(Object[] args, Func<Object, String> func) {
     return join(args, ", ", func);
   }
   
-  public static String join(Object[] args) {
+  public static <V> String join(Object[] args) {
     return join(args, ", ");
   }
   
