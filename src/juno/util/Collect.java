@@ -252,7 +252,7 @@ public final class Collect {
    * @param func función ha aplicar para cada elemento
    * @return String
    */
-  public static  String join(Object[] args, String separator, Func<Object, String> func) {
+  public static String join(Object[] args, String separator, Func<Object, String> func) {
     final StringBuilder sb = new StringBuilder();
     for (int i = 0; i < args.length; i++) {
       if (i > 0) sb.append(separator);
@@ -261,15 +261,15 @@ public final class Collect {
     return sb.toString();
   }
   
-  public static <V> String join(Object[] args, String separator) {
+  public static String join(Object[] args, String separator) {
     return join(args, separator, Func.OBJ_TO_STR);
   }
   
-  public static <V> String join(Object[] args, Func<Object, String> func) {
+  public static String join(Object[] args, Func<Object, String> func) {
     return join(args, ", ", func);
   }
   
-  public static <V> String join(Object[] args) {
+  public static String join(Object[] args) {
     return join(args, ", ");
   }
   
