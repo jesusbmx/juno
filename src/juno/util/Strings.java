@@ -1,9 +1,10 @@
 package juno.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
-import static juno.util.Util.isEmpty;
+import static juno.util.Util.isNull;
 
 public final class Strings {
   
@@ -13,6 +14,131 @@ public final class Strings {
   public static final String EMPTY = "";
   
   private Strings() {}
+  
+  /*
+   |--------------------------------------------------------------------------
+   | S T R I N G S
+   |--------------------------------------------------------------------------
+   */
+
+  /**
+   * <p>Valida si una cadena esta vacia o esta es nula.</p>
+   *
+   * <pre>
+   * Util.isEmpty(null)      = true
+   * Util.isEmpty("")        = true
+   * Util.isEmpty(" ")       = false
+   * Util.isEmpty("bob")     = false
+   * Util.isEmpty("  bob  ") = false
+   * </pre>
+   * 
+   * @param str cadena a evaluar
+   * @return boolean
+   */
+  public static boolean isEmpty(CharSequence str) {
+    return isNull(str) || str.length() == 0;
+  }
+  
+  /**
+   * <p>Comprueba si una cadena no está vacío y no es nulo.</p>
+   *
+   * <pre>
+   * Util.isNotEmpty(null)             = false
+   * Util.isNotEmpty("")               = false
+   * Util.isNotEmpty("ab")             = true
+   * </pre>
+   *
+   * @param str cadena a evaluar
+   * @return boolean
+   */
+  public static boolean isNotEmpty(CharSequence str) {
+    return !isEmpty(str);
+  }
+  
+  /**
+   * <p>Devuelva una cadena especifica SI la expresión es Vacia, de lo contrario,
+   * devuelva la expresión.</p>
+   * 
+   * <pre>
+   * Util.ifEmpty(null, "Hola mundo")  = "Hola mundo"
+   * Util.ifEmpty("", "B")             = "B"
+   * </pre>
+   *
+   * @param str expresión
+   * @param altValue valor especificado
+   * @return valor de la expresión
+   */
+  public static CharSequence ifEmpty(CharSequence str, CharSequence altValue) {
+    return isEmpty(str) ? altValue : str;
+  }
+  
+  public static String ifEmpty(String str, String altValue) {
+    return isEmpty(str) ? altValue : str;
+  }
+
+  /**
+   * <p>Limpia los espacios en blanco de una cadena.</p>
+   *
+   * <pre>
+   * Util.trim(null)          = ""
+   * Util.trim("")            = ""
+   * Util.trim("     ")       = ""
+   * Util.trim("abc")         = "abc"
+   * Util.trim("    abc    ") = "abc"
+   * </pre>
+   * 
+   * @param str cadena a limpiar
+   * @return String
+   */
+  public static String trim(CharSequence str) {
+    return isNull(str) ? Convert.STRING : str.toString().trim();
+  }
+  
+  /**
+   * <p>Comprueba si un CharSequence está vacío (""), nulo o solo espacios en blanco.</p>
+   *
+   * <p>El espacio en blanco se define mediante {@link Character#isWhitespace(char)}.</p>
+   *
+   * <pre>
+   * Util.isBlank(null)      = true
+   * Util.isBlank("")        = true
+   * Util.isBlank(" ")       = true
+   * Util.isBlank("bob")     = false
+   * Util.isBlank("  bob  ") = false
+   * </pre>
+   *
+   * @param cs  el CharSequence a comprobar, puede ser nulo
+   * @return {@code true} si CharSequence es nulo, vacío o solo espacios en blanco
+   */
+  public static boolean isBlank(final CharSequence cs) {
+    int strLen;
+    if (cs == null || (strLen = cs.length()) == 0) {
+      return true;
+    }
+    for (int i = 0; i < strLen; i++) {
+      if (!Character.isWhitespace(cs.charAt(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Funcion para concatenear elementos
+   *
+   * @param elements
+   * @return String
+   */
+  public static String concat(Object... elements) {
+    StringBuilder sb = new StringBuilder();
+    Collect.append(sb, elements);
+    return sb.toString();
+  }
+  public static String concat(Collection elements) {
+    StringBuilder sb = new StringBuilder();
+    Collect.append(sb, elements);
+    return sb.toString();
+  }
   
   /**
    * Devuelve una copia de esta cadena que tiene su primera letra en mayúscula,

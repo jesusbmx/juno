@@ -2,9 +2,6 @@ package juno.util;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.text.ParseException;
-import static juno.util.Util.isEmpty;
-import static juno.util.Util.isNull;
 
 public final class Convert {
 
@@ -32,24 +29,24 @@ public final class Convert {
    * @return String
    */
   public static String toString(Object o, String nullDefault) {
-    return isNull(o) ? nullDefault : o.toString();
+    return Util.isNull(o) ? nullDefault : o.toString();
   }
   public static String toString(Object o) {
     return toString(o, STRING);
   }
   
   public static String toString(byte[] bytes) {
-    if (isNull(bytes)) return null;
+    if (Util.isNull(bytes)) return null;
     return new String(bytes);
   }
   
   public static String toString(byte[] bytes, Charset charset) throws IOException {
-    if (isNull(bytes)) return null;
+    if (Util.isNull(bytes)) return null;
     return new String(bytes, charset);
   }
   
   public static byte toByte(CharSequence str, byte defaultValue) {
-    if (isEmpty(str)) return defaultValue;
+    if (Strings.isEmpty(str)) return defaultValue;
     try {
       return Byte.parseByte(str.toString());
     } catch (NumberFormatException ignore) {
@@ -62,7 +59,7 @@ public final class Convert {
   }
   
   public static byte toByte(Object o, byte defaultVal) {
-    if (isNull(o)) return defaultVal;
+    if (Util.isNull(o)) return defaultVal;
     if (o instanceof Byte) return ((Byte) o);
     return toByte(o.toString(), defaultVal);
   }
@@ -79,7 +76,7 @@ public final class Convert {
    * @return int `12`
    */
   public static int toInt(CharSequence str, int defaultValue) {
-    if (isEmpty(str)) return defaultValue;
+    if (Strings.isEmpty(str)) return defaultValue;
     try {
       return Integer.parseInt(str.toString());
     } catch (NumberFormatException ignore) {
@@ -92,7 +89,7 @@ public final class Convert {
   }
   
   public static int toInt(Object o, int defaultVal) {
-    if (isNull(o)) return defaultVal;
+    if (Util.isNull(o)) return defaultVal;
     if (o instanceof Number) return ((Number) o).intValue();
     return toInt(o.toString(), defaultVal);
   }
@@ -109,7 +106,7 @@ public final class Convert {
    * @return long `12L`
    */
   public static long toLong(CharSequence str, long defaultValue) {
-    if (isEmpty(str)) return defaultValue;
+    if (Strings.isEmpty(str)) return defaultValue;
     try {
       return Long.parseLong(str.toString());
     } catch (NumberFormatException ignore) {
@@ -122,7 +119,7 @@ public final class Convert {
   }
   
   public static long toLong(Object o, long defaultVal) {
-    if (isNull(o)) return defaultVal;
+    if (Util.isNull(o)) return defaultVal;
     if (o instanceof Number) return ((Number) o).longValue();
     return toLong(o.toString(), defaultVal);
   }
@@ -139,7 +136,7 @@ public final class Convert {
    * @return float `12.50f`
    */
   public static float toFloat(CharSequence str, float defaultVal) {
-    if (isEmpty(str)) return defaultVal;
+    if (Strings.isEmpty(str)) return defaultVal;
     try {
       return Float.parseFloat(str.toString());
     } catch (NumberFormatException ignore) {
@@ -152,7 +149,7 @@ public final class Convert {
   }
   
   public static float toFloat(Object o, float defaultVal) {
-    if (isNull(o)) return defaultVal;
+    if (Util.isNull(o)) return defaultVal;
     if (o instanceof Number) return ((Number) o).floatValue();
     return toFloat(o.toString(), defaultVal);
   }
@@ -169,7 +166,7 @@ public final class Convert {
    * @return double `12.50d`
    */
   public static double toDouble(CharSequence str, double defaultVal) {
-    if (isEmpty(str)) return defaultVal;
+    if (Strings.isEmpty(str)) return defaultVal;
     try {
       return Double.parseDouble(str.toString());
     } catch (NumberFormatException ignore) {
@@ -182,7 +179,7 @@ public final class Convert {
   }
   
   public static double toDouble(Object o, double defaultVal) {
-    if (isNull(o)) return defaultVal;
+    if (Util.isNull(o)) return defaultVal;
     if (o instanceof Number) return ((Number) o).doubleValue();
     return toDouble(o.toString(), defaultVal);
   }
@@ -199,7 +196,7 @@ public final class Convert {
    * @return boolean `true`
    */
   public static boolean toBool(CharSequence cs, boolean defaultVal) {
-    if (isEmpty(cs)) return defaultVal;
+    if (Strings.isEmpty(cs)) return defaultVal;
     String str = cs.toString().toLowerCase();
     if (str.equals("true"))  return true;
     if (str.equals("false")) return false;

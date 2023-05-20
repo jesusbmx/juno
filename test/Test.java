@@ -20,7 +20,7 @@ public class Test {
     
     // Strings
     String txt = null;
-    if (Util.isEmpty(txt)) {
+    if (Strings.isEmpty(txt)) {
       System.out.println("txt is empty");
     }
     
@@ -30,7 +30,7 @@ public class Test {
     System.out.printf("txt = '%s'\n", txt);
     
     String name = "jesus   ";
-    name = Util.trim(name);
+    name = Strings.trim(name);
     name = Strings.capitalize(name);
     System.out.printf("name = '%s'\n", name);
     
