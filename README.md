@@ -1,9 +1,6 @@
 Juno
 ========
 Herramientas de desarrollo para java y Android
-
-Descargar [juno.jar](https://github.com/jesusbmx/juno/raw/master/dist/juno.jar)
-
 ```
       (\__/)             
       (•ㅅ•)        
@@ -15,6 +12,7 @@ Descargar [juno.jar](https://github.com/jesusbmx/juno/raw/master/dist/juno.jar)
 　　 ｜( 王 ﾉ〈   (\__/)
 　　 /ﾐ`ー―彡\    (•ㅅ•)
 ```
+Descargar [juno.jar](https://github.com/jesusbmx/juno/raw/master/dist/juno.jar)
 
 ### Strings
 Validación para cadenas.
