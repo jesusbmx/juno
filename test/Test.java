@@ -11,13 +11,12 @@ import juno.util.Objects;
 public class Test {
   
   public static void main(String[] args) {
-    // Util
-    double round = Numbers.roundAvoid(948.856099955012, 2);
-    System.out.println(round);
-    
+    // Objs
     String a = null;
     String b = "b";
     System.out.println(Objects.eq(a, b));
+    System.out.println(Objects.isNull(null));
+    System.out.println(Objects.isNotNull(null));
     
     // Strings
     String txt = null;
@@ -53,6 +52,8 @@ public class Test {
     float f = Convert.toFloat(str);
     System.out.printf("f = '%f'\n", f);
     
+    double round = Numbers.roundAvoid(948.856099955012, 2);
+    System.out.println(round);
     
     // Base64
     String encodeBase64 = Convert.toBase64("Hola mundo");

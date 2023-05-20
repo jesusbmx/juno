@@ -70,11 +70,13 @@ String a = null;
 String b = "b";
 System.out.println(Objects.eq(a, b));
 System.out.println(Objects.isNull(null));
+System.out.println(Objects.isNotNull(null));
 ```
 
 ```markdown
 > false
 > true
+> false
 ```
 
 ### Arrays
