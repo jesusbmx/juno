@@ -155,25 +155,25 @@ public final class Dates {
         return calendarWithoutTime().getTime();
     }
     
-    public static void main(String[] args) throws Exception {
-        String sDate = "2023-04-30 19:10:02";
-        
-        Calendar date = Dates.parseCalendar(sDate, "yyyy-MM-dd");
-        System.out.println(Dates.dateTimeFormat(date)); // 2023-04-30 00:00:00
-        
-        Date dateTime = Dates.parseDate(sDate, "yyyy-MM-dd HH:mm:ss");
-        System.out.println(Dates.dateTimeFormat(dateTime)); // 2023-04-30 19:10:02
-
-        
-        System.out.println(Dates.dateFormat(new Date())); // 2023-05-03
-        System.out.println(Dates.dateTimeFormat(new Date())); // 2023-05-03 12:31:47
-        System.out.println(Dates.format("yyyy-MM-dd HH:mm:ss", new Date())); // 2023-05-03 12:31:47
-        
-        
-        Calendar cDate = Dates.calendarWithoutTime(); // get date without time
-        System.out.println(Dates.dateTimeFormat(cDate)); // 2023-05-03 00:00:00
-        
-        Calendar cDateTime = Dates.calendarWithTime(); // get date and time
-        System.out.println(Dates.dateTimeFormat(cDateTime)); // 2023-05-03 12:31:47
-    }
+//    public static void main(String[] args) throws Exception {
+//        String sDate = "2023-04-30 19:10:02";
+//        
+//        Calendar date = Dates.parseCalendar(sDate, "yyyy-MM-dd");
+//        System.out.println(Dates.dateTimeFormat(date)); // 2023-04-30 00:00:00
+//        
+//        Date dateTime = Dates.parseDate(sDate, "yyyy-MM-dd HH:mm:ss");
+//        System.out.println(Dates.dateTimeFormat(dateTime)); // 2023-04-30 19:10:02
+//
+//        
+//        System.out.println(Dates.dateFormat(new Date())); // 2023-05-03
+//        System.out.println(Dates.dateTimeFormat(new Date())); // 2023-05-03 12:31:47
+//        System.out.println(Dates.format("yyyy-MM-dd HH:mm:ss", new Date())); // 2023-05-03 12:31:47
+//        
+//        
+//        Calendar cDate = Dates.calendarWithoutTime(); // get date without time
+//        System.out.println(Dates.dateTimeFormat(cDate)); // 2023-05-03 00:00:00
+//        
+//        Calendar cDateTime = Dates.calendarWithTime(); // get date and time
+//        System.out.println(Dates.dateTimeFormat(cDateTime)); // 2023-05-03 12:31:47
+//    }
 }
