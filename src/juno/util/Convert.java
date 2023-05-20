@@ -29,19 +29,19 @@ public final class Convert {
    * @return String
    */
   public static String toString(Object o, String nullDefault) {
-    return Util.isNull(o) ? nullDefault : o.toString();
+    return Objects.isNull(o) ? nullDefault : o.toString();
   }
   public static String toString(Object o) {
     return toString(o, STRING);
   }
   
   public static String toString(byte[] bytes) {
-    if (Util.isNull(bytes)) return null;
+    if (Objects.isNull(bytes)) return null;
     return new String(bytes);
   }
   
   public static String toString(byte[] bytes, Charset charset) throws IOException {
-    if (Util.isNull(bytes)) return null;
+    if (Objects.isNull(bytes)) return null;
     return new String(bytes, charset);
   }
   
@@ -59,7 +59,7 @@ public final class Convert {
   }
   
   public static byte toByte(Object o, byte defaultVal) {
-    if (Util.isNull(o)) return defaultVal;
+    if (Objects.isNull(o)) return defaultVal;
     if (o instanceof Byte) return ((Byte) o);
     return toByte(o.toString(), defaultVal);
   }
@@ -89,7 +89,7 @@ public final class Convert {
   }
   
   public static int toInt(Object o, int defaultVal) {
-    if (Util.isNull(o)) return defaultVal;
+    if (Objects.isNull(o)) return defaultVal;
     if (o instanceof Number) return ((Number) o).intValue();
     return toInt(o.toString(), defaultVal);
   }
@@ -119,7 +119,7 @@ public final class Convert {
   }
   
   public static long toLong(Object o, long defaultVal) {
-    if (Util.isNull(o)) return defaultVal;
+    if (Objects.isNull(o)) return defaultVal;
     if (o instanceof Number) return ((Number) o).longValue();
     return toLong(o.toString(), defaultVal);
   }
@@ -149,7 +149,7 @@ public final class Convert {
   }
   
   public static float toFloat(Object o, float defaultVal) {
-    if (Util.isNull(o)) return defaultVal;
+    if (Objects.isNull(o)) return defaultVal;
     if (o instanceof Number) return ((Number) o).floatValue();
     return toFloat(o.toString(), defaultVal);
   }
@@ -179,7 +179,7 @@ public final class Convert {
   }
   
   public static double toDouble(Object o, double defaultVal) {
-    if (Util.isNull(o)) return defaultVal;
+    if (Objects.isNull(o)) return defaultVal;
     if (o instanceof Number) return ((Number) o).doubleValue();
     return toDouble(o.toString(), defaultVal);
   }

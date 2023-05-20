@@ -1,22 +1,23 @@
 
 import java.util.Date;
+import juno.util.Numbers;
 import juno.util.Collect;
 import juno.util.Convert;
 import juno.util.Strings;
 import juno.util.Dates;
-import juno.util.Util;
 import juno.util.Func;
+import juno.util.Objects;
 
 public class Test {
   
   public static void main(String[] args) {
     // Util
-    double round = Util.roundAvoid(948.856099955012, 2);
+    double round = Numbers.roundAvoid(948.856099955012, 2);
     System.out.println(round);
     
     String a = null;
     String b = "b";
-    System.out.println(Util.eq(a, b));
+    System.out.println(Objects.eq(a, b));
     
     // Strings
     String txt = null;
@@ -24,7 +25,7 @@ public class Test {
       System.out.println("txt is empty");
     }
     
-    txt = Util.ifNull(txt, "hola mundo");
+    txt = Objects.ifNull(txt, "hola mundo");
     System.out.printf("txt = '%s'\n", txt);
     txt = Strings.abbreviate(txt, 7);
     System.out.printf("txt = '%s'\n", txt);
@@ -38,7 +39,7 @@ public class Test {
     
     // Numbers
     String number = "-892768237.50";
-    if (Util.isNumber(number)) {
+    if (Numbers.isNumber(number)) {
       System.out.printf("'%f' is number\n", Convert.toDouble(number));
     } else {
       System.out.printf("'%s' not is number\n", number);

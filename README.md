@@ -12,7 +12,7 @@ if (Strings.isEmpty(txt)) {
   System.out.println("txt is empty");
 }
     
-txt = Util.ifNull(txt, "hola mundo");
+txt = Objects.ifNull(txt, "hola mundo");
 System.out.printf("txt = '%s'\n", txt);
 
 txt = Strings.abbreviate(txt, 7);
@@ -38,7 +38,7 @@ System.out.println(Strings.subStr("[Hola mundo]", "[", "]"));
 Conversión de valores numéricos
 ```java
 String number = "-892768237.50";
-if (Util.isNumber(number)) {
+if (Numbers.isNumber(number)) {
   System.out.printf("'%f' is number\n", Convert.toDouble(number));
 } else {
   System.out.printf("'%s' not is number\n", number);
@@ -51,26 +51,27 @@ System.out.printf("i = '%s'\n", i);
     
 float f = Convert.toFloat(str);
 System.out.printf("f = '%f'\n", f);
+
+double round = Numbers.roundAvoid(948.856099955012, 2);
+System.out.println(round);
 ```
 
 ```markdown
 > '-892768237.500000' is number
 > i = '0'
 > f = '10.800000'
+> 948.86
 ```
 
-### Util
+### Objects
 ```java
-double round = Util.roundAvoid(948.856099955012, 2);
-System.out.println(round);
 
 String a = null;
 String b = "b";
-System.out.println(Util.eq(a, b));
+System.out.println(Objects.eq(a, b));
 ```
 
 ```markdown
-> 948.86
 > false
 ```
 

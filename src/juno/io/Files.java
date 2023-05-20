@@ -10,7 +10,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
-import juno.util.Util;
+import juno.util.Objects;
 
 /**
  *
@@ -121,7 +121,7 @@ public final class Files {
   
   /** Obtiene la extencion de un archivo. */
   public static String getExtension(String fileName) {
-    if (Util.isNull(fileName)) return null;
+    if (Objects.isNull(fileName)) return null;
     final int extensionPos = fileName.lastIndexOf('.');
     final int lastSeparator = indexOfLastSeparator(fileName);
     if (extensionPos > lastSeparator + 1) {
@@ -131,22 +131,22 @@ public final class Files {
   }
   
   public static String getExtension(File file) {
-    if (Util.isNull(file)) return null;
+    if (Objects.isNull(file)) return null;
     return getExtension(file.getName());
   }
   
   public static String getName(String fileName) {
-    if (Util.isNull(fileName)) return null;
+    if (Objects.isNull(fileName)) return null;
     return fileName.substring(indexOfLastSeparator(fileName) + 1);
   }
   
   public static String getName(File file) {
-    if (Util.isNull(file)) return null;
+    if (Objects.isNull(file)) return null;
     return getName(file.getName());
   }
   
   public static String getBaseName(String fileName) {
-    if (Util.isNull(fileName)) return null;
+    if (Objects.isNull(fileName)) return null;
     
     final int len = fileName.length();
     final int extensionPos = fileName.lastIndexOf(".");
@@ -168,12 +168,12 @@ public final class Files {
   }
   
   public static String getBaseName(File file) {
-    if (Util.isNull(file)) return null;
+    if (Objects.isNull(file)) return null;
     return getBaseName(file.getName());
   }
   
   public static String getParent(String fileName) {
-    if (Util.isNull(fileName)) return null;
+    if (Objects.isNull(fileName)) return null;
     final int lastSeparator = indexOfLastSeparator(fileName);
     if (lastSeparator != -1) {
       return fileName.substring(0, lastSeparator + 1);
@@ -182,7 +182,7 @@ public final class Files {
   }
   
   public static String getParent(File file) {
-    if (Util.isNull(file)) return null;
+    if (Objects.isNull(file)) return null;
     return getParent(file.toString());
   }
   

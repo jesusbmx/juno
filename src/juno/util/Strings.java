@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
-import static juno.util.Util.isNull;
 
 public final class Strings {
   
@@ -20,32 +19,68 @@ public final class Strings {
    | S T R I N G S
    |--------------------------------------------------------------------------
    */
+  
+   /**
+   * <p>Valida si el objeto es nulo.</p>
+   *
+   * <pre>
+   * Strings.isNull(null)    = true
+   * Strings.isNull("")      = false
+   * Strings.isNull(" ")     = false
+   * Strings.isNull("bob")   = false
+   * Strings.isNull(1234)    = false
+   * </pre>
+   * 
+   * @param o objeto a evaluar
+   * @return boolean
+   */
+  public static boolean isNull(String o) {
+    return o == null;
+  }
+  
+  /**
+   * <p>Valida si el objeto no es nulo.</p>
+   *
+   * <pre>
+   * Strings.isNotNull(null)    = false
+   * Strings.isNotNull("")      = true
+   * Strings.isNotNull(" ")     = true
+   * Strings.isNotNull("bob")   = true
+   * Strings.isNotNull(1234)    = true
+   * </pre>
+   * 
+   * @param o objeto a evaluar
+   * @return boolean
+   */
+  public static boolean isNotNull(String o) {
+    return o != null;
+  }
 
   /**
    * <p>Valida si una cadena esta vacia o esta es nula.</p>
    *
    * <pre>
-   * Util.isEmpty(null)      = true
-   * Util.isEmpty("")        = true
-   * Util.isEmpty(" ")       = false
-   * Util.isEmpty("bob")     = false
-   * Util.isEmpty("  bob  ") = false
+   * Strings.isEmpty(null)      = true
+   * Strings.isEmpty("")        = true
+   * Strings.isEmpty(" ")       = false
+   * Strings.isEmpty("bob")     = false
+   * Strings.isEmpty("  bob  ") = false
    * </pre>
    * 
    * @param str cadena a evaluar
    * @return boolean
    */
   public static boolean isEmpty(CharSequence str) {
-    return isNull(str) || str.length() == 0;
+    return Objects.isNull(str) || str.length() == 0;
   }
   
   /**
    * <p>Comprueba si una cadena no está vacío y no es nulo.</p>
    *
    * <pre>
-   * Util.isNotEmpty(null)             = false
-   * Util.isNotEmpty("")               = false
-   * Util.isNotEmpty("ab")             = true
+   * Strings.isNotEmpty(null)             = false
+   * Strings.isNotEmpty("")               = false
+   * Strings.isNotEmpty("ab")             = true
    * </pre>
    *
    * @param str cadena a evaluar
@@ -60,8 +95,8 @@ public final class Strings {
    * devuelva la expresión.</p>
    * 
    * <pre>
-   * Util.ifEmpty(null, "Hola mundo")  = "Hola mundo"
-   * Util.ifEmpty("", "B")             = "B"
+   * Strings.ifEmpty(null, "Hola mundo")  = "Hola mundo"
+   * Strings.ifEmpty("", "B")             = "B"
    * </pre>
    *
    * @param str expresión
@@ -80,18 +115,18 @@ public final class Strings {
    * <p>Limpia los espacios en blanco de una cadena.</p>
    *
    * <pre>
-   * Util.trim(null)          = ""
-   * Util.trim("")            = ""
-   * Util.trim("     ")       = ""
-   * Util.trim("abc")         = "abc"
-   * Util.trim("    abc    ") = "abc"
+   * Strings.trim(null)          = ""
+   * Strings.trim("")            = ""
+   * Strings.trim("     ")       = ""
+   * Strings.trim("abc")         = "abc"
+   * Strings.trim("    abc    ") = "abc"
    * </pre>
    * 
    * @param str cadena a limpiar
    * @return String
    */
   public static String trim(CharSequence str) {
-    return isNull(str) ? Convert.STRING : str.toString().trim();
+    return Objects.isNull(str) ? Convert.STRING : str.toString().trim();
   }
   
   /**
@@ -100,11 +135,11 @@ public final class Strings {
    * <p>El espacio en blanco se define mediante {@link Character#isWhitespace(char)}.</p>
    *
    * <pre>
-   * Util.isBlank(null)      = true
-   * Util.isBlank("")        = true
-   * Util.isBlank(" ")       = true
-   * Util.isBlank("bob")     = false
-   * Util.isBlank("  bob  ") = false
+   * Strings.isBlank(null)      = true
+   * Strings.isBlank("")        = true
+   * Strings.isBlank(" ")       = true
+   * Strings.isBlank("bob")     = false
+   * Strings.isBlank("  bob  ") = false
    * </pre>
    *
    * @param cs  el CharSequence a comprobar, puede ser nulo
@@ -168,20 +203,20 @@ public final class Strings {
    * como el marcador de reemplazo.</p>
    * 
    * <pre>
-   * Util.abbreviate(null, null, *, *)                 = null
-   * Util.abbreviate("abcdefghijklmno", null, *, *)    = "abcdefghijklmno"
-   * Util.abbreviate("", "...", 0, 4)                  = ""
-   * Util.abbreviate("abcdefghijklmno", "---", -1, 10) = "abcdefg---"
-   * Util.abbreviate("abcdefghijklmno", ",", 0, 10)    = "abcdefghi,"
-   * Util.abbreviate("abcdefghijklmno", ",", 1, 10)    = "abcdefghi,"
-   * Util.abbreviate("abcdefghijklmno", ",", 2, 10)    = "abcdefghi,"
-   * Util.abbreviate("abcdefghijklmno", "::", 4, 10)   = "::efghij::"
-   * Util.abbreviate("abcdefghijklmno", "...", 6, 10)  = "...ghij..."
-   * Util.abbreviate("abcdefghijklmno", "*", 9, 10)    = "*ghijklmno"
-   * Util.abbreviate("abcdefghijklmno", "'", 10, 10)   = "'ghijklmno"
-   * Util.abbreviate("abcdefghijklmno", "!", 12, 10)   = "!ghijklmno"
-   * Util.abbreviate("abcdefghij", "abra", 0, 4)       = IllegalArgumentException
-   * Util.abbreviate("abcdefghij", "...", 5, 6)        = IllegalArgumentException
+   * Strings.abbreviate(null, null, *, *)                 = null
+   * Strings.abbreviate("abcdefghijklmno", null, *, *)    = "abcdefghijklmno"
+   * Strings.abbreviate("", "...", 0, 4)                  = ""
+   * Strings.abbreviate("abcdefghijklmno", "---", -1, 10) = "abcdefg---"
+   * Strings.abbreviate("abcdefghijklmno", ",", 0, 10)    = "abcdefghi,"
+   * Strings.abbreviate("abcdefghijklmno", ",", 1, 10)    = "abcdefghi,"
+   * Strings.abbreviate("abcdefghijklmno", ",", 2, 10)    = "abcdefghi,"
+   * Strings.abbreviate("abcdefghijklmno", "::", 4, 10)   = "::efghij::"
+   * Strings.abbreviate("abcdefghijklmno", "...", 6, 10)  = "...ghij..."
+   * Strings.abbreviate("abcdefghijklmno", "*", 9, 10)    = "*ghijklmno"
+   * Strings.abbreviate("abcdefghijklmno", "'", 10, 10)   = "'ghijklmno"
+   * Strings.abbreviate("abcdefghijklmno", "!", 12, 10)   = "!ghijklmno"
+   * Strings.abbreviate("abcdefghij", "abra", 0, 4)       = IllegalArgumentException
+   * Strings.abbreviate("abcdefghij", "...", 5, 6)        = IllegalArgumentException
    * </pre>
    * 
    * @param str  la cadena a comprobar, puede ser nula
