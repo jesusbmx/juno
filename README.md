@@ -69,10 +69,12 @@ System.out.println(round);
 String a = null;
 String b = "b";
 System.out.println(Objects.eq(a, b));
+System.out.println(Objects.isNull(null));
 ```
 
 ```markdown
 > false
+> true
 ```
 
 ### Arrays
