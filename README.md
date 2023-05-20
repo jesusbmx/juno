@@ -10,7 +10,7 @@ Herramientas de desarrollo para java y Android
 |　ﾉ⌒＼ ￣￣ヽ　ノ 
 ヽ＿＿＿＞､＿_／.   
 　　 ｜( 王 ﾉ〈   (\__/)
-　　 /ﾐ`ー―彡 \   (•ㅅ•)
+　　 /ﾐ`ー― 彡 \  (•ㅅ•)
 ```
 Descargar [juno.jar](https://github.com/jesusbmx/juno/raw/master/dist/juno.jar)
 
