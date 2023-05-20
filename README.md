@@ -7,7 +7,7 @@ Descargar [juno.jar](https://github.com/jesusbmx/juno/raw/master/dist/juno.jar)
 ```
      (\__/)             
      (•ㅅ•)        
-　＿ノ ヽ ノ＼  __    
+　 ＿ノ ヽ ノ＼  __    
  /　`/ ⌒Ｙ⌒ Ｙ　ヽ
 ( 　(三ヽ人　 /　　| 
 |　ﾉ⌒＼ ￣￣ヽ　ノ 
