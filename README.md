@@ -192,10 +192,10 @@ try {
 ```java
 String sDate = "2023-04-30 19:10:02";
         
-Date date = Dates.parse("yyyy-MM-dd", sDate);
+Calendar date = Dates.parseCalendar(sDate, "yyyy-MM-dd");
 System.out.println(Dates.dateTimeFormat(date)); // 2023-04-30 00:00:00
 
-Date dateTime = Dates.parse("yyyy-MM-dd HH:mm:ss", sDate);
+Date dateTime = Dates.parseDate(sDate, "yyyy-MM-dd HH:mm:ss");
 System.out.println(Dates.dateTimeFormat(dateTime)); // 2023-04-30 19:10:02
 
 

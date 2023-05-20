@@ -369,11 +369,11 @@ public final class Collect {
     return result.toArray(a);
   }
   
-  public static <V> boolean every(List<V> list, Func<V, Boolean> fun) {
+  public static <V> boolean every(List<V> list, Func<V, Boolean> func) {
     if (isNull(list)) return false;
     for (int i = 0; i < list.size(); i++) {
       V object = list.get(i);
-      if (!fun.call(object)) {
+      if (!func.call(object)) {
         return false;
       }
     }
@@ -391,11 +391,11 @@ public final class Collect {
     return true;
   }
   
-  public static <V> boolean some(List<V> list, Func<V, Boolean> fun) {
+  public static <V> boolean some(List<V> list, Func<V, Boolean> func) {
     if (isNull(list)) return false;
     for (int i = 0; i < list.size(); i++) {
       V object = list.get(i);
-      if (fun.call(object)) {
+      if (func.call(object)) {
         return true;
       }
     }

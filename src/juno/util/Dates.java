@@ -1,9 +1,11 @@
 package juno.util;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public final class Dates {
 
@@ -12,14 +14,44 @@ public final class Dates {
     
     /**
      * Convierte un string en una fecha
-     * @param format "yyyy-MM-dd"
      * @param source "2023-04-30 19:10:02"
+     * @param format "yyyy-MM-dd"
+     * @param locale
      * @return
      * @throws ParseException 
      */
-    public static Date parse(String format, String source) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+    public static Date parseDate(String source, String format, Locale locale) throws ParseException {
+        if (source == null) {
+            return null;
+        }
+        DateFormat dateFormat = new SimpleDateFormat(format, locale);
         return dateFormat.parse(source);
+    }
+    
+    public static Date parseDate(String source, String format) throws ParseException {
+        return parseDate(source, format, Locale.getDefault());
+    }
+    
+    /**
+     * Convierte un string en una fecha
+     * @param source "2023-04-30 19:10:02"
+     * @param format "yyyy-MM-dd"
+     * @param locale
+     * @return
+     * @throws ParseException 
+     */
+    public static Calendar parseCalendar(String source, String format, Locale locale) throws ParseException {
+        if (source == null) {
+            return null;
+        }
+        Calendar cal = Calendar.getInstance(locale);
+        DateFormat dateFormat = new SimpleDateFormat(format, locale);
+        cal.setTime(dateFormat.parse(source));
+        return dateFormat.getCalendar();
+    }
+    
+    public static Calendar parseCalendar(String source, String format) throws ParseException {
+        return parseCalendar(source, format, Locale.getDefault());
     }
     
     /**
@@ -29,7 +61,7 @@ public final class Dates {
      * @throws ParseException 
      */
     public static Date toDate(String source) throws ParseException {
-        return parse("yyyy-MM-dd", source);
+        return parseDate(source, "yyyy-MM-dd");
     }
     
     /**
@@ -39,12 +71,12 @@ public final class Dates {
      * @throws ParseException 
      */
     public static Date toDateTime(String source) throws ParseException {
-        return parse("yyyy-MM-dd HH:mm:ss", source);
+        return parseDate(source, "yyyy-MM-dd HH:mm:ss");
     }
     
     
     public static String format(String format, Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        DateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.format(date);
     }
     
@@ -123,25 +155,25 @@ public final class Dates {
         return calendarWithoutTime().getTime();
     }
     
-//    public static void main(String[] args) throws Exception {
-//        String sDate = "2023-04-30 19:10:02";
-//        
-//        Date date = Dates.parse("yyyy-MM-dd", sDate);
-//        System.out.println(Dates.dateTimeFormat(date)); // 2023-04-30 00:00:00
-//        
-//        Date dateTime = Dates.parse("yyyy-MM-dd HH:mm:ss", sDate);
-//        System.out.println(Dates.dateTimeFormat(dateTime)); // 2023-04-30 19:10:02
-//
-//        
-//        System.out.println(Dates.dateFormat(new Date())); // 2023-05-03
-//        System.out.println(Dates.dateTimeFormat(new Date())); // 2023-05-03 12:31:47
-//        System.out.println(Dates.format("yyyy-MM-dd HH:mm:ss", new Date())); // 2023-05-03 12:31:47
-//        
-//        
-//        Calendar cDate = Dates.calendarWithoutTime(); // get date without time
-//        System.out.println(Dates.dateTimeFormat(cDate)); // 2023-05-03 00:00:00
-//        
-//        Calendar cDateTime = Dates.calendarWithTime(); // get date and time
-//        System.out.println(Dates.dateTimeFormat(cDateTime)); // 2023-05-03 12:31:47
-//    }
+    public static void main(String[] args) throws Exception {
+        String sDate = "2023-04-30 19:10:02";
+        
+        Calendar date = Dates.parseCalendar(sDate, "yyyy-MM-dd");
+        System.out.println(Dates.dateTimeFormat(date)); // 2023-04-30 00:00:00
+        
+        Date dateTime = Dates.parseDate(sDate, "yyyy-MM-dd HH:mm:ss");
+        System.out.println(Dates.dateTimeFormat(dateTime)); // 2023-04-30 19:10:02
+
+        
+        System.out.println(Dates.dateFormat(new Date())); // 2023-05-03
+        System.out.println(Dates.dateTimeFormat(new Date())); // 2023-05-03 12:31:47
+        System.out.println(Dates.format("yyyy-MM-dd HH:mm:ss", new Date())); // 2023-05-03 12:31:47
+        
+        
+        Calendar cDate = Dates.calendarWithoutTime(); // get date without time
+        System.out.println(Dates.dateTimeFormat(cDate)); // 2023-05-03 00:00:00
+        
+        Calendar cDateTime = Dates.calendarWithTime(); // get date and time
+        System.out.println(Dates.dateTimeFormat(cDateTime)); // 2023-05-03 12:31:47
+    }
 }
