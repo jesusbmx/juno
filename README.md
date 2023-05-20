@@ -15,15 +15,15 @@ if (Util.isEmpty(txt)) {
 txt = Util.ifNull(txt, "hola mundo");
 System.out.printf("txt = '%s'\n", txt);
 
-txt = Texts.abbreviate(txt, 7);
+txt = Strings.abbreviate(txt, 7);
 System.out.printf("txt = '%s'\n", txt);
 
 String name = "jesus   ";
 name = Util.trim(name);
-name = Texts.capitalize(name);
+name = Strings.capitalize(name);
 System.out.printf("name = '%s'\n", name);
 
-System.out.println(Texts.subStr("[Hola mundo]", "[", "]"));
+System.out.println(Strings.subStr("[Hola mundo]", "[", "]"));
 ```
 
 ```markdown
