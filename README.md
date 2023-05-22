@@ -80,7 +80,7 @@ System.out.println(Objects.isNotNull(null));
 ```
 
 ### Collections
-Validación para arreglos.
+
 ```java
 List<String> strList = Collect.listOf("1", "2", "3", "7", "9");
 List<Integer> intList = Collect.map(strList, (String it) -> Convert.toInt(it) );
