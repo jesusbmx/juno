@@ -329,12 +329,11 @@ public final class Collect {
     return new TransformedCollect<I, R>(fromCollection, function);
   }
    
-  public static <I, R> List<R> map(List<I> list, Func<I, R> func) {
+  public static <I, R> List<R> map(Iterable<I> list, Func<I, R> func) {
     if (Objects.isNull(list)) return null;
-    final List<R> result = new ArrayList<R>(list.size());
-    for (int i = 0; i < list.size(); i++) {
-      I object = list.get(i);
-      result.add(func.call(object));
+    List<R> result = new ArrayList<R>();
+    for (I i : list) {
+      result.add(func.call(i));
     }
     return result;
   }
@@ -350,14 +349,13 @@ public final class Collect {
     return result.toArray(a);
   }
   
-  public static <V> List<V> filter(List<V> list, Func<V, Boolean> func) {
+  public static <V> List<V> filter(Iterable<V> list, Func<V, Boolean> func) {
     if (Objects.isNull(list)) return null;
-    final List<V> result = new ArrayList<V>(list.size());
-    for (int i = 0; i < list.size(); i++) {
-      V object = list.get(i);
-      if (func.call(object)) {
-        result.add(object);
-      }
+    List<V> result = new ArrayList<V>();
+    for (V v : list) {
+      if (func.call(v)) {
+        result.add(v);
+      } 
     }
     return result;
   }
@@ -377,13 +375,12 @@ public final class Collect {
     return result.toArray(a);
   }
   
-  public static <V> boolean every(List<V> list, Func<V, Boolean> func) {
+  public static <V> boolean every(Iterable<V> list, Func<V, Boolean> func) {
     if (Objects.isNull(list)) return false;
-    for (int i = 0; i < list.size(); i++) {
-      V object = list.get(i);
-      if (!func.call(object)) {
+    for (V v : list) {
+      if (!func.call(v)) {
         return false;
-      }
+      }   
     }
     return true;
   }
@@ -399,13 +396,12 @@ public final class Collect {
     return true;
   }
   
-  public static <V> boolean some(List<V> list, Func<V, Boolean> func) {
+  public static <V> boolean some(Iterable<V> list, Func<V, Boolean> func) {
     if (Objects.isNull(list)) return false;
-    for (int i = 0; i < list.size(); i++) {
-      V object = list.get(i);
-      if (func.call(object)) {
+    for (V v : list) {
+      if (func.call(v)) {
         return true;
-      }
+      }   
     }
     return false;
   }
@@ -421,12 +417,11 @@ public final class Collect {
     return false;
   }
   
-  public static <V> V find(List<V> list, Func<V, Boolean> func) {
+  public static <V> V find(Iterable<V> list, Func<V, Boolean> func) {
     if (Objects.isNull(list)) return null;
-    for (int i = 0; i < list.size(); i++) {
-      V object = list.get(i);
-      if (func.call(object)) {
-        return object;
+    for (V v : list) {
+      if (func.call(v)) {
+        return v;
       }
     }
     return null;

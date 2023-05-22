@@ -79,7 +79,7 @@ System.out.println(Objects.isNotNull(null));
 > false
 ```
 
-### Arrays
+### Collections
 Validación para arreglos.
 ```java
 String[] strArray = {"1", "2", "3", "7", "9"};
