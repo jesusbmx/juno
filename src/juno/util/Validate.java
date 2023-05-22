@@ -1,8 +1,8 @@
 package juno.util;
 
-public final class Objects {
+public final class Validate {
 
-  private Objects() {
+  private Validate() {
   }
     
    /**

@@ -1,5 +1,5 @@
 
-import juno.util.Objects;
+import juno.util.Validate;
 import juno.util.Strings;
 
 public class TestStrings {
@@ -11,7 +11,7 @@ public class TestStrings {
           System.out.println("txt is empty");
         }
 
-        txt = Objects.ifNull(txt, "hola mundo");
+        txt = Validate.ifNull(txt, "hola mundo");
         System.out.printf("txt = '%s'\n", txt);
         txt = Strings.abbreviate(txt, 7);
         System.out.printf("txt = '%s'\n", txt);

@@ -35,7 +35,7 @@ public final class Strings {
    * @return boolean
    */
   public static boolean isNull(String o) {
-    return o == null;
+    return Validate.isNull(o);
   }
   
   /**
@@ -53,7 +53,7 @@ public final class Strings {
    * @return boolean
    */
   public static boolean isNotNull(String o) {
-    return o != null;
+    return Validate.isNotNull(o);
   }
 
   /**
@@ -71,7 +71,7 @@ public final class Strings {
    * @return boolean
    */
   public static boolean isEmpty(CharSequence str) {
-    return Objects.isNull(str) || str.length() == 0;
+    return Validate.isNull(str) || str.length() == 0;
   }
   
   /**
@@ -126,7 +126,7 @@ public final class Strings {
    * @return String
    */
   public static String trim(CharSequence str) {
-    return Objects.isNull(str) ? Convert.STRING : str.toString().trim();
+    return Validate.isNull(str) ? Convert.STRING : str.toString().trim();
   }
   
   /**

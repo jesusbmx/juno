@@ -12,7 +12,7 @@ if (Strings.isEmpty(txt)) {
   System.out.println("txt is empty");
 }
     
-txt = Objects.ifNull(txt, "hola mundo");
+txt = Validate.ifNull(txt, "hola mundo");
 System.out.printf("txt = '%s'\n", txt);
 
 txt = Strings.abbreviate(txt, 7);
@@ -63,14 +63,14 @@ System.out.println(round);
 > 948.86
 ```
 
-### Objects
+### Validate
 ```java
 
 String a = null;
 String b = "b";
-System.out.println(Objects.eq(a, b));
-System.out.println(Objects.isNull(null));
-System.out.println(Objects.isNotNull(null));
+System.out.println(Validate.eq(a, b));
+System.out.println(Validate.isNull(null));
+System.out.println(Validate.isNotNull(null));
 ```
 
 ```markdown

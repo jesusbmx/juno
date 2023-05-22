@@ -19,15 +19,15 @@ public final class Collect {
    * @return boolean
    */
   public static <T> boolean isEmpty(T[] array) {
-    return Objects.isNull(array) || array.length == 0;
+    return Validate.isNull(array) || array.length == 0;
   }
   
   public static boolean isEmpty(Collection it) {
-    return Objects.isNull(it) || it.isEmpty();
+    return Validate.isNull(it) || it.isEmpty();
   }
   
   public static boolean isEmpty(Map it) {
-    return Objects.isNull(it) || it.isEmpty();
+    return Validate.isNull(it) || it.isEmpty();
   }
 
   /**
@@ -38,17 +38,17 @@ public final class Collect {
    * @return @true si el array contiene el indice.
    */
   public static <T> boolean hasIndex(T[] array, int index) {
-    if (Objects.isNull(array)) return false;
+    if (Validate.isNull(array)) return false;
     return index > -1 && array.length > index;
   }
   
   public static <T> boolean hasIndex(List<T> list, int index) {
-    if (Objects.isNull(list)) return false;
+    if (Validate.isNull(list)) return false;
     return index > -1 && list.size() > index;
   }
   
   public static <K, V> boolean hasKey(Map<K, V> map, K key) {
-    if (Objects.isNull(map)) return false;
+    if (Validate.isNull(map)) return false;
     return map.containsKey(key);
   }
   
@@ -86,13 +86,13 @@ public final class Collect {
   }
   
   public static <T> void add(Collection<T> out, T... elements) { 
-    if (Objects.isNotNull(elements))
+    if (Validate.isNotNull(elements))
       for (T e : elements) 
         out.add(e);
   }
   
   public static <K, V> void put(Map<K, V> out, Object... namesAndValues) {
-    if (Objects.isNull(namesAndValues)) return;
+    if (Validate.isNull(namesAndValues)) return;
     for (int i = 0; i < namesAndValues.length; i += 2) {
       K name = (K) namesAndValues[i];
       V value = (V) namesAndValues[i + 1];
@@ -101,13 +101,13 @@ public final class Collect {
   }
   
   public static void append(StringBuilder out, Object... elements) {
-    if (Objects.isNotNull(elements))
+    if (Validate.isNotNull(elements))
       for (Object e : elements) 
         out.append(e);
   }
   
   public static void append(StringBuilder out, Collection elements) {
-    if (Objects.isNotNull(elements))
+    if (Validate.isNotNull(elements))
       for (Object e : elements) 
         out.append(e);
   }
@@ -129,7 +129,7 @@ public final class Collect {
    * @return </T> 
    */
   public static <T> ArrayList<T> listOf(T... elements) {
-    if (Objects.isNull(elements)) return null;
+    if (Validate.isNull(elements)) return null;
     ArrayList<T> list = new ArrayList<T>(elements.length);
     add(list, elements);
     return list;
@@ -143,7 +143,7 @@ public final class Collect {
    * @return </T> 
    */
   public static <T> LinkedHashSet<T> setOf(T... elements) {
-    if (Objects.isNull(elements)) return null;
+    if (Validate.isNull(elements)) return null;
     LinkedHashSet<T> list = new LinkedHashSet<T>(elements.length);
     add(list, elements);
     return list;
@@ -159,7 +159,7 @@ public final class Collect {
    * @return HashMap</V></K> 
    */
   public static <K, V> LinkedHashMap<K, V> mapOf(Object... namesAndValues) {
-    if (Objects.isNull(namesAndValues)) return null;
+    if (Validate.isNull(namesAndValues)) return null;
     if (namesAndValues.length % 2 != 0) {
       throw new IllegalArgumentException("Expected alternating header names and values");
     }
@@ -284,7 +284,7 @@ public final class Collect {
   }
   
   public static <V> List<V> fill(List<V> list, V value, int start, int end) {
-    if (Objects.isNull(list)) return null;
+    if (Validate.isNull(list)) return null;
     for (int i = start; i < end; i++) {
       list.set(i, value);
     }
@@ -300,7 +300,7 @@ public final class Collect {
   }
   
   public static <V> V[] fill(V[] array, V value, int start, int end) {
-    if (Objects.isNull(array)) return null;
+    if (Validate.isNull(array)) return null;
     for (int i = start; i < end; i++) {
       array[i] = value;
     }
@@ -330,7 +330,7 @@ public final class Collect {
   }
    
   public static <I, R> List<R> map(Iterable<I> list, Func<I, R> func) {
-    if (Objects.isNull(list)) return null;
+    if (Validate.isNull(list)) return null;
     List<R> result = new ArrayList<R>();
     for (I i : list) {
       result.add(func.call(i));
@@ -339,7 +339,7 @@ public final class Collect {
   }
   
   public static <I, R> R[] map(I[] array, Class<R> componentType, Func<I, R> func) {
-    if (Objects.isNull(array)) return null;
+    if (Validate.isNull(array)) return null;
     final List<R> result = new ArrayList<R>(array.length);
     for (int i = 0; i < array.length; i++) {
       I object = array[i];
@@ -350,7 +350,7 @@ public final class Collect {
   }
   
   public static <V> List<V> filter(Iterable<V> list, Func<V, Boolean> func) {
-    if (Objects.isNull(list)) return null;
+    if (Validate.isNull(list)) return null;
     List<V> result = new ArrayList<V>();
     for (V v : list) {
       if (func.call(v)) {
@@ -361,7 +361,7 @@ public final class Collect {
   }
   
   public static <V> V[] filter(V[] array, Func<V, Boolean> func) {
-    if (Objects.isNull(array)) return null;
+    if (Validate.isNull(array)) return null;
     final List<V> result = new ArrayList<V>(array.length);
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
@@ -376,7 +376,7 @@ public final class Collect {
   }
   
   public static <V> boolean every(Iterable<V> list, Func<V, Boolean> func) {
-    if (Objects.isNull(list)) return false;
+    if (Validate.isNull(list)) return false;
     for (V v : list) {
       if (!func.call(v)) {
         return false;
@@ -386,7 +386,7 @@ public final class Collect {
   }
   
   public static <V> boolean every(V[] array, Func<V, Boolean> func) {
-    if (Objects.isNull(array)) return false;
+    if (Validate.isNull(array)) return false;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
       if (!func.call(object)) {
@@ -397,7 +397,7 @@ public final class Collect {
   }
   
   public static <V> boolean some(Iterable<V> list, Func<V, Boolean> func) {
-    if (Objects.isNull(list)) return false;
+    if (Validate.isNull(list)) return false;
     for (V v : list) {
       if (func.call(v)) {
         return true;
@@ -407,7 +407,7 @@ public final class Collect {
   }
   
   public static <V> boolean some(V[] array, Func<V, Boolean> func) {
-    if (Objects.isNull(array)) return false;
+    if (Validate.isNull(array)) return false;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
       if (func.call(object)) {
@@ -418,7 +418,7 @@ public final class Collect {
   }
   
   public static <V> V find(Iterable<V> list, Func<V, Boolean> func) {
-    if (Objects.isNull(list)) return null;
+    if (Validate.isNull(list)) return null;
     for (V v : list) {
       if (func.call(v)) {
         return v;
@@ -428,7 +428,7 @@ public final class Collect {
   }
   
   public static <V> V find(V[] array, Func<V, Boolean> func) {
-    if (Objects.isNull(array)) return null;
+    if (Validate.isNull(array)) return null;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
       if (func.call(object)) {
