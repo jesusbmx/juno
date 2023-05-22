@@ -83,8 +83,7 @@ System.out.println(Objects.isNotNull(null));
 
 ```java
 List<String> strList = Collect.listOf("1", "2", "3", "7", "9");
-List<Integer> intList = Collect.map(strList, 
-    (String it) -> Convert.toInt(it) );
+List<Integer> intList = Collect.map(strList, (String it) -> Convert.toInt(it) );
 
 if (Collect.hasIndex(strList, 2)) {
   System.out.printf("list[2] = '%s'\n", strList.get(2));
@@ -97,8 +96,7 @@ if (Collect.isEmpty(strList)) {
 System.out.println(Collect.get(strList, 50, "defaultVal"));
 
 System.out.println(Collect.join(strList));
-System.out.println(Collect.join(strList, 
-    (String it) -> "\"" + it.toString() + "\"" ));
+System.out.println(Collect.join(strList, (String it) -> "\"" + it.toString() + "\"" ));
 
 boolean some = Collect.some(strList, (String it) -> t.equals("7") );
 System.out.println(some);
