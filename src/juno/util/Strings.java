@@ -305,6 +305,28 @@ public final class Strings {
     if (isEmpty(str)) return new String[0];
     return WORDS.split(str);
   }
+  
+  /**
+   * Obiene una sub cadena
+   * @param str 
+   * @param first
+   * @param end 
+   * @return 
+   */
+  public static String subStrReturn(String str, String first, String end) {
+    final int iFirst = str.indexOf(first);
+    if (iFirst == -1) return null;
+
+    final int endChar = str.length() -1;
+    if (end == null) 
+        return str.substring(iFirst, endChar);
+
+    final int iEnd = str.indexOf(end, Math.min(iFirst + 1, endChar));
+    if (iEnd == -1) 
+        return null;
+
+    return str.substring(iFirst, iEnd + 1);
+  }
 
   /**
    * Obtiene un subcadena  
@@ -317,9 +339,11 @@ public final class Strings {
   public static String subStr(String str, String start, String end) {
     int beginIndex = str.indexOf(start);
     if (beginIndex == -1) return null;
+    
     int offset = beginIndex + start.length();
     int endIndex = str.indexOf(end, offset);
     if (endIndex == -1) endIndex = str.length();
+    
     return str.substring(offset, endIndex);
   }
 }
