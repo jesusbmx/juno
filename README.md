@@ -86,11 +86,11 @@ List<String> strList = Collect.listOf("1", "2", "3", "7", "9");
 List<Integer> intList = Collect.map(strList, (String it) -> Convert.toInt(it) );
 
 if (Collect.hasIndex(strList, 2)) {
-  System.out.printf("strList[2] = '%s'\n", strList.get(2));
+  System.out.printf("list[2] = '%s'\n", strList.get(2));
 }
 
 if (Collect.isEmpty(strList)) {
-  System.out.println("array is empty");
+  System.out.println("list is empty");
 }
 
 System.out.println(Collect.get(strList, 50, "defaultVal"));
@@ -115,7 +115,7 @@ System.out.println(Collect.join(fill, ","));
 ```
 
 ```markdown
-> array[2] = '3'
+> list[2] = '3'
 > defaultVal
 > 1,2,3,7,9
 > "1", "2", "3", "7", "9"
