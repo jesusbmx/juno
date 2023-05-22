@@ -82,36 +82,35 @@ System.out.println(Objects.isNotNull(null));
 ### Collections
 Validación para arreglos.
 ```java
-String[] strArray = {"1", "2", "3", "7", "9"};
-Integer[] intArray = Collect.map(strArray, Integer.class, 
-    (String it) -> Integer.parseInt(it) );
+List<String> strList = Collect.listOf("1", "2", "3", "7", "9");
+List<Integer> intList = Collect.map(strList, (String it) -> Convert.toInt(it) );
 
-if (Collect.hasIndex(strArray, 2)) {
-  System.out.printf("strArray[2] = '%s'\n", strArray[2]);
+if (Collect.hasIndex(strList, 2)) {
+  System.out.printf("strList[2] = '%s'\n", strList.get(2));
 }
 
-if (Collect.isEmpty(strArray)) {
+if (Collect.isEmpty(strList)) {
   System.out.println("array is empty");
 }
 
-System.out.println(Collect.get(strArray, 50, "defaultVal"));
+System.out.println(Collect.get(strList, 50, "defaultVal"));
 
-System.out.println(Collect.join(strArray));
-System.out.println(Collect.join(strArray, (String it) -> "\"" + it.toString() + "\"" ));
+System.out.println(Collect.join(strList));
+System.out.println(Collect.join(strList, (String it) -> "\"" + it.toString() + "\"" ));
 
-boolean some = Collect.some(strArray, (String it) -> t.equals("7") );
+boolean some = Collect.some(strList, (String it) -> t.equals("7") );
 System.out.println(some);
 
-boolean every = Collect.every(intArray, (Integer it) -> it % 2 == 0 );
+boolean every = Collect.every(intList, (Integer it) -> it % 2 == 0 );
 System.out.println(every);
 
-String find = Collect.find(strArray, (String it) -> t.equals("9") );
+String find = Collect.find(strList, (String it) -> t.equals("9") );
 System.out.println(find);
     
-Integer[] filter = Collect.filter(intArray, (Integer it) -> it > 5 );
+List<Integer> filter = Collect.filter(intList, (Integer it) -> it > 5 );
 System.out.println(Collect.join(filter, ","));
 
-String[] fill = Collect.fill(strArray, "z");
+List<String> fill = Collect.fill(strList, "z");
 System.out.println(Collect.join(fill, ","));
 ```
 
