@@ -309,23 +309,20 @@ public final class Strings {
   /**
    * Obiene una sub cadena
    * @param str 
-   * @param first
+   * @param start
    * @param end 
    * @return 
    */
-  public static String subStrReturn(String str, String first, String end) {
-    final int iFirst = str.indexOf(first);
-    if (iFirst == -1) return null;
-
-    final int endChar = str.length() -1;
-    if (end == null) 
-        return str.substring(iFirst, endChar);
-
-    final int iEnd = str.indexOf(end, Math.min(iFirst + 1, endChar));
-    if (iEnd == -1) 
-        return null;
-
-    return str.substring(iFirst, iEnd + 1);
+  public static String subStrReturn(String str, String start, String end) {
+    final int beginIndex = str.indexOf(start);
+    if (beginIndex == -1) return null;
+    
+    final int offset = beginIndex + start.length();
+    
+    int endIndex = str.indexOf(end, offset);
+    if (endIndex == -1) endIndex = str.length();
+    
+    return str.substring(beginIndex, endIndex + 1);
   }
 
   /**
@@ -337,13 +334,20 @@ public final class Strings {
    * @return "Hola mundo"
    */
   public static String subStr(String str, String start, String end) {
-    int beginIndex = str.indexOf(start);
+    final int beginIndex = str.indexOf(start);
     if (beginIndex == -1) return null;
     
-    int offset = beginIndex + start.length();
+    final int offset = beginIndex + start.length();
+    
     int endIndex = str.indexOf(end, offset);
     if (endIndex == -1) endIndex = str.length();
     
     return str.substring(offset, endIndex);
   }
+  
+//    public static void main(String[] args) {
+//        String cd = "Content-Disposition: form-data; name=\"fieldName\"; filename=\"filename.jpg\"";
+//        System.out.println(Strings.subStr(cd, "name=\"", "\""));
+//        System.out.println(Strings.subStrReturn(cd, "name=\"", "\""));
+//    }
 }
