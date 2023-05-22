@@ -76,6 +76,15 @@ public final class Collect {
     return get(map, key, null);
   }
   
+  public static <V> V first(List<V> collection) {
+    return collection.isEmpty() ? null : collection.get(0);
+  }
+  
+  public static <V> V last(List<V> collection) {
+    final int len = collection.size();
+    return collection.isEmpty() ? null : collection.get(len - 1);
+  }
+  
   public static <T> void add(Collection<T> out, T... elements) { 
     if (Objects.isNotNull(elements))
       for (T e : elements) 
