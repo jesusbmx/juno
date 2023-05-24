@@ -19,9 +19,31 @@ public class EventManager {
     private final List<EventListener> listeners = 
             new ArrayList<EventListener>();
     
+    private Executor executorDelivery = 
+            Dispatcher.get().executorDelivery();
+    
     private EventManager(String name) {
         this.name = name;
     }
+    
+    /**
+     * Obtiene el puente por su nombre.
+     * 
+     * @param name
+     * @return 
+     */
+    public static EventManager get(String name) {
+        EventManager eventHandler = INSTANCES.get(name);
+        if (eventHandler == null) {
+            eventHandler = new EventManager(name);
+            INSTANCES.put(name, eventHandler);
+        }
+        return eventHandler;
+    }
+    
+    public static EventManager get() {
+        return EventManager.get("DefaultEventHandler");
+    }   
     
     /**
      * Elimina todos los listeners de este puente
@@ -57,14 +79,13 @@ public class EventManager {
      * @param <V>
      * @param name nombre del listener
      * @param value valor que se mandara
-     * @param executor libera la respuesta
      */
-    public <V> void send(final String name, final V value, final Executor executor) {
+    public <V> void send(final String name, final V value) {
         for (int i = 0; i < listeners.size(); i++) {
             final EventListener listener = listeners.get(i);
             if (listener.name.equals(name)) {
                 
-                executor.execute(new Runnable() {
+                executorDelivery.execute(new Runnable() {
                     @Override
                     public void run() {
                         listener.onMessage(value);
@@ -73,30 +94,14 @@ public class EventManager {
             }
         }
     }
-    
-    public <V> void send(final String name, final V value) {
-        final Dispatcher dispatcher = Dispatcher.get();
-        send(name, value, dispatcher.executorDelivery());
+
+    public Executor getExecutorDelivery() {
+        return executorDelivery;
     }
-    
-    /**
-     * Obtiene el puente por su nombre.
-     * 
-     * @param name
-     * @return 
-     */
-    public static EventManager get(String name) {
-        EventManager eventHandler = INSTANCES.get(name);
-        if (eventHandler == null) {
-            eventHandler = new EventManager(name);
-            INSTANCES.put(name, eventHandler);
-        }
-        return eventHandler;
+
+    public void setExecutorDelivery(Executor executorDelivery) {
+        this.executorDelivery = executorDelivery;
     }
-    
-    public static EventManager get() {
-        return EventManager.get("DefaultEventHandler");
-    }   
     
 //    public static void main(String[] args) {
 //        EventManager receiver = EventManager.get("MyHandler");
