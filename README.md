@@ -290,9 +290,16 @@ call.execute((File result) -> {
 });
 ```
 
+### EventManager
+
 ```java
-Dispatcher dispatcher = Dispatcher.get();
-dispatcher.setExecutorService(/*no Threads*/4)
+EventManager receiver = EventManager.get("MyHandler");
+receiver.on("log", (String value) -> {
+    System.out.println(value);
+});
+
+EventManager sender = EventManager.get("MyHandler");
+sender.send("log", "Hola mundo");
 ```
 
 License
