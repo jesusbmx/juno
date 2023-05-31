@@ -62,14 +62,14 @@ public class EventManager {
     }
     
     public boolean removeAllListener(String listenerName) {
-        boolean r = false;
+        List<EventListener> r = new ArrayList<EventListener>();
         for (int i = 0; i < listeners.size(); i++) {
             EventListener listener = listeners.get(i);
             if (listener.name.equals(listenerName)) {
-                r = removeListener(listener);
+                r.add(listener);
             }
         }
-        return r;
+        return listeners.removeAll(r);
     }
 
     public List<EventListener> getListeners() {
@@ -87,12 +87,13 @@ public class EventManager {
     /**
      * Agrega un listener a este puente
      * @param <V>
-     * @param name nombre del listener
+     * @param listenerName nombre del listener
      * @param onMessage escucha cuando se envie un nuevo mensaje
      * @return 
      */
-    public <V> EventListener<V> on(String name, OnMessage<V> onMessage) {
-        final EventListener<V> listener = new EventListener<V>(this, name, onMessage);
+    public <V> EventListener<V> on(String listenerName, OnMessage<V> onMessage) {
+        final EventListener<V> listener = new EventListener<V>(
+                this, listenerName, onMessage);
         listeners.add(listener);
         return listener;
     }
@@ -100,13 +101,13 @@ public class EventManager {
     /**
      * Envia un mensaje a el puente libera la respuesta al listener
      * @param <V>
-     * @param name nombre del listener
+     * @param listenerName nombre del listener
      * @param value valor que se mandara
      */
-    public <V> void send(final String name, final V value) {
+    public <V> void send(final String listenerName, final V value) {
         for (int i = 0; i < listeners.size(); i++) {
             final EventListener listener = listeners.get(i);
-            if (listener.name.equals(name)) {
+            if (listener.name.equals(listenerName)) {
                 
                 executorDelivery.execute(new Runnable() {
                     @Override
