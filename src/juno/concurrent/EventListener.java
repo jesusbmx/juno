@@ -17,7 +17,7 @@ public class EventListener<T> implements OnMessage<T> {
     }
 
     public void remove() {
-        eventHandler.remove(this);
+        eventHandler.removeListener(this);
     }
 
     @Override

@@ -57,16 +57,16 @@ public class EventManager {
      * @param listener
      * @return 
      */
-    public boolean remove(EventListener<?> listener) {
+    public boolean removeListener(EventListener<?> listener) {
         return listeners.remove(listener);
     }
     
-    public boolean remove(String listenerName) {
+    public boolean removeAll(String listenerName) {
         boolean r = false;
         for (int i = 0; i < listeners.size(); i++) {
             EventListener listener = listeners.get(i);
             if (listener.name.equals(listenerName)) {
-                r = remove(listener);
+                r = removeListener(listener);
             }
         }
         return r;
