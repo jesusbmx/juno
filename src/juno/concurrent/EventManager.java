@@ -61,6 +61,28 @@ public class EventManager {
         return listeners.remove(listener);
     }
     
+    public boolean remove(String listenerName) {
+        for (int i = 0; i < listeners.size(); i++) {
+            EventListener listener = listeners.get(i);
+            if (listener.name.equals(listenerName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<EventListener> getListeners() {
+        return listeners;
+    }
+    
+    public EventListener getListener(int index) {
+        return listeners.get(index);
+    }
+    
+    public int getListenerCount() {
+        return listeners.size();
+    }
+    
     /**
      * Agrega un listener a este puente
      * @param <V>
