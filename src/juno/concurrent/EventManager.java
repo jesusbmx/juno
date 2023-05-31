@@ -62,13 +62,14 @@ public class EventManager {
     }
     
     public boolean remove(String listenerName) {
+        boolean r = false;
         for (int i = 0; i < listeners.size(); i++) {
             EventListener listener = listeners.get(i);
             if (listener.name.equals(listenerName)) {
-                return true;
+                r = true;
             }
         }
-        return false;
+        return r;
     }
 
     public List<EventListener> getListeners() {
