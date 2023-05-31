@@ -66,7 +66,7 @@ public class EventManager {
         for (int i = 0; i < listeners.size(); i++) {
             EventListener listener = listeners.get(i);
             if (listener.name.equals(listenerName)) {
-                r = true;
+                r = remove(listener);
             }
         }
         return r;
