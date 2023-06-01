@@ -41,6 +41,10 @@ public class EventManager {
         return eventHandler;
     }
     
+    public static EventManager get(Class<?> className) {
+        return get(className.getSimpleName());
+    }
+    
     public static EventManager get() {
         return EventManager.get("DefaultEventHandler");
     }   
