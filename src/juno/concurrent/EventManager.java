@@ -49,33 +49,6 @@ public class EventManager {
         return EventManager.get("DefaultEventHandler");
     }   
     
-    /**
-     * Elimina todos los listeners de este puente
-     */
-    public void removeAllListener() {
-        listeners.clear();
-    }
-    
-    /**
-     * Remueve el listener de este puente
-     * @param listener
-     * @return 
-     */
-    public boolean removeListener(EventListener<?> listener) {
-        return listeners.remove(listener);
-    }
-    
-    public boolean removeAllListener(String listenerName) {
-        List<EventListener> r = new ArrayList<EventListener>();
-        for (int i = 0; i < listeners.size(); i++) {
-            EventListener listener = listeners.get(i);
-            if (listener.name.equals(listenerName)) {
-                r.add(listener);
-            }
-        }
-        return listeners.removeAll(r);
-    }
-
     public List<EventListener> getListeners() {
         return listeners;
     }
@@ -89,6 +62,39 @@ public class EventManager {
     }
     
     /**
+     * Elimina todos los listeners de este puente
+     */
+    public void removeAllListener() {
+        synchronized (listeners) {
+            listeners.clear();
+        }
+    }
+    
+    /**
+     * Remueve el listener de este puente
+     * @param listener
+     * @return 
+     */
+    public boolean removeListener(EventListener<?> listener) {
+        synchronized (listeners) {
+            return listeners.remove(listener);
+        }
+    }
+    
+    public boolean removeAllListener(String listenerName) {
+        synchronized (listeners) {
+            List<EventListener> r = new ArrayList<EventListener>();
+            for (int i = 0; i < listeners.size(); i++) {
+                EventListener listener = listeners.get(i);
+                if (listener.name.equals(listenerName)) {
+                    r.add(listener);
+                }
+            }
+            return listeners.removeAll(r);
+        }
+    }
+    
+    /**
      * Agrega un listener a este puente
      * @param <V>
      * @param listenerName nombre del listener
@@ -96,10 +102,12 @@ public class EventManager {
      * @return 
      */
     public <V> EventListener<V> on(String listenerName, OnMessage<V> onMessage) {
-        final EventListener<V> listener = new EventListener<V>(
-                this, listenerName, onMessage);
-        listeners.add(listener);
-        return listener;
+        synchronized (listeners) {
+            final EventListener<V> listener = new EventListener<V>(
+                    this, listenerName, onMessage);
+            listeners.add(listener);
+            return listener;
+        }
     }
     
     /**
@@ -109,16 +117,18 @@ public class EventManager {
      * @param value valor que se mandara
      */
     public <V> void send(final String listenerName, final V value) {
-        for (int i = 0; i < listeners.size(); i++) {
-            final EventListener listener = listeners.get(i);
-            if (listener.name.equals(listenerName)) {
-                
-                executorDelivery.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.onMessage(value);
-                    }
-                });
+        synchronized (listeners) {
+            for (int i = 0; i < listeners.size(); i++) {
+                final EventListener listener = listeners.get(i);
+                if (listener.name.equals(listenerName)) {
+
+                    executorDelivery.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onMessage(value);
+                        }
+                    });
+                }
             }
         }
     }
