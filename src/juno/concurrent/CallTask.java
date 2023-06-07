@@ -1,6 +1,6 @@
 package juno.concurrent;
 
-public interface Task<T> {
+public interface CallTask<T> {
   
   /**
    * Ejecuta la tarea y devuelve una respuesta.

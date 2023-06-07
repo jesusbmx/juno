@@ -220,7 +220,7 @@ System.out.println(Dates.dateTimeFormat(cDateTime)); // 2023-05-03 12:31:47
 ### Async Call
 
 ```java
-AsyncCall<String> saludar() {
+Call<String> saludar() {
   return new AsyncCall<>(() -> {
     //throw new Exception("error");
     return "Hola Mundo";

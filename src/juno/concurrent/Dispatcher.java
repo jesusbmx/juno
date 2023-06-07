@@ -66,16 +66,11 @@ public final class Dispatcher implements ThreadFactory {
    * @param task tarea propuesta para la ejecución.
    * @return 
    */
-  public <V> AsyncCall<V> newCall(final Task<V> task) {
-    return new AsyncCall<V>(this) {
-      @Override 
-      public V doInBackground() throws Exception {
-        return task != null ? task.doInBackground() : null;
-      }
-    };
+  public <V> AsyncCall<V> newCall(final CallTask<V> task) {
+    return new AsyncCall<V>(task, this);
   }
   
-  public static <V> AsyncCall<V> call(Task<V> task) {
+  public static <V> AsyncCall<V> call(CallTask<V> task) {
     return Dispatcher.get().newCall(task);
   }
   
@@ -88,7 +83,7 @@ public final class Dispatcher implements ThreadFactory {
    * @return 
    */
   public <V> AsyncCall<V> execute(
-    Task<V> task,
+    CallTask<V> task,
     OnResponse<V> onResponse,
     OnError onError
   ) {
@@ -100,9 +95,9 @@ public final class Dispatcher implements ThreadFactory {
   /** 
    * Ejecuta la llamada en la cola de peticiones.
    */
-  public Future<?> submit(Runnable task) { 
+  public Future<?> submit(Runnable runnable) { 
     // Propone una tarea Runnable para la ejecución y devuelve un Futuro.
-    return executorService().submit(task);
+    return executorService().submit(runnable);
   }
     
   public Executor executorDelivery() {
@@ -153,21 +148,16 @@ public final class Dispatcher implements ThreadFactory {
     final String method, 
     final Object... params
   ) { 
-    return new AsyncCall<V>(this) {
-      @Override 
-      public V doInBackground() throws Exception {
-        Class<?>[] types = Types.getTypes(params);
-        final Method instanceMethod = obj.getClass()
-                .getDeclaredMethod(method, types);
-        
-        return (V) instanceMethod.invoke(obj, params);
-      }
-      @Override
-      public void onFailure(Exception e) {
-        super.onFailure(e);
-        e.printStackTrace();
-      }
-    };
+    return newCall(new CallTask<V>() {
+        @Override
+        public V doInBackground() throws Exception {
+            Class<?>[] types = Types.getTypes(params);
+            final Method instanceMethod = obj.getClass()
+                    .getDeclaredMethod(method, types);
+
+            return (V) instanceMethod.invoke(obj, params);
+        }
+    });
   }
   
   public static <V> AsyncCall<V> callUserfunc(
@@ -183,21 +173,16 @@ public final class Dispatcher implements ThreadFactory {
     final String method, 
     final Object... params
   ) {
-    return new AsyncCall<V>(this) {
-      @Override 
-      public V doInBackground() throws Exception {
-        Class<?>[] types = Types.getTypes(params);
-        final Method instanceMethod = clazz
-                .getDeclaredMethod(method, types);
-        
-        return (V) instanceMethod.invoke(null, params);
-      }
-      @Override
-      public void onFailure(Exception e) {
-        super.onFailure(e);
-        e.printStackTrace();
-      }
-    };
+    return newCall(new CallTask<V>() {
+        @Override
+        public V doInBackground() throws Exception {
+            Class<?>[] types = Types.getTypes(params);
+            final Method instanceMethod = clazz
+                    .getDeclaredMethod(method, types);
+
+            return (V) instanceMethod.invoke(null, params);
+        }
+    });
   }
   
   public static <V> AsyncCall<V> callUserfunc(

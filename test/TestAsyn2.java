@@ -25,7 +25,7 @@ public class TestAsyn2 {
       call.cancel(true);
     }
     call = Dispatcher.callUserfunc(this, "saludar", 10);
-    call.execute();
+    call.submit();
   }
   
   public void saludar(int len) {
