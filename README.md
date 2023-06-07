@@ -261,28 +261,6 @@ Call<String> saludar() {
 }
 ```
 
-Run tasks asynchronously
-```java
-saludar().then((String result) -> {
-  System.out.println(result);
-
-}, (Exception error) -> {
-  System.err.println(error);
-
-});
-```
-
-Run tasks synchronously
-```java
-try {
-  String str = saludar().await();
-  System.out.println(str);
-
-} catch(Exception error) {
-  System.err.println(error);
-}
-```
-
 ### EventManager
 
 ```java
