@@ -228,7 +228,7 @@ Call<String> saludar() {
 }
 ```
 
-Async
+Run tasks asynchronously
 ```java
 saludar().then((String result) -> {
   System.out.println(result);
@@ -239,7 +239,40 @@ saludar().then((String result) -> {
 });
 ```
 
-Sync
+Run tasks synchronously
+```java
+try {
+  String str = saludar().await();
+  System.out.println(str);
+
+} catch(Exception error) {
+  System.err.println(error);
+}
+```
+
+### Sender Call
+
+```java
+SenderCall<String> saludar() {
+  return new SenderCall<>((sender) -> {
+    //sender.reject(throw new Exception("error"));
+    sender.resolve("Hola Mundo");
+  });
+}
+```
+
+Run tasks asynchronously
+```java
+saludar().then((String result) -> {
+  System.out.println(result);
+
+}, (Exception error) -> {
+  System.err.println(error);
+
+});
+```
+
+Run tasks synchronously
 ```java
 try {
   String str = saludar().await();
