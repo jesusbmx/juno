@@ -41,16 +41,7 @@ public abstract class AsyncCall<T>
   }
 
   @Override public void execute(final OnResponse<T> onResponse, final OnError onError) {
-    this.execute(new Callback<T>() {
-        @Override
-        public void onResponse(T result) throws Exception {
-          onResponse.onResponse(result);
-        }
-        @Override
-        public void onFailure(Exception e) {
-          onError.onFailure(e);
-        }
-    });
+    this.execute(new CallbackAdapter<T>(onResponse, onError));
   }
   
   public void execute() {

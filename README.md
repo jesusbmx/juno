@@ -217,20 +217,20 @@ System.out.println(Dates.dateTimeFormat(cDateTime)); // 2023-05-03 12:31:47
 
 
 
-### Promise
+### Async Call
 
 ```java
-Promise<String> saludar() {
-  return new Promise<>((Sender<String> sender) -> {
-    //sender.reject(new Exception("error"));
-    sender.resolve("Hola Mundo");
+AsyncCall<String> saludar() {
+  return new AsyncCall<>(() -> {
+    //throw new Exception("error");
+    return "Hola Mundo";
   });
 }
 ```
 
 Async
 ```java
-saludar().then((String result) -> {
+saludar().execute((String result) -> {
   System.out.println(result);
 
 }, (Exception error) -> {
