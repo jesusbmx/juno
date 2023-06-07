@@ -250,46 +250,6 @@ try {
 }
 ```
 
-### Concurrent
-```java
-class CopyAsyncTask extends AsyncCall<File> {
-  File in = new File("/etc/hola.txt");
-
-  @Override public Void doInBackground() throws Exception {
-    FileOutputStream out = null;
-    try {
-      File copy = new File("/etc/hola-copy.txt");
-      out = new FileOutputStream(copy);
-      IOUtils.copy(in, out);
-      return copy;
-
-    } finally {
-      IOUtils.closeQuietly(out);
-    }
-  }
-}
-```
-
-```java
-Call<File> call = new CopyAsyncTask();
-
-call.execute((File result) -> {   
-  Toast.makeText(getApplicationContext(), file.toString(), Toast.LENGTH_SHORT).show();
-
-}, (Exception e) {
-  new AlertDialog.Builder(ActivityMain.this)
-        .setTitle("Error")
-        .setMessage(e.getMessage())
-        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-          @Override public void onClick(DialogInterface dialog, int which) {
-            ....
-          }
-        })
-        .create()
-        .show();
-});
-```
-
 ### EventManager
 
 ```java
