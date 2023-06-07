@@ -3,19 +3,27 @@ package juno.concurrent;
 
 public interface Call<T> {
   /**
-   * Envíe de forma asíncrona la solicitud y notifica su respuesta o si se 
-   * produjo un error al crear la solicitud o al procesar la respuesta.
+   * Executa la tarea de manera asíncrona y notifica su respuesta al callback
+   * 
    * @param callback devolución de llamada
    */
-  void execute(Callback<T> callback);
+  void then(Callback<T> callback);
   
   /**
-   * Envíe de forma asíncrona la solicitud y notifica su respuesta o si se 
-   * produjo un error al crear la solicitud o al procesar la respuesta.
+   * Executa la tarea de manera asíncrona y notifica su respuesta al callback
+   * 
    * @param onResponse
    * @param onError
    */
-  void execute(OnResponse<T> onResponse, OnError onError);
+  void then(OnResponse<T> onResponse, OnError onError);
+  
+  /**
+   * Executa la tarea de manera síncrona
+   * 
+   * @return resultado obtenido
+   * @throws Exception 
+   */
+  T await() throws Exception;
   
   /**
    * Trata de cancelar la ejecución de esta tarea.
@@ -23,12 +31,18 @@ public interface Call<T> {
    * @param mayInterruptIfRunning {@code true} valida se el hilo que se ejecuta 
    * debe ser interrumpido; de lo contrario, se permiten tareas en curso
    * hasta completar.
+   * 
+   * @return true si fue cancelado
    */
   boolean cancel(boolean mayInterruptIfRunning);
   
-  /** Devuelve <tt>true</tt> si esta tarea estaba cancelada. */
+  /** 
+   * @return Devuelve <tt>true</tt> si esta tarea estaba cancelada. 
+   */
   boolean isCancelled();
 
-  /** Devuelve <tt>true</tt> si esta tarea se completó. */
+  /** 
+   * @return Devuelve <tt>true</tt> si esta tarea se completó. 
+   */
   boolean isDone();
 }

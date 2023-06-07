@@ -12,15 +12,15 @@ public class TestAsync {
         return new AsyncCall<String>(new Task<String>() {
             @Override
             public String doInBackground() throws Exception {
-                throw new Exception("error");
-                //return "Hola mundo"; 
+                //throw new Exception("error");
+                return "Hola mundo"; 
             }
         });
     }
     
     public static void main(String[] args) {
         TestAsync test = new TestAsync();
-        test.saludar().execute(new OnResponse<String>() {
+        test.saludar().then(new OnResponse<String>() {
             @Override
             public void onResponse(String result) throws Exception {
                 System.out.println(result);

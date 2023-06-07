@@ -230,7 +230,7 @@ Call<String> saludar() {
 
 Async
 ```java
-saludar().execute((String result) -> {
+saludar().then((String result) -> {
   System.out.println(result);
 
 }, (Exception error) -> {

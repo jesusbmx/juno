@@ -59,38 +59,6 @@ public final class Dispatcher implements ThreadFactory {
   public void setExecutorService(ExecutorService es) {
     executorService = es;
   }
-    
-  /** 
-   * Crea una llamada. 
-   * @param <V>
-   * @param task tarea propuesta para la ejecución.
-   * @return 
-   */
-  public <V> AsyncCall<V> newCall(final Task<V> task) {
-    return new AsyncCall<V>(task, this);
-  }
-  
-  public static <V> AsyncCall<V> call(Task<V> task) {
-    return Dispatcher.get().newCall(task);
-  }
-  
-  /**
-   * Executa una tarea
-   * @param <V>
-   * @param task
-   * @param onResponse
-   * @param onError
-   * @return 
-   */
-  public <V> AsyncCall<V> execute(
-    Task<V> task,
-    OnResponse<V> onResponse,
-    OnError onError
-  ) {
-    final AsyncCall<V> asyncCall = newCall(task);
-    asyncCall.execute(onResponse, onError);
-    return asyncCall;
-  }
   
   /** 
    * Ejecuta la llamada en la cola de peticiones.
@@ -141,6 +109,38 @@ public final class Dispatcher implements ThreadFactory {
         callback.onFailure(error);
       }
     });
+  }
+    
+  /** 
+   * Crea una llamada. 
+   * @param <V>
+   * @param task tarea propuesta para la ejecución.
+   * @return 
+   */
+  public <V> AsyncCall<V> newCall(final Task<V> task) {
+    return new AsyncCall<V>(task, this);
+  }
+  
+  public static <V> AsyncCall<V> call(Task<V> task) {
+    return Dispatcher.get().newCall(task);
+  }
+  
+  /**
+   * Executa una tarea
+   * @param <V>
+   * @param task
+   * @param onResponse
+   * @param onError
+   * @return 
+   */
+  public <V> AsyncCall<V> execute(
+    Task<V> task,
+    OnResponse<V> onResponse,
+    OnError onError
+  ) {
+    final AsyncCall<V> asyncCall = newCall(task);
+    asyncCall.then(onResponse, onError);
+    return asyncCall;
   }
   
    public <V> AsyncCall<V> newCallUserfunc(
