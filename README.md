@@ -253,7 +253,7 @@ try {
 ### Sender Call
 
 ```java
-SenderCall<String> saludar() {
+Call<String> saludar() {
   return new SenderCall<>((sender) -> {
     //sender.reject(throw new Exception("error"));
     sender.resolve("Hola Mundo");
