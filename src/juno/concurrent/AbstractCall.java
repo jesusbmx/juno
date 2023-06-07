@@ -3,7 +3,7 @@ package juno.concurrent;
 import java.util.concurrent.Future;
 
 public abstract class AbstractCall<T>
-  implements Call<T>, Callback<T>, CallTask<T>, Runnable {
+  implements Call<T>, Callback<T>, Task<T>, Runnable {
   
   final Dispatcher dispatcher;
   Callback<T> callback;
@@ -37,14 +37,14 @@ public abstract class AbstractCall<T>
   
   @Override public void execute(Callback<T> callback) {
     this.callback = callback;
-    submit();
+    execute();
   }
 
   @Override public void execute(final OnResponse<T> onResponse, final OnError onError) {
     this.execute(new CallbackAdapter<T>(onResponse, onError));
   }
   
-  public void submit() {
+  public void execute() {
     future = this.dispatcher.submit(this);
     isRunning = true;
   }

@@ -66,11 +66,11 @@ public final class Dispatcher implements ThreadFactory {
    * @param task tarea propuesta para la ejecución.
    * @return 
    */
-  public <V> AsyncCall<V> newCall(final CallTask<V> task) {
+  public <V> AsyncCall<V> newCall(final Task<V> task) {
     return new AsyncCall<V>(task, this);
   }
   
-  public static <V> AsyncCall<V> call(CallTask<V> task) {
+  public static <V> AsyncCall<V> call(Task<V> task) {
     return Dispatcher.get().newCall(task);
   }
   
@@ -83,7 +83,7 @@ public final class Dispatcher implements ThreadFactory {
    * @return 
    */
   public <V> AsyncCall<V> execute(
-    CallTask<V> task,
+    Task<V> task,
     OnResponse<V> onResponse,
     OnError onError
   ) {
@@ -148,7 +148,7 @@ public final class Dispatcher implements ThreadFactory {
     final String method, 
     final Object... params
   ) { 
-    return newCall(new CallTask<V>() {
+    return newCall(new Task<V>() {
         @Override
         public V doInBackground() throws Exception {
             Class<?>[] types = Types.getTypes(params);
@@ -173,7 +173,7 @@ public final class Dispatcher implements ThreadFactory {
     final String method, 
     final Object... params
   ) {
-    return newCall(new CallTask<V>() {
+    return newCall(new Task<V>() {
         @Override
         public V doInBackground() throws Exception {
             Class<?>[] types = Types.getTypes(params);
