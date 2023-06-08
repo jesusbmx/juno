@@ -6,12 +6,12 @@ Descargar [juno.jar](https://github.com/jesusbmx/juno/raw/master/dist/juno.jar)
 
 ### Convert
 ```java
-int i = Convert.toInt("1"); // 1
+int i = Convert.toInt("1", -1); // 1
 float f = Convert.toFloat("1.1"); // 1.1f
-double d = Convert.toDouble("2.2") // 2.2d
-double l = Convert.toLong("1000") // 1000L
-String str = Convert.toString(f) // "1.1"
-boolean bool = Convert.toBool("true") // true
+double d = Convert.toDouble("2.2"); // 2.2d
+double l = Convert.toLong("1000"); // 1000L
+String str = Convert.toString(f, ""); // "1.1"
+boolean bool = Convert.toBool("true"); // true
 ```
 
 ### Base64
