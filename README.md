@@ -183,17 +183,19 @@ System.out.println(Dates.dateTimeFormat(date_iso_8601)); // 2023-06-20 13:18:11
 ### Async Call
 
 ```java
-Call<File> read(final String file) {
+Call<String> read(final File file) {
   return new AsyncCall<>(() -> {
     //throw new Exception("error");
-    return Files.readString(new File(file));
+    return Files.readString(file);
   });
 }
 ```
 
 Run tasks asynchronously
 ```java
-read("/home/user/a.txt").then((String result) -> {
+File file = new File("/home/user/a.txt");
+
+read(file).then((String result) -> {
   System.out.println(result);
 
 }, (Exception error) -> {
@@ -205,7 +207,9 @@ read("/home/user/a.txt").then((String result) -> {
 Run tasks synchronously
 ```java
 try {
-  String result = read("/home/user/a.txt").await();
+  File file = new File("/home/user/a.txt");
+
+  String result = read(file).await();
   System.out.println(result);
 
 } catch(Exception error) {
@@ -216,10 +220,10 @@ try {
 ### Sender Call
 
 ```java
-Call<File> read(final String file) {
+Call<String> read(final File file) {
   return new SenderCall<>((sender) -> {
     //sender.reject(throw new Exception("error"));
-    String result = Files.readString(new File(file));
+    String result = Files.readString(file);
     sender.resolve(result);
   });
 }
@@ -228,12 +232,12 @@ Call<File> read(final String file) {
 ### Abstract Call
 
 ```java
-Call<File> read(final String file) {
+Call<String> read(final File file) {
     return new AbstractCall<Integer>() {
         @Override
         public String doInBackground() throws Exception {
             //throw new Exception("error");
-            return Files.readString(new File(file));
+            return Files.readString(file);
         }
     };
 }
