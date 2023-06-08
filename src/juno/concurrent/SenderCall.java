@@ -27,8 +27,7 @@ public class SenderCall<T> extends AbstractCall<T> implements Sender<T> {
         synchronized (this) {
             executor.execute(this);
 
-            while (true) {
-                wait(waitTime);
+            do {
 
                 if (error != null) {
                     throw error;
@@ -37,7 +36,10 @@ public class SenderCall<T> extends AbstractCall<T> implements Sender<T> {
                 if (result != null) {
                     return result;
                 }
-            }
+                
+                wait(waitTime);
+                
+            } while (true);
         }
     }
 
