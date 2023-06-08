@@ -250,6 +250,15 @@ EventManager sender = EventManager.get("MyHandler");
 sender.send("log", "Hola mundo");
 ```
 
+```java
+EventManager receiver = EventManager.get("MyHandler");
+EventListener<String> listener = receiver.on("log", (String value) -> {
+    System.out.println(value);
+});
+...
+listener.remove()
+```
+
 
 ### IO
 ```java
