@@ -231,6 +231,7 @@ Call<Integer> sum(final int a, final int b) {
     return new AbstractCall<Integer>() {
         @Override
         public Integer doInBackground() throws Exception {
+            //throw new Exception("error");
             return a + b;
         }
     };
