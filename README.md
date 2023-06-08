@@ -257,6 +257,9 @@ EventListener<Integer> listener = receiver.on("status", (Integer value) -> {
 });
 ...
 listener.remove()
+
+EventManager sender = EventManager.get("MyHandler");
+sender.send(200, "status");
 ```
 
 
