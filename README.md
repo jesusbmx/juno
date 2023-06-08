@@ -230,7 +230,7 @@ Call<Integer> sum(final int a, final int b) {
 Call<Integer> sum(final int a, final int b) {
     return new AbstractCall<Integer>() {
         @Override
-        public String doInBackground() throws Exception {
+        public Integer doInBackground() throws Exception {
             return a + b;
         }
     };
