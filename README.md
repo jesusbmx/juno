@@ -180,7 +180,6 @@ System.out.println(Dates.dateTimeFormat(date_iso_8601)); // 2023-06-20 13:18:11
 ```
 
 
-
 ### Async Call
 
 ```java
@@ -224,6 +223,20 @@ Call<String> saludar() {
   });
 }
 ```
+
+### Abstract Call
+
+```java
+Call<String> saludar() {
+    return new AbstractCall<String>() {
+        @Override
+        public String doInBackground() throws Exception {
+            return "Hola mundo";
+        }
+    };
+}
+```
+
 
 ### EventManager
 
