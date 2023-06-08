@@ -183,17 +183,17 @@ System.out.println(Dates.dateTimeFormat(date_iso_8601)); // 2023-06-20 13:18:11
 ### Async Call
 
 ```java
-Call<String> saludar() {
+Call<Integer> sum(final int a, final int b) {
   return new AsyncCall<>(() -> {
     //throw new Exception("error");
-    return "Hola Mundo";
+    return a + b;
   });
 }
 ```
 
 Run tasks asynchronously
 ```java
-saludar().then((String result) -> {
+sum(3, 7).then((Integer result) -> {
   System.out.println(result);
 
 }, (Exception error) -> {
@@ -205,8 +205,8 @@ saludar().then((String result) -> {
 Run tasks synchronously
 ```java
 try {
-  String str = saludar().await();
-  System.out.println(str);
+  Integer result = sum(3, 7).await();
+  System.out.println(result);
 
 } catch(Exception error) {
   System.err.println(error);
@@ -216,10 +216,10 @@ try {
 ### Sender Call
 
 ```java
-Call<String> saludar() {
+Call<Integer> sum(final int a, final int b) {
   return new SenderCall<>((sender) -> {
     //sender.reject(throw new Exception("error"));
-    sender.resolve("Hola Mundo");
+    sender.resolve(a + b);
   });
 }
 ```
@@ -227,11 +227,11 @@ Call<String> saludar() {
 ### Abstract Call
 
 ```java
-Call<String> saludar() {
-    return new AbstractCall<String>() {
+Call<Integer> sum(final int a, final int b) {
+    return new AbstractCall<Integer>() {
         @Override
         public String doInBackground() throws Exception {
-            return "Hola mundo";
+            return a + b;
         }
     };
 }
