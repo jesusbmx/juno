@@ -290,12 +290,11 @@ Read bytes.
 byte[] bytes = Files.readByteArray(new File("/etc/hola.txt"));
 ```
 
-Copiar
+Copy
 ```java
 Files.copy("/etc/hola.txt", "/etc/hola-copy.txt");
 ```
 
-Copiar
 ```java
 FileInputStream in = null;
 FileOutputStream out = null;
