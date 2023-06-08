@@ -4,6 +4,30 @@ Herramientas de desarrollo para java y Android
 
 Descargar [juno.jar](https://github.com/jesusbmx/juno/raw/master/dist/juno.jar)
 
+### Convert
+```java
+int i = Convert.toInt("1"); // 1
+float f = Convert.toFloat("1.1"); // 1.1f
+double d = Convert.toDouble("2.2") // 2.2d
+double l = Convert.toLong("1000") // 1000L
+String str = Convert.toString(f) // "1.1"
+boolean bool = Convert.toBool("true") // true
+```
+
+### Base64
+```java
+String encodeBase64 = Convert.toBase64("Hola mundo");
+System.out.println(encodeBase64);
+
+String decodeBase64 = Convert.fromBase64(encodeBase64);
+System.out.println(decodeBase64);
+```
+
+```markdown
+> SG9sYSBtdW5kbw==
+> Hola mundo
+```
+
 ### Strings
 Validación para cadenas.
 ```java
@@ -126,72 +150,6 @@ System.out.println(Collect.join(fill, ","));
 > z,z,z,z,z
 ```
 
-
-### Base64
-```java
-String encodeBase64 = Convert.toBase64("Hola mundo");
-System.out.println(encodeBase64);
-
-String decodeBase64 = Convert.fromBase64(encodeBase64);
-System.out.println(decodeBase64);
-```
-
-```markdown
-> SG9sYSBtdW5kbw==
-> Hola mundo
-```
-
-### IO
-```java
-String path = "/etc/hola.txt";
-File f = new File(path);
-
-Files.write(f, "Hola mundo\n", /*append*/true, "UTF-8");
-
-String str = Files.readString(f);
-System.out.println(str);
-
-System.out.printf("parent: %s\n", Files.getParent(path));
-System.out.printf("name: %s\n", Files.getName(path));
-System.out.printf("extension: %s\n", Files.getExtension(path));
-System.out.printf("base name: %s\n", Files.getBaseName(path));
-```
-
-```markdown
-> Hola mundo
->
-> parent: /etc/
-> name: hola.txt
-> extension: txt
-> base name: hola
-```
-
-Read bytes.
-```java
-byte[] bytes = Files.readByteArray(new File("/etc/hola.txt"));
-```
-
-Copiar
-```java
-Files.copy("/etc/hola.txt", "/etc/hola-copy.txt");
-```
-
-Copiar
-```java
-FileInputStream in = null;
-FileOutputStream out = null;
-try {
-  in = new FileInputStream("/etc/hola.txt");
-  out = new FileOutputStream("/etc/hola-copy.txt");
-  Files.copy(in, out);
-
-} finally {
-  Files.closeQuietly(in);
-  Files.closeQuietly(out);
-}
-```
-
-
 ### Date
 ```java
 String sDate = "2023-04-30 19:10:02";
@@ -277,6 +235,57 @@ receiver.on("log", (String value) -> {
 
 EventManager sender = EventManager.get("MyHandler");
 sender.send("log", "Hola mundo");
+```
+
+
+### IO
+```java
+String path = "/etc/hola.txt";
+File f = new File(path);
+
+Files.write(f, "Hola mundo\n", /*append*/true, "UTF-8");
+
+String str = Files.readString(f);
+System.out.println(str);
+
+System.out.printf("parent: %s\n", Files.getParent(path));
+System.out.printf("name: %s\n", Files.getName(path));
+System.out.printf("extension: %s\n", Files.getExtension(path));
+System.out.printf("base name: %s\n", Files.getBaseName(path));
+```
+
+```markdown
+> Hola mundo
+>
+> parent: /etc/
+> name: hola.txt
+> extension: txt
+> base name: hola
+```
+
+Read bytes.
+```java
+byte[] bytes = Files.readByteArray(new File("/etc/hola.txt"));
+```
+
+Copiar
+```java
+Files.copy("/etc/hola.txt", "/etc/hola-copy.txt");
+```
+
+Copiar
+```java
+FileInputStream in = null;
+FileOutputStream out = null;
+try {
+  in = new FileInputStream("/etc/hola.txt");
+  out = new FileOutputStream("/etc/hola-copy.txt");
+  Files.copy(in, out);
+
+} finally {
+  Files.closeQuietly(in);
+  Files.closeQuietly(out);
+}
 ```
 
 License
