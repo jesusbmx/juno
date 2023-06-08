@@ -233,7 +233,7 @@ Call<String> read(final File file) {
 
 ```java
 Call<String> read(final File file) {
-    return new AbstractCall<Integer>() {
+    return new AbstractCall<String>() {
         @Override
         public String doInBackground() throws Exception {
             //throw new Exception("error");
