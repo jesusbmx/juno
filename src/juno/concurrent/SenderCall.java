@@ -5,21 +5,21 @@ public class SenderCall<T> extends AbstractCall<T> implements Sender<T> {
     protected volatile T result;
     protected volatile Exception error;
 
-    public final SenderExecutor<T> executor;
+    public final SenderTask<T> task;
 
-    public SenderCall(SenderExecutor<T> executor, Dispatcher dispatcher) {
+    public SenderCall(SenderTask<T> task, Dispatcher dispatcher) {
         super(dispatcher);
-        this.executor = executor;
+        this.task = task;
     }
     
-    public SenderCall(SenderExecutor<T> executor) {
-        this(executor, Dispatcher.get());
+    public SenderCall(SenderTask<T> task) {
+        this(task, Dispatcher.get());
     }
 
     @Override
     public T doInBackground() throws Exception {
         synchronized (this) {
-            executor.execute(this);
+            task.execute(this);
 
             do {
 

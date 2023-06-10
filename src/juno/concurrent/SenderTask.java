@@ -1,6 +1,6 @@
 package juno.concurrent;
 
-public interface SenderExecutor<V> {
+public interface SenderTask<V> {
     
     void execute(Sender<V> sender) throws Exception;    
 }
