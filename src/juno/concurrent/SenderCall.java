@@ -31,7 +31,8 @@ public class SenderCall<T> extends AbstractCall<T> implements Sender<T> {
                     return result;
                 }
                 
-                //System.out.println("SenderCall.wait");
+                // Si no se detecta una respuesta dormimos el hilo hasta que
+                // se llame alguno de los metodos resolve o reject
                 wait();
                 
             } while (true);
@@ -42,7 +43,7 @@ public class SenderCall<T> extends AbstractCall<T> implements Sender<T> {
     public void resolve(T result) throws Exception {
         synchronized (this) {
             this.result = result;
-            notifyAll();
+            notifyAll(); // depierta el hilo si esta dormido
         }
     }
 
@@ -50,7 +51,7 @@ public class SenderCall<T> extends AbstractCall<T> implements Sender<T> {
     public void reject(Exception error) {
         synchronized (this) {
             this.error = error;
-            notifyAll();
+            notifyAll(); // depierta el hilo si esta dormido
         }
     }
 }
