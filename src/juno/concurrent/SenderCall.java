@@ -6,16 +6,10 @@ public class SenderCall<T> extends AbstractCall<T> implements Sender<T> {
     protected volatile Exception error;
 
     public final SenderExecutor<T> executor;
-    public final long waitTime;
 
-    public SenderCall(SenderExecutor<T> executor, Dispatcher dispatcher, long waitTime) {
+    public SenderCall(SenderExecutor<T> executor, Dispatcher dispatcher) {
         super(dispatcher);
         this.executor = executor;
-        this.waitTime = waitTime;
-    }
-    
-    public SenderCall(SenderExecutor<T> executor, Dispatcher dispatcher) {
-        this(executor, dispatcher, 100);
     }
     
     public SenderCall(SenderExecutor<T> executor) {
@@ -37,7 +31,8 @@ public class SenderCall<T> extends AbstractCall<T> implements Sender<T> {
                     return result;
                 }
                 
-                wait(waitTime);
+                //System.out.println("SenderCall.wait");
+                wait();
                 
             } while (true);
         }
@@ -45,11 +40,17 @@ public class SenderCall<T> extends AbstractCall<T> implements Sender<T> {
 
     @Override
     public void resolve(T result) throws Exception {
-        this.result = result;
+        synchronized (this) {
+            this.result = result;
+            notifyAll();
+        }
     }
 
     @Override
     public void reject(Exception error) {
-        this.error = error;
+        synchronized (this) {
+            this.error = error;
+            notifyAll();
+        }
     }
 }
