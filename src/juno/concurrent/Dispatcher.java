@@ -60,14 +60,6 @@ public final class Dispatcher implements ThreadFactory {
     executorService = es;
   }
   
-  /** 
-   * Ejecuta la llamada en la cola de peticiones.
-   */
-  public Future<?> submit(Runnable runnable) { 
-    // Propone una tarea Runnable para la ejecución y devuelve un Futuro.
-    return executorService().submit(runnable);
-  }
-    
   public Executor executorDelivery() {
     if (executorDelivery == null) {
       executorDelivery = Platform.get();
@@ -79,6 +71,14 @@ public final class Dispatcher implements ThreadFactory {
     executorDelivery = executor;
   }
   
+ /** 
+   * Ejecuta la llamada en la cola de peticiones.
+   */
+  public Future<?> submit(Runnable runnable) { 
+    // Propone una tarea Runnable para la ejecución y devuelve un Futuro.
+    return executorService().submit(runnable);
+  }
+    
   public void delivery(Runnable runnable) {
     executorDelivery().execute(runnable);
   }
@@ -117,12 +117,12 @@ public final class Dispatcher implements ThreadFactory {
    * @param task tarea propuesta para la ejecución.
    * @return 
    */
-  public <V> AsyncTask<V> newCall(final Task<V> task) {
+  public <V> Async<V> newAsync(final Task<V> task) {
     return new AsyncTask<V>(task, this);
   }
   
-  public static <V> AsyncTask<V> call(Task<V> task) {
-    return Dispatcher.get().newCall(task);
+  public static <V> Async<V> async(Task<V> task) {
+    return Dispatcher.get().newAsync(task);
   }
   
   /**
@@ -133,22 +133,22 @@ public final class Dispatcher implements ThreadFactory {
    * @param onError
    * @return 
    */
-  public <V> AsyncTask<V> execute(
+  public <V> Async<V> execute(
     Task<V> task,
     OnResponse<V> onResponse,
     OnError onError
   ) {
-    final AsyncTask<V> asyncCall = newCall(task);
-    asyncCall.then(onResponse, onError);
-    return asyncCall;
+    final Async<V> async = newAsync(task);
+    async.then(onResponse, onError);
+    return async;
   }
   
-   public <V> AsyncTask<V> newCallUserfunc(
+   public <V> Async<V> newCallUserfunc(
     final Object obj, 
     final String method, 
     final Object... params
   ) { 
-    return newCall(new Task<V>() {
+    return newAsync(new Task<V>() {
         @Override
         public V doInBackground() throws Exception {
             Class<?>[] types = Types.getTypes(params);
@@ -160,7 +160,7 @@ public final class Dispatcher implements ThreadFactory {
     });
   }
   
-  public static <V> AsyncTask<V> callUserfunc(
+  public static <V> Async<V> callUserfunc(
     final Object obj, 
     final String method, 
     final Object... params
@@ -168,12 +168,12 @@ public final class Dispatcher implements ThreadFactory {
     return Dispatcher.get().newCallUserfunc(obj, method, params);
   }
   
-  public <V> AsyncTask<V> newCallUserfunc(
+  public <V> Async<V> newCallUserfunc(
     final Class clazz, 
     final String method, 
     final Object... params
   ) {
-    return newCall(new Task<V>() {
+    return newAsync(new Task<V>() {
         @Override
         public V doInBackground() throws Exception {
             Class<?>[] types = Types.getTypes(params);
@@ -185,7 +185,7 @@ public final class Dispatcher implements ThreadFactory {
     });
   }
   
-  public static <V> AsyncTask<V> callUserfunc(
+  public static <V> Async<V> callUserfunc(
     final Class clazz, 
     final String method, 
     final Object... params
