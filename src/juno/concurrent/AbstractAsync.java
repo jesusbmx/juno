@@ -2,8 +2,8 @@ package juno.concurrent;
 
 import java.util.concurrent.Future;
 
-public abstract class AbstractCall<T>
-  implements Call<T>, Callback<T>, Task<T>, Runnable {
+public abstract class AbstractAsync<T>
+  implements Async<T>, Callback<T>, Task<T>, Runnable {
   
   final Dispatcher dispatcher;
   Callback<T> callback;
@@ -11,11 +11,11 @@ public abstract class AbstractCall<T>
   volatile boolean isCancel;
   volatile boolean isRunning = false;
 
-  public AbstractCall() {
+  public AbstractAsync() {
     this(Dispatcher.get());
   }
   
-  public AbstractCall(Dispatcher dispatcher) {
+  public AbstractAsync(Dispatcher dispatcher) {
     this.dispatcher = dispatcher;
   }
 

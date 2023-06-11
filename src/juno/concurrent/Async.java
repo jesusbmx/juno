@@ -1,7 +1,7 @@
 
 package juno.concurrent;
 
-public interface Call<T> {
+public interface Async<T> {
   /**
    * Executa la tarea de manera asíncrona y notifica su respuesta al callback
    * 

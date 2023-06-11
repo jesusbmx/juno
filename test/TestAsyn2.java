@@ -1,5 +1,5 @@
 
-import juno.concurrent.AsyncCall;
+import juno.concurrent.AsyncTask;
 import juno.concurrent.Dispatcher;
 
 /*
@@ -14,7 +14,7 @@ import juno.concurrent.Dispatcher;
  */
 public class TestAsyn2 {
 
-  AsyncCall call;
+  AsyncTask call;
   
   public static void main(String[] args) {
     new TestAsyn2().init();

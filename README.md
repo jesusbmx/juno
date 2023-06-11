@@ -180,11 +180,11 @@ System.out.println(Dates.dateTimeFormat(date_iso_8601)); // 2023-06-20 13:18:11
 ```
 
 
-### Async Call
+### Async Task
 
 ```java
-Call<String> read(final File file) {
-  return new AsyncCall<>(() -> {
+Async<String> read(final File file) {
+  return new AsyncTask<>(() -> {
     //throw new Exception("error");
     return Files.readString(file);
   });
@@ -217,11 +217,11 @@ try {
 }
 ```
 
-### Sender Call
+### Async Sender
 
 ```java
-Call<String> read(final File file) {
-  return new SenderCall<>((sender) -> {
+Async<String> read(final File file) {
+  return new AsyncSender<>((sender) -> {
     //sender.reject(throw new Exception("error"));
     String result = Files.readString(file);
     sender.resolve(result);
@@ -229,17 +229,17 @@ Call<String> read(final File file) {
 }
 ```
 
-### Abstract Call
+### Abstract Async
 
 ```java
-Call<String> read(final File file) {
-    return new AbstractCall<String>() {
-        @Override
-        public String doInBackground() throws Exception {
-            //throw new Exception("error");
-            return Files.readString(file);
-        }
-    };
+Async<String> read(final File file) {
+  return new AbstractAsync<String>() {
+    @Override
+    public String doInBackground() throws Exception {
+      //throw new Exception("error");
+      return Files.readString(file);
+    }
+ };
 }
 ```
 

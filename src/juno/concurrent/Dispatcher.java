@@ -117,11 +117,11 @@ public final class Dispatcher implements ThreadFactory {
    * @param task tarea propuesta para la ejecución.
    * @return 
    */
-  public <V> AsyncCall<V> newCall(final Task<V> task) {
-    return new AsyncCall<V>(task, this);
+  public <V> AsyncTask<V> newCall(final Task<V> task) {
+    return new AsyncTask<V>(task, this);
   }
   
-  public static <V> AsyncCall<V> call(Task<V> task) {
+  public static <V> AsyncTask<V> call(Task<V> task) {
     return Dispatcher.get().newCall(task);
   }
   
@@ -133,17 +133,17 @@ public final class Dispatcher implements ThreadFactory {
    * @param onError
    * @return 
    */
-  public <V> AsyncCall<V> execute(
+  public <V> AsyncTask<V> execute(
     Task<V> task,
     OnResponse<V> onResponse,
     OnError onError
   ) {
-    final AsyncCall<V> asyncCall = newCall(task);
+    final AsyncTask<V> asyncCall = newCall(task);
     asyncCall.then(onResponse, onError);
     return asyncCall;
   }
   
-   public <V> AsyncCall<V> newCallUserfunc(
+   public <V> AsyncTask<V> newCallUserfunc(
     final Object obj, 
     final String method, 
     final Object... params
@@ -160,7 +160,7 @@ public final class Dispatcher implements ThreadFactory {
     });
   }
   
-  public static <V> AsyncCall<V> callUserfunc(
+  public static <V> AsyncTask<V> callUserfunc(
     final Object obj, 
     final String method, 
     final Object... params
@@ -168,7 +168,7 @@ public final class Dispatcher implements ThreadFactory {
     return Dispatcher.get().newCallUserfunc(obj, method, params);
   }
   
-  public <V> AsyncCall<V> newCallUserfunc(
+  public <V> AsyncTask<V> newCallUserfunc(
     final Class clazz, 
     final String method, 
     final Object... params
@@ -185,7 +185,7 @@ public final class Dispatcher implements ThreadFactory {
     });
   }
   
-  public static <V> AsyncCall<V> callUserfunc(
+  public static <V> AsyncTask<V> callUserfunc(
     final Class clazz, 
     final String method, 
     final Object... params

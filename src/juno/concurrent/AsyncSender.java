@@ -1,18 +1,18 @@
 package juno.concurrent;
 
-public class SenderCall<T> extends AbstractCall<T> implements Sender<T> {
+public class AsyncSender<T> extends AbstractAsync<T> implements Sender<T> {
 
     protected volatile T result;
     protected volatile Exception error;
 
     public final SenderTask<T> task;
 
-    public SenderCall(SenderTask<T> task, Dispatcher dispatcher) {
+    public AsyncSender(SenderTask<T> task, Dispatcher dispatcher) {
         super(dispatcher);
         this.task = task;
     }
     
-    public SenderCall(SenderTask<T> task) {
+    public AsyncSender(SenderTask<T> task) {
         this(task, Dispatcher.get());
     }
 

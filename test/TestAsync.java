@@ -1,15 +1,15 @@
 
-import juno.concurrent.AsyncCall;
-import juno.concurrent.Call;
+import juno.concurrent.AsyncTask;
 import juno.concurrent.OnError;
 import juno.concurrent.OnResponse;
 import juno.concurrent.Task;
+import juno.concurrent.Async;
 
 
 public class TestAsync {
     
-    public Call<String> saludar() {
-        return new AsyncCall<String>(new Task<String>() {
+    public Async<String> saludar() {
+        return new AsyncTask<String>(new Task<String>() {
             @Override
             public String doInBackground() throws Exception {
                 //throw new Exception("error");
