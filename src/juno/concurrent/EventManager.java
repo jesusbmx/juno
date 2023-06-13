@@ -123,6 +123,7 @@ public class EventManager {
                     @Override
                     public void onMessage(V value) {
                         this.remove();
+                        
                         try {
                             sender.resolve(value);
                         } catch(Exception e) {
