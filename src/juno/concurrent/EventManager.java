@@ -184,8 +184,11 @@ public class EventManager {
     
 //    public static void main(String[] args) {
 //        EventManager receiver = EventManager.get("MyHandler");
-//        receiver.on("log", (String value) -> {
-//            System.out.println(value);
+//        receiver.on("log", new OnMessage<String>() {
+//            @Override
+//            public void onMessage(String value) {
+//                System.out.println(value);
+//            }
 //        });
 //        
 //        EventManager sender = EventManager.get("MyHandler");
