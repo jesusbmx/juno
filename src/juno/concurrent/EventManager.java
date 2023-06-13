@@ -182,7 +182,7 @@ public class EventManager {
         this.executorDelivery = executorDelivery;
     }
     
-//    public static void main(String[] args) {
+//    public static void main(String[] args) throws Exception {
 //        EventManager receiver = EventManager.get("MyHandler");
 //        receiver.on("log", new OnMessage<String>() {
 //            @Override
@@ -190,6 +190,20 @@ public class EventManager {
 //                System.out.println(value);
 //            }
 //        });
+//        
+//        Async<String> async = receiver.once("log");
+//        async.then(new Callback<String>() {
+//            @Override
+//            public void onResponse(String result) throws Exception {
+//                System.out.println(result);
+//            }
+//            @Override
+//            public void onFailure(Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+//        
+//        Thread.sleep(1000);
 //        
 //        EventManager sender = EventManager.get("MyHandler");
 //        sender.send("log", "Hola mundo");
