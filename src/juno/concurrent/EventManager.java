@@ -53,6 +53,17 @@ public class EventManager {
         return listeners;
     }
     
+    public List<EventListener> getListeners(String listenerName) {
+        List<EventListener> r = new ArrayList<EventListener>();
+        for (int i = 0; i < listeners.size(); i++) {
+            EventListener listener = listeners.get(i);
+            if (listener.name.equals(listenerName)) {
+                r.add(listener);
+            }
+        }
+        return r;
+    }
+    
     public EventListener getListener(int index) {
         return listeners.get(index);
     }
