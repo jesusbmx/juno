@@ -105,6 +105,35 @@ public class EventManager {
         }
     }
     
+    public <V> EventListener<V> add(EventListener<V> listener) {
+        synchronized (listeners) {
+            listener.setEventHandler(this);
+            listeners.add(listener);
+            return listener;
+        }
+    }
+    
+    public <V> Async<V> once(final String listenerName) {
+        return new AsyncSender<V>(new SenderTask<V>() {
+            
+            @Override
+            public void execute(final Sender<V> sender) throws Exception {
+                add(new EventListener<V>(listenerName) {
+                    
+                    @Override
+                    public void onMessage(V value) {
+                        this.remove();
+                        try {
+                            sender.resolve(value);
+                        } catch(Exception e) {
+                            sender.reject(e);
+                        }
+                    }
+                });
+            }
+        });
+    }
+      
     /**
      * Agrega un listener a este puente
      * @param <V>
@@ -112,13 +141,13 @@ public class EventManager {
      * @param onMessage escucha cuando se envie un nuevo mensaje
      * @return 
      */
-    public <V> EventListener<V> on(String listenerName, OnMessage<V> onMessage) {
-        synchronized (listeners) {
-            final EventListener<V> listener = new EventListener<V>(
-                    this, listenerName, onMessage);
-            listeners.add(listener);
-            return listener;
-        }
+    public <V> EventListener<V> on(String listenerName, final OnMessage<V> onMessage) {
+        return add(new EventListener<V>(listenerName) {
+            @Override
+            public void onMessage(V value) {
+                onMessage.onMessage(value);
+            }
+        });
     }
     
     /**
@@ -143,7 +172,7 @@ public class EventManager {
             }
         }
     }
-
+    
     public Executor getExecutorDelivery() {
         return executorDelivery;
     }

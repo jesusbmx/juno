@@ -4,26 +4,26 @@ package juno.concurrent;
  * Evento registrado par el watcher
  * @param <T>
  */
-public class EventListener<T> implements OnMessage<T> {
+public abstract class EventListener<T> implements OnMessage<T> {
 
-    public final EventManager eventHandler;
+    private EventManager eventHandler;
     public final String name;
-    public final OnMessage<T> onMessage;
 
-    public EventListener(EventManager eventHandler, String name, OnMessage<T> onMessage) {
-        this.eventHandler = eventHandler;
+    public EventListener(String name) {
         this.name = name;
-        this.onMessage = onMessage;
     }
 
-    public void remove() {
-        eventHandler.removeListener(this);
+    public EventManager getEventHandler() {
+        return eventHandler;
     }
 
-    @Override
-    public void onMessage(T value) {
-        onMessage.onMessage(value);
+    public void setEventHandler(EventManager eventHandler) {
+        this.eventHandler = eventHandler;
     }
     
-
+    public void remove() {
+        if (eventHandler != null) {
+            eventHandler.removeListener(this);
+        }
+    }
 }
