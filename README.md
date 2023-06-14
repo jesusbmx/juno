@@ -258,11 +258,9 @@ sender.send("log", "Hola mundo");
 
 ```java
 EventManager receiver = EventManager.get("MyHandler");
-receiver.on("status", (EventMessage<Integer> value) -> {
+receiver.once("status", (EventMessage<Integer> value) -> {
     System.out.println(value.getValue());
 });
-...
-listener.remove()
 
 EventManager sender = EventManager.get("MyHandler");
 sender.send(200, "status");
