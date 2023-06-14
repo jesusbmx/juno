@@ -49,6 +49,10 @@ public class EventManager {
         return EventManager.get("DefaultEventHandler");
     }   
     
+    /**
+     * Obtiene todos los listeners registrados
+     * @return 
+     */
     public List<EventListener> getListeners() {
         return listeners;
     }
@@ -64,21 +68,21 @@ public class EventManager {
         return r;
     }
     
+    /**
+     * Obtiene un listener por su posicion
+     * @param index
+     * @return 
+     */
     public EventListener getListener(int index) {
         return listeners.get(index);
     }
     
+    /**
+     * Obtiene el numero de listeners registrados
+     * @return 
+     */
     public int getListenerCount() {
         return listeners.size();
-    }
-    
-    /**
-     * Elimina todos los listeners de este puente
-     */
-    public void removeAllListener() {
-        synchronized (listeners) {
-            listeners.clear();
-        }
     }
     
     /**
@@ -92,6 +96,20 @@ public class EventManager {
         }
     }
     
+    /**
+     * Elimina todos los listeners de este puente.
+     */
+    public void removeAllListener() {
+        synchronized (listeners) {
+            listeners.clear();
+        }
+    }
+    
+    /**
+     * Remueve los listener que contengan el mismo nombre.
+     * @param listenerName
+     * @return 
+     */
     public boolean removeAllListener(String listenerName) {
         synchronized (listeners) {
             List<EventListener> r = new ArrayList<EventListener>();
@@ -105,6 +123,12 @@ public class EventManager {
         }
     }
     
+    /**
+     * Registra un nuevo listener.
+     * @param <V>
+     * @param listener
+     * @return 
+     */
     public <V> EventListener<V> add(EventListener<V> listener) {
         synchronized (listeners) {
             listener.setEventHandler(this);
@@ -113,24 +137,46 @@ public class EventManager {
         }
     }
     
-    public <V> Async<V> once(final String listenerName) {
+    /**
+     * Obtiene un Async de un once
+     * @param <V>
+     * @param listenerName
+     * @return 
+     */
+    public <V> Async<V> sync(final String listenerName) {
         return new AsyncSender<V>(new SenderTask<V>() {
             
             @Override
             public void execute(final Sender<V> sender) throws Exception {
-                add(new EventListener<V>(listenerName) {
+                once(listenerName, new OnMessage<V>() {
                     
                     @Override
-                    public void onMessage(V value) {
-                        this.remove();
-                        
+                    public void onMessage(EventMessage<V> evt) {
                         try {
-                            sender.resolve(value);
-                        } catch(Exception e) {
+                            sender.resolve(evt.getValue());
+                        } catch (Exception e) {
                             sender.reject(e);
                         }
                     }
                 });
+            }
+        });
+    }
+    
+    /**
+     * Agrega un listener. El La próxima vez que se active, este agente de 
+     * escucha se elimina.
+     * @param <V>
+     * @param listenerName
+     * @param onMessage
+     * @return 
+     */
+    public <V> EventListener<V> once(String listenerName, final OnMessage<V> onMessage) {
+        return add(new EventListener<V>(listenerName) {
+            @Override
+            public void onMessage(EventMessage<V> evt) {
+                evt.getListener().remove();
+                onMessage.onMessage(evt);
             }
         });
     }
@@ -145,8 +191,8 @@ public class EventManager {
     public <V> EventListener<V> on(String listenerName, final OnMessage<V> onMessage) {
         return add(new EventListener<V>(listenerName) {
             @Override
-            public void onMessage(V value) {
-                onMessage.onMessage(value);
+            public void onMessage(EventMessage<V> e) {
+                onMessage.onMessage(e);
             }
         });
     }
@@ -162,13 +208,7 @@ public class EventManager {
             for (int i = 0; i < listeners.size(); i++) {
                 final EventListener listener = listeners.get(i);
                 if (listener.name.equals(listenerName)) {
-
-                    executorDelivery.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onMessage(value);
-                        }
-                    });
+                    executorDelivery.execute(new EventMessage(this, listener, value));
                 }
             }
         }
@@ -186,12 +226,12 @@ public class EventManager {
 //        EventManager receiver = EventManager.get("MyHandler");
 //        receiver.on("log", new OnMessage<String>() {
 //            @Override
-//            public void onMessage(String value) {
-//                System.out.println(value);
+//            public void onMessage(EventMessage<String> e) {
+//                System.out.println(e.getValue());
 //            }
 //        });
 //        
-//        Async<String> async = receiver.once("log");
+//        Async<String> async = receiver.sync("log");
 //        async.then(new Callback<String>() {
 //            @Override
 //            public void onResponse(String result) throws Exception {

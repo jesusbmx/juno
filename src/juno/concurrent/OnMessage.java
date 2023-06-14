@@ -5,5 +5,6 @@ package juno.concurrent;
  * @param <T>
  */
 public interface OnMessage<T> {
-    void onMessage(T value);
+    
+    void onMessage(EventMessage<T> evt);
 }

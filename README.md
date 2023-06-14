@@ -248,8 +248,8 @@ Async<String> read(final File file) {
 
 ```java
 EventManager receiver = EventManager.get("MyHandler");
-receiver.on("log", (String value) -> {
-    System.out.println(value);
+receiver.on("log", (EventMessage<String> evt) -> {
+    System.out.println(evt.getValue());
 });
 
 EventManager sender = EventManager.get("MyHandler");
@@ -258,8 +258,8 @@ sender.send("log", "Hola mundo");
 
 ```java
 EventManager receiver = EventManager.get("MyHandler");
-EventListener<Integer> listener = receiver.on("status", (Integer value) -> {
-    System.out.println(value);
+receiver.on("status", (EventMessage<Integer> value) -> {
+    System.out.println(value.getValue());
 });
 ...
 listener.remove()
