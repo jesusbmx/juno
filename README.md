@@ -263,7 +263,7 @@ receiver.once("status", (EventMessage<Integer> evt) -> {
 });
 
 EventManager sender = EventManager.get("MyHandler");
-sender.send(200, "status");
+sender.send("status", 200);
 ```
 
 
