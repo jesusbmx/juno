@@ -28,4 +28,9 @@ public interface Func<Input, Result> {
    */
   Result call(Input it);
 
+  
+  interface Throws<Input, Result> {
+      
+    Result call(Input it) throws Exception;
+  }
 }

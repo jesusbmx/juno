@@ -12,12 +12,12 @@ import juno.concurrent.Dispatcher;
  *
  * @author Jesus
  */
-public class TestAsyn2 {
+public class TestCallUserFunc {
 
   AsyncTask call;
   
   public static void main(String[] args) {
-    new TestAsyn2().init();
+    new TestCallUserFunc().init();
   }
 
   private void init() {

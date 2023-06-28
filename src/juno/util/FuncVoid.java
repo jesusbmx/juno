@@ -9,4 +9,9 @@ public interface FuncVoid<Input> {
    */
   void call(Input it);
 
+  
+  interface Throws<Input> {
+      
+    void call(Input it) throws Exception;
+  }
 }
