@@ -16,7 +16,7 @@ public class Test {
     public static void main(String[] args) {
         new Test().execute(new Callback<String>() {
             @Override
-            public void call(String result) throws Exception {
+            public void call(String result) {
                 System.out.println(result);
             }
         });
