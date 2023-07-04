@@ -208,19 +208,23 @@ public final class Convert {
   }
   
   public static byte[] fromBase64String(String s) {
-    return Base64.decode(s);
+    Base64.Decoder decoder = Base64.getDecoder();
+    return decoder.decode(s);
   }
   
   public static String toBase64String(byte[] inArray) {
-    return Base64.encode(inArray);
+    Base64.Encoder encoder = Base64.getEncoder();
+    return encoder.encodeToString(inArray);
   }
   
   public static String fromBase64(String s) {
-    byte[] decode = Base64.decode(s);
+    Base64.Decoder decoder = Base64.getDecoder();
+    byte[] decode = decoder.decode(s);
     return new String(decode);
   }
   
   public static String toBase64(String inArray) {
-    return Base64.encode(inArray.getBytes());
+    Base64.Encoder encoder = Base64.getEncoder();
+    return encoder.encodeToString(inArray.getBytes());
   }
 }
