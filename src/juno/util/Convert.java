@@ -220,7 +220,7 @@ public final class Convert {
   /**
    * Decodifica una cadena
    * @param base64Encoded cadena codificada en base64
-   * @return cadena decodificados
+   * @return cadena decodificada
    */
   public static String fromBase64(String base64Encoded) {
     Base64.Decoder decoder = Base64.getDecoder();
