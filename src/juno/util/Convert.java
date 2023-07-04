@@ -22,7 +22,7 @@ public final class Convert {
    */
   
   /**
-   * Analiza el objeto como una cadena y devuelve el resultado.
+   * Convierte el valor especificado en su representación de cadena equivalente.
    *
    * @param o objeto a convertir.
    * @param nullDefault valor a retora si 'o' es nulo.
@@ -45,6 +45,13 @@ public final class Convert {
     return new String(bytes, charset);
   }
   
+  /**
+   * Convierte el valor especificado en su representación de un byte.
+   *
+   * @param str cadena a convertir.
+   * @param defaultValue valor por default
+   * @return String
+   */
   public static byte toByte(CharSequence str, byte defaultValue) {
     if (Strings.isEmpty(str)) return defaultValue;
     try {
@@ -69,7 +76,7 @@ public final class Convert {
   }
   
   /**
-   * Analiza la cadena como un número int y devuelve el resultado.
+   * Convierte el valor especificado en su representación de un int.
    *
    * @param str cadena `"12"`
    * @param defaultValue valor por default
@@ -99,7 +106,7 @@ public final class Convert {
   }
   
   /**
-   * Analiza la cadena como un número long y devuelve el resultado.
+   * Convierte el valor especificado en su representación de un long.
    *
    * @param str cadena `"12"`
    * @param defaultValue valor por default
@@ -129,7 +136,7 @@ public final class Convert {
   }
 
   /**
-   * Analiza la cadena como un número float y devuelve el resultado.
+   * Convierte el valor especificado en su representación de un float.
    *
    * @param str cadena `"12.50"`
    * @param defaultVal valor por default
@@ -159,7 +166,7 @@ public final class Convert {
   }
 
   /**
-   * Analiza la cadena como un número doble y devuelve el resultado.
+   * Convierte el valor especificado en su representación de un double.
    *
    * @param str cadena `"12.50"`
    * @param defaultVal valor por default
@@ -189,7 +196,7 @@ public final class Convert {
   }
 
   /**
-   * Analiza la cadena como un booleano y devuelve el resultado.
+   * Convierte el valor especificado en su representación de un boolean.
    *
    * @param cs cadena `"true"`
    * @param defaultVal valor por default
