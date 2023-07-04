@@ -207,24 +207,44 @@ public final class Convert {
     return toBool(cs, false);
   }
   
-  public static byte[] fromBase64String(String s) {
+  /**
+   * Decodifica una cadena
+   * @param base64Encoded cadena codificada en base64
+   * @return bytes decodificados
+   */
+  public static byte[] fromBase64String(String base64Encoded) {
     Base64.Decoder decoder = Base64.getDecoder();
-    return decoder.decode(s);
+    return decoder.decode(base64Encoded);
   }
-  
-  public static String toBase64String(byte[] inArray) {
-    Base64.Encoder encoder = Base64.getEncoder();
-    return encoder.encodeToString(inArray);
-  }
-  
-  public static String fromBase64(String s) {
+
+  /**
+   * Decodifica una cadena
+   * @param base64Encoded cadena codificada en base64
+   * @return cadena decodificados
+   */
+  public static String fromBase64(String base64Encoded) {
     Base64.Decoder decoder = Base64.getDecoder();
-    byte[] decode = decoder.decode(s);
+    byte[] decode = decoder.decode(base64Encoded);
     return new String(decode);
   }
-  
-  public static String toBase64(String inArray) {
+
+  /**
+   * Codifica una cadena a base64
+   * @param plainTextBytes bytes a codificar
+   * @return cadena codificada
+   */
+  public static String toBase64String(byte[] plainTextBytes) {
     Base64.Encoder encoder = Base64.getEncoder();
-    return encoder.encodeToString(inArray.getBytes());
+    return encoder.encodeToString(plainTextBytes);
+  }
+  
+  /**
+   * Codifica una cadena a base64
+   * @param plainText cadena a codificar
+   * @return cadena codificada
+   */
+  public static String toBase64(String plainText) {
+    Base64.Encoder encoder = Base64.getEncoder();
+    return encoder.encodeToString(plainText.getBytes());
   }
 }
