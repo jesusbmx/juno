@@ -78,9 +78,9 @@ public final class Convert {
   /**
    * Convierte el valor especificado en su representación de un int.
    *
-   * @param str cadena `"12"`
+   * @param str cadena "12"
    * @param defaultValue valor por default
-   * @return int `12`
+   * @return int 12
    */
   public static int toInt(CharSequence str, int defaultValue) {
     if (Strings.isEmpty(str)) return defaultValue;
@@ -108,9 +108,9 @@ public final class Convert {
   /**
    * Convierte el valor especificado en su representación de un long.
    *
-   * @param str cadena `"12"`
+   * @param str cadena "12"
    * @param defaultValue valor por default
-   * @return long `12L`
+   * @return long 12L
    */
   public static long toLong(CharSequence str, long defaultValue) {
     if (Strings.isEmpty(str)) return defaultValue;
@@ -138,9 +138,9 @@ public final class Convert {
   /**
    * Convierte el valor especificado en su representación de un float.
    *
-   * @param str cadena `"12.50"`
+   * @param str cadena "12.50"
    * @param defaultVal valor por default
-   * @return float `12.50f`
+   * @return float 12.50f
    */
   public static float toFloat(CharSequence str, float defaultVal) {
     if (Strings.isEmpty(str)) return defaultVal;
@@ -168,9 +168,9 @@ public final class Convert {
   /**
    * Convierte el valor especificado en su representación de un double.
    *
-   * @param str cadena `"12.50"`
+   * @param str cadena "12.50"
    * @param defaultVal valor por default
-   * @return double `12.50d`
+   * @return double 12.50d
    */
   public static double toDouble(CharSequence str, double defaultVal) {
     if (Strings.isEmpty(str)) return defaultVal;
@@ -198,9 +198,9 @@ public final class Convert {
   /**
    * Convierte el valor especificado en su representación de un boolean.
    *
-   * @param cs cadena `"true"`
+   * @param cs cadena "true"
    * @param defaultVal valor por default
-   * @return boolean `true`
+   * @return boolean true
    */
   public static boolean toBool(CharSequence cs, boolean defaultVal) {
     if (Strings.isEmpty(cs)) return defaultVal;
