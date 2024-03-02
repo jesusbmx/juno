@@ -61,10 +61,10 @@ public abstract class AbstractAsync<T>
             public void run() {
                 try {
                     final T result = call();
-                    delivery(new Delivery(callback, result, null));
+                    delivery(new Delivery(AbstractAsync.this, result, null));
 
                 } catch (final Exception error) {
-                    delivery(new Delivery(callback, null, error));
+                    delivery(new Delivery(AbstractAsync.this, null, error));
 
                 } finally {
                     isRunning = false;
@@ -126,16 +126,14 @@ public abstract class AbstractAsync<T>
 
         @Override
         public void run() {
-            if (callback != null) {
-                if (result != null) {
-                    try {
-                        callback.onResponse(result);
-                    } catch (Exception e) {
-                        callback.onFailure(e);
-                    }
-                } else if (error != null) {
-                    callback.onFailure(error);
+            if (result != null) {
+                try {
+                    callback.onResponse(result);
+                } catch (Exception e) {
+                    callback.onFailure(e);
                 }
+            } else if (error != null) {
+                callback.onFailure(error);
             }
         }
 
