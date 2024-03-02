@@ -35,17 +35,17 @@ public abstract class AbstractAsync<T>
     return isRunning;
   }
   
-  @Override public void then(Callback<T> callback) {
+  @Override public void execute(Callback<T> callback) {
     this.callback = callback;
     execute();
   }
 
-  @Override public void then(final OnResponse<T> onResponse, final OnError onError) {
-    this.then(new CallbackAdapter<T>(onResponse, onError));
+  @Override public void execute(final OnResponse<T> onResponse, final OnError onError) {
+    this.execute(new CallbackAdapter<T>(onResponse, onError));
   }
   
   @Override public synchronized T await() throws Exception {
-    return doInBackground();
+    return call();
   }
   
   public void execute() {
@@ -55,15 +55,15 @@ public abstract class AbstractAsync<T>
   
   @Override public void run() {
     try {
-      T result = doInBackground();
-      dispatcher.onResponse(this, result);
+      T result = call();
+      dispatcher.deliveryResponse(this, result);
     } catch (Exception e) {
-      dispatcher.onFailure(this, e);
+      dispatcher.deliveryError(this, e);
     }
     isRunning = false;
   }
   
-   @Override public boolean cancel(boolean mayInterruptIfRunning) {
+  @Override public boolean cancel(boolean mayInterruptIfRunning) {
     isRunning = false;
     if (future != null) { 
       return future.cancel(mayInterruptIfRunning);

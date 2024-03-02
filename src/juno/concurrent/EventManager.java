@@ -19,8 +19,8 @@ public class EventManager {
     private final List<EventListener> listeners = 
             new ArrayList<EventListener>();
     
-    private Executor executorDelivery = 
-            Dispatcher.get().executorDelivery();
+    private Executor executorDelivery = Dispatcher.get()
+            .getExecutorDelivery();
     
     private EventManager(String name) {
         this.name = name;
@@ -144,7 +144,7 @@ public class EventManager {
      * @return 
      */
     public <V> Async<V> sync(final String listenerName) {
-        return new AsyncSender<V>(new SenderTask<V>() {
+        return new AsyncSender<V>(new ExecutorSender<V>() {
             
             @Override
             public void execute(final Sender<V> sender) throws Exception {

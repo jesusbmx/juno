@@ -47,7 +47,7 @@ public final class Dispatcher implements ThreadFactory {
     return result;
   }
   
-  public synchronized ExecutorService executorService() {
+  public synchronized ExecutorService getExecutorService() {
     if (executorService == null) {
       executorService = new ThreadPoolExecutor(threadLimit, threadLimit, 
               0L, TimeUnit.MILLISECONDS, 
@@ -60,7 +60,7 @@ public final class Dispatcher implements ThreadFactory {
     executorService = es;
   }
   
-  public Executor executorDelivery() {
+  public Executor getExecutorDelivery() {
     if (executorDelivery == null) {
       executorDelivery = Platform.get();
     }
@@ -71,22 +71,33 @@ public final class Dispatcher implements ThreadFactory {
     executorDelivery = executor;
   }
   
- /** 
+  /** 
    * Ejecuta la llamada en la cola de peticiones.
    */
   public Future<?> submit(Runnable runnable) { 
     // Propone una tarea Runnable para la ejecución y devuelve un Futuro.
-    return executorService().submit(runnable);
+    return getExecutorService().submit(runnable);
+  }
+  
+  /** 
+   * Executes the given command at some time in the future
+   */
+  public void execute(Runnable runnable) { 
+    // Propone una tarea Runnable para la ejecución y devuelve un Futuro.
+    getExecutorService().execute(runnable);
   }
     
   public void delivery(Runnable runnable) {
-    executorDelivery().execute(runnable);
+    getExecutorDelivery().execute(runnable);
   }
   
   /**
    * Metodo que se encarga de liverar la respuesta obtenida, al hilo de la UI.
+   * @param <V>
+   * @param callback
+   * @param result
    */
-  public <V> void onResponse(final Callback<V> callback, final V result) {
+  public <V> void deliveryResponse(final Callback<V> callback, final V result) {
     if (callback == null) return;
     delivery(new Runnable() {  
       @Override public void run() {
@@ -101,8 +112,10 @@ public final class Dispatcher implements ThreadFactory {
 
   /**
    * Metodo que se encarga de liverar el error obtenido, al hilo de la UI.
+   * @param callback
+   * @param error
    */
-  public void onFailure(final Callback<?> callback, final Exception error) {
+  public void deliveryError(final Callback<?> callback, final Exception error) {
     if (callback == null) return;
     delivery(new Runnable() {
       @Override public void run() {
@@ -111,55 +124,56 @@ public final class Dispatcher implements ThreadFactory {
     });
   }
     
-  /** 
-   * Crea una llamada. 
-   * @param <V>
-   * @param task tarea propuesta para la ejecución.
-   * @return 
-   */
-  public <V> AsyncTask<V> newAsync(final Task<V> task) {
-    return new AsyncTask<V>(task, this);
-  }
-  
-  public static <V> AsyncTask<V> async(Task<V> task) {
-    return Dispatcher.get().newAsync(task);
-  }
-  
-  /**
-   * Executa una tarea
-   * @param <V>
-   * @param task
-   * @param onResponse
-   * @param onError
-   * @return 
-   */
-  public <V> AsyncTask<V> execute(
-    Task<V> task,
-    OnResponse<V> onResponse,
-    OnError onError
-  ) {
-    final AsyncTask<V> async = newAsync(task);
-    async.then(onResponse, onError);
-    return async;
-  }
-  
-   public <V> AsyncTask<V> newCallUserfunc(
+  public <V> AsyncTask<V> newCallUserfunc(
     final Object obj, 
     final String method, 
     final Object... params
   ) { 
-    return newAsync(new Task<V>() {
+    return new AsyncTask<V>(new Task<V>() {
         @Override
-        public V doInBackground() throws Exception {
+        public V call() throws Exception {
             Class<?>[] types = Types.getTypes(params);
             final Method instanceMethod = obj.getClass()
                     .getDeclaredMethod(method, types);
 
             return (V) instanceMethod.invoke(obj, params);
         }
-    });
+    }, this);
+  }
+    
+  /**
+   * 
+   * @param <V>
+   * @param clazz
+   * @param method
+   * @param params
+   * @return 
+   */
+  public <V> AsyncTask<V> newCallUserfunc(
+    final Class clazz, 
+    final String method, 
+    final Object... params
+  ) {
+    return new AsyncTask<V>(new Task<V>() {
+        @Override
+        public V call() throws Exception {
+            Class<?>[] types = Types.getTypes(params);
+            final Method instanceMethod = clazz
+                    .getDeclaredMethod(method, types);
+
+            return (V) instanceMethod.invoke(null, params);
+        }
+    }, this);
   }
   
+  /**
+   * 
+   * @param <V>
+   * @param obj
+   * @param method
+   * @param params
+   * @return 
+   */
   public static <V> AsyncTask<V> callUserfunc(
     final Object obj, 
     final String method, 
@@ -168,23 +182,14 @@ public final class Dispatcher implements ThreadFactory {
     return Dispatcher.get().newCallUserfunc(obj, method, params);
   }
   
-  public <V> AsyncTask<V> newCallUserfunc(
-    final Class clazz, 
-    final String method, 
-    final Object... params
-  ) {
-    return newAsync(new Task<V>() {
-        @Override
-        public V doInBackground() throws Exception {
-            Class<?>[] types = Types.getTypes(params);
-            final Method instanceMethod = clazz
-                    .getDeclaredMethod(method, types);
-
-            return (V) instanceMethod.invoke(null, params);
-        }
-    });
-  }
-  
+  /**
+   * 
+   * @param <V>
+   * @param clazz
+   * @param method
+   * @param params
+   * @return 
+   */
   public static <V> AsyncTask<V> callUserfunc(
     final Class clazz, 
     final String method, 

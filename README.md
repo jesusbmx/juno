@@ -195,7 +195,7 @@ Run tasks asynchronously
 ```java
 File file = new File("/home/user/a.txt");
 
-read(file).then((String result) -> {
+read(file).execute((String result) -> {
   System.out.println(result);
 
 }, (Exception error) -> {

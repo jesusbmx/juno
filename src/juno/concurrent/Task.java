@@ -7,5 +7,5 @@ public interface Task<T> {
    * @return respuesta obtenida
    * @throws Exception 
    */
-  T doInBackground() throws Exception;
+  T call() throws Exception;
 }

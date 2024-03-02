@@ -11,7 +11,7 @@ public class TestAsync {
     public Async<String> saludar() {
         return new AsyncTask<String>(new Task<String>() {
             @Override
-            public String doInBackground() throws Exception {
+            public String call() throws Exception {
                 //throw new Exception("error");
                 return "Hola mundo"; 
             }
@@ -20,7 +20,7 @@ public class TestAsync {
     
     public static void main(String[] args) {
         TestAsync test = new TestAsync();
-        test.saludar().then(new OnResponse<String>() {
+        test.saludar().execute(new OnResponse<String>() {
             @Override
             public void onResponse(String result) throws Exception {
                 System.out.println(result);

@@ -7,7 +7,7 @@ public interface Async<T> {
    * 
    * @param callback devolución de llamada
    */
-  void then(Callback<T> callback);
+  void execute(Callback<T> callback);
   
   /**
    * Executa la tarea de manera asíncrona y notifica su respuesta al callback
@@ -15,7 +15,7 @@ public interface Async<T> {
    * @param onResponse
    * @param onError
    */
-  void then(OnResponse<T> onResponse, OnError onError);
+  void execute(OnResponse<T> onResponse, OnError onError);
   
   /**
    * Executa la tarea de manera síncrona

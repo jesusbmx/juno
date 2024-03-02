@@ -14,7 +14,7 @@ public class AsyncTask<T> extends AbstractAsync<T> {
   }
 
   @Override
-  public T doInBackground() throws Exception {
-    return task != null ? task.doInBackground() : null;
+  public T call() throws Exception {
+    return task != null ? task.call() : null;
   }
 }

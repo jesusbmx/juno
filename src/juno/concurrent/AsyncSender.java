@@ -5,21 +5,21 @@ public class AsyncSender<T> extends AbstractAsync<T> implements Sender<T> {
     protected volatile T result;
     protected volatile Exception error;
 
-    public final SenderTask<T> task;
+    public final ExecutorSender<T> executor;
 
-    public AsyncSender(SenderTask<T> task, Dispatcher dispatcher) {
+    public AsyncSender(ExecutorSender<T> executor, Dispatcher dispatcher) {
         super(dispatcher);
-        this.task = task;
+        this.executor = executor;
     }
     
-    public AsyncSender(SenderTask<T> task) {
-        this(task, Dispatcher.get());
+    public AsyncSender(ExecutorSender<T> executor) {
+        this(executor, Dispatcher.get());
     }
 
     @Override
-    public T doInBackground() throws Exception {
+    public T call() throws Exception {
         synchronized (this) {
-            task.execute(this);
+            executor.execute(this);
 
             do {
 
