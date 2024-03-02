@@ -235,7 +235,7 @@ Async<String> read(final File file) {
 Async<String> read(final File file) {
   return new AbstractAsync<String>() {
     @Override
-    public String doInBackground() throws Exception {
+    public String call() throws Exception {
       //throw new Exception("error");
       return Files.readString(file);
     }
