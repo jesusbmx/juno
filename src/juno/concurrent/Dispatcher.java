@@ -90,40 +90,7 @@ public final class Dispatcher implements ThreadFactory {
   public void delivery(Runnable runnable) {
     getExecutorDelivery().execute(runnable);
   }
-  
-  /**
-   * Metodo que se encarga de liverar la respuesta obtenida, al hilo de la UI.
-   * @param <V>
-   * @param callback
-   * @param result
-   */
-  public <V> void deliveryResponse(final Callback<V> callback, final V result) {
-    if (callback == null) return;
-    delivery(new Runnable() {  
-      @Override public void run() {
-        try {
-          callback.onResponse(result);
-        } catch (Exception error) {
-          callback.onFailure(error);
-        }
-      }
-    });
-  }
 
-  /**
-   * Metodo que se encarga de liverar el error obtenido, al hilo de la UI.
-   * @param callback
-   * @param error
-   */
-  public void deliveryError(final Callback<?> callback, final Exception error) {
-    if (callback == null) return;
-    delivery(new Runnable() {
-      @Override public void run() {
-        callback.onFailure(error);
-      }
-    });
-  }
-    
   public <V> AsyncTask<V> newCallUserfunc(
     final Object obj, 
     final String method, 
