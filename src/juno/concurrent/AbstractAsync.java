@@ -5,7 +5,7 @@ import java.util.concurrent.Future;
 public abstract class AbstractAsync<T>
         implements Async<T>, Callback<T>, Task<T> {
 
-    final Dispatcher dispatcher;
+    Dispatcher dispatcher;
     Callback<T> callback;
     Future future;
     volatile boolean isCancel;
@@ -21,6 +21,10 @@ public abstract class AbstractAsync<T>
 
     public Dispatcher getDispatcher() {
         return dispatcher;
+    }
+
+    public void setDispatcher(Dispatcher dispatcher) {
+        this.dispatcher = dispatcher;
     }
 
     @Override
@@ -61,10 +65,10 @@ public abstract class AbstractAsync<T>
             public void run() {
                 try {
                     final T result = call();
-                    delivery(new Delivery(AbstractAsync.this, result, null));
+                    delivery(new Delivery<T>(AbstractAsync.this, result, null));
 
                 } catch (final Exception error) {
-                    delivery(new Delivery(AbstractAsync.this, null, error));
+                    delivery(new Delivery<T>(AbstractAsync.this, null, error));
 
                 } finally {
                     isRunning = false;
