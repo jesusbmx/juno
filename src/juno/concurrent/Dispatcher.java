@@ -91,11 +91,11 @@ public final class Dispatcher implements ThreadFactory {
     getExecutorDelivery().execute(runnable);
   }
   
-  public <V> AsyncTask<V> newAsyncTask(Task<V> task) {
+  public <V> AsyncTask<V> newTask(Task<V> task) {
     return new AsyncTask<V>(task, this);
   }
   
-  public <V> AsyncSender<V> newAsyncSender(ExecutorSender<V> executorSender) {
+  public <V> AsyncSender<V> newSender(ExecutorSender<V> executorSender) {
     return new AsyncSender<V>(executorSender, this);
   }
 
@@ -104,7 +104,7 @@ public final class Dispatcher implements ThreadFactory {
     final String method, 
     final Object... params
   ) { 
-    return newAsyncTask(new Task<V>() {
+    return newTask(new Task<V>() {
         @Override
         public V call() throws Exception {
             Class<?>[] types = Types.getTypes(params);
@@ -129,7 +129,7 @@ public final class Dispatcher implements ThreadFactory {
     final String method, 
     final Object... params
   ) {
-    return newAsyncTask(new Task<V>() {
+    return newTask(new Task<V>() {
         @Override
         public V call() throws Exception {
             Class<?>[] types = Types.getTypes(params);
