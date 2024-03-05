@@ -1,5 +1,5 @@
 
-import juno.concurrent.AsyncTask;
+import juno.concurrent.AsyncCallable;
 import juno.concurrent.Dispatcher;
 
 /*
@@ -14,7 +14,7 @@ import juno.concurrent.Dispatcher;
  */
 public class TestCallUserFunc {
 
-  AsyncTask call;
+  AsyncCallable call;
   
   public static void main(String[] args) {
     new TestCallUserFunc().init();

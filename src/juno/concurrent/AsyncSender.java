@@ -5,14 +5,14 @@ public class AsyncSender<T> extends AbstractAsync<T> implements Sender<T> {
     protected volatile T result;
     protected volatile Exception error;
 
-    public final ExecutorSender<T> executor;
+    public final Sender.Executor<T> executor;
 
-    public AsyncSender(ExecutorSender<T> executor, Dispatcher dispatcher) {
+    public AsyncSender(Sender.Executor<T> executor, Dispatcher dispatcher) {
         super(dispatcher);
         this.executor = executor;
     }
     
-    public AsyncSender(ExecutorSender<T> executor) {
+    public AsyncSender(Sender.Executor<T> executor) {
         this(executor, Dispatcher.get());
     }
 

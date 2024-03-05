@@ -184,7 +184,7 @@ System.out.println(Dates.dateTimeFormat(date_iso_8601)); // 2023-06-20 13:18:11
 
 ```java
 Async<String> read(final File file) {
-  return new AsyncTask<>(() -> {
+  return new AsyncCallable<>(() -> {
     //throw new Exception("error");
     return Files.readString(file);
   });

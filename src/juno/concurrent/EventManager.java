@@ -144,7 +144,7 @@ public class EventManager {
      * @return 
      */
     public <V> Async<V> sync(final String listenerName) {
-        return new AsyncSender<V>(new ExecutorSender<V>() {
+        return new AsyncSender<V>(new Sender.Executor<V>() {
             
             @Override
             public void execute(final Sender<V> sender) throws Exception {

@@ -1,6 +1,7 @@
 package juno.concurrent;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -91,20 +92,20 @@ public final class Dispatcher implements ThreadFactory {
     getExecutorDelivery().execute(runnable);
   }
   
-  public <V> AsyncTask<V> newTask(Task<V> task) {
-    return new AsyncTask<V>(task, this);
+  public <V> AsyncCallable<V> newCallable(Callable<V> callable) {
+    return new AsyncCallable<V>(callable, this);
   }
   
-  public <V> AsyncSender<V> newSender(ExecutorSender<V> executorSender) {
+  public <V> AsyncSender<V> newSender(Sender.Executor<V> executorSender) {
     return new AsyncSender<V>(executorSender, this);
   }
 
-  public <V> AsyncTask<V> newCallUserfunc(
+  public <V> AsyncCallable<V> newCallUserfunc(
     final Object obj, 
     final String method, 
     final Object... params
   ) { 
-    return newTask(new Task<V>() {
+    return newCallable(new Callable<V>() {
         @Override
         public V call() throws Exception {
             Class<?>[] types = Types.getTypes(params);
@@ -124,12 +125,12 @@ public final class Dispatcher implements ThreadFactory {
    * @param params
    * @return 
    */
-  public <V> AsyncTask<V> newCallUserfunc(
+  public <V> AsyncCallable<V> newCallUserfunc(
     final Class clazz, 
     final String method, 
     final Object... params
   ) {
-    return newTask(new Task<V>() {
+    return newCallable(new Callable<V>() {
         @Override
         public V call() throws Exception {
             Class<?>[] types = Types.getTypes(params);
@@ -149,7 +150,7 @@ public final class Dispatcher implements ThreadFactory {
    * @param params
    * @return 
    */
-  public static <V> AsyncTask<V> callUserfunc(
+  public static <V> AsyncCallable<V> callUserfunc(
     final Object obj, 
     final String method, 
     final Object... params
@@ -165,7 +166,7 @@ public final class Dispatcher implements ThreadFactory {
    * @param params
    * @return 
    */
-  public static <V> AsyncTask<V> callUserfunc(
+  public static <V> AsyncCallable<V> callUserfunc(
     final Class clazz, 
     final String method, 
     final Object... params

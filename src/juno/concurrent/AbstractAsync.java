@@ -1,9 +1,10 @@
 package juno.concurrent;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 public abstract class AbstractAsync<T>
-        implements Async<T>, Callback<T>, Task<T> {
+        implements Async<T>, Callback<T>, Callable<T> {
 
     Dispatcher dispatcher;
     Callback<T> callback;
