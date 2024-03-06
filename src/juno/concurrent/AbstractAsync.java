@@ -66,10 +66,10 @@ public abstract class AbstractAsync<T>
             public void run() {
                 try {
                     final T result = call();
-                    delivery(new Delivery<T>(AbstractAsync.this, result, null));
+                    deliveryResponse(result);
 
                 } catch (final Exception error) {
-                    delivery(new Delivery<T>(AbstractAsync.this, null, error));
+                    deliveryError(error);
 
                 } finally {
                     isRunning = false;
@@ -104,43 +104,43 @@ public abstract class AbstractAsync<T>
     }
 
     /**
-     * Libera la respuesta obtenida, al hilo de la UI.
+     * Libera comandos al hilo de la UI.
      *
      * @param run
      */
     public void delivery(Runnable run) {
         dispatcher.delivery(run);
     }
-
+    
     /**
-     * Libera el resutado
+     * Libera el resutado al hilo de la UI.
      *
-     * @param <V>
+     * @param result
      */
-    static final class Delivery<V> implements Runnable {
-
-        public final Callback<V> callback;
-        public final V result;
-        public final Exception error;
-
-        public Delivery(Callback<V> callback, V result, Exception error) {
-            this.callback = callback;
-            this.result = result;
-            this.error = error;
-        }
-
-        @Override
-        public void run() {
-            if (result != null) {
+    protected void deliveryResponse(final T result) {
+        delivery(new Runnable() {
+            @Override
+            public void run() {
                 try {
-                    callback.onResponse(result);
+                    onResponse(result);
                 } catch (Exception e) {
-                    callback.onFailure(e);
+                    onFailure(e);
                 }
-            } else if (error != null) {
-                callback.onFailure(error);
             }
-        }
-
+        });
+    }
+    
+    /**
+     * Libera el error al hilo de la UI.
+     *
+     * @param error
+     */
+    protected void deliveryError(final Exception error) {
+        delivery(new Runnable() {
+            @Override
+            public void run() {
+                onFailure(error);
+            }
+        });
     }
 }
