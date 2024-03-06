@@ -19,7 +19,7 @@ public class EventManager {
     private final List<EventListener> listeners = 
             new ArrayList<EventListener>();
     
-    private Executor executorDelivery = Dispatcher.get()
+    private Executor executorDelivery = Dispatcher.getInstance()
             .getExecutorDelivery();
     
     private EventManager(String name) {

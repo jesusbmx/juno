@@ -12,7 +12,7 @@ public class AsyncCallable<T> extends AbstractAsync<T> {
   }
 
   public AsyncCallable(Callable<T> task) {
-    this(task, Dispatcher.get());
+    this(task, Dispatcher.getInstance());
   }
 
   @Override

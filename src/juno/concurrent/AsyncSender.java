@@ -13,7 +13,7 @@ public class AsyncSender<T> extends AbstractAsync<T> implements Sender<T> {
     }
     
     public AsyncSender(Sender.Executor<T> executor) {
-        this(executor, Dispatcher.get());
+        this(executor, Dispatcher.getInstance());
     }
 
     @Override

@@ -13,7 +13,7 @@ public abstract class AbstractAsync<T>
     volatile boolean isRunning = false;
 
     public AbstractAsync() {
-        this(Dispatcher.get());
+        this(Dispatcher.getInstance());
     }
 
     public AbstractAsync(Dispatcher dispatcher) {

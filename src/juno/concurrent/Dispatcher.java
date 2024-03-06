@@ -30,14 +30,14 @@ public final class Dispatcher implements ThreadFactory {
     this.threadLimit = threadLimit;
   }
   
-  public synchronized static Dispatcher get() {
+  public synchronized static Dispatcher getInstance() {
     if (instance == null) {
       instance = new Dispatcher("Juno-Dispatcher", 4);
     }
     return instance;
   }
 
-  public synchronized static void set(Dispatcher instance) {
+  public synchronized static void setInstance(Dispatcher instance) {
     Dispatcher.instance = instance;
   }
   
@@ -92,11 +92,11 @@ public final class Dispatcher implements ThreadFactory {
     getExecutorDelivery().execute(runnable);
   }
   
-  public <V> Async<V> newCallable(Callable<V> callable) {
+  public <V> Async<V> newAsync(Callable<V> callable) {
     return new AsyncCallable<V>(callable, this);
   }
   
-  public <V> Async<V> newSender(Sender.Executor<V> executorSender) {
+  public <V> Async<V> newAsync(Sender.Executor<V> executorSender) {
     return new AsyncSender<V>(executorSender, this);
   }
 
@@ -105,7 +105,7 @@ public final class Dispatcher implements ThreadFactory {
     final String method, 
     final Object... params
   ) { 
-    return newCallable(new Callable<V>() {
+    return newAsync(new Callable<V>() {
         @Override
         public V call() throws Exception {
             Class<?>[] types = Types.getTypes(params);
@@ -130,7 +130,7 @@ public final class Dispatcher implements ThreadFactory {
     final String method, 
     final Object... params
   ) {
-    return newCallable(new Callable<V>() {
+    return newAsync(new Callable<V>() {
         @Override
         public V call() throws Exception {
             Class<?>[] types = Types.getTypes(params);
@@ -155,7 +155,8 @@ public final class Dispatcher implements ThreadFactory {
     final String method, 
     final Object... params
   ) { 
-    return Dispatcher.get().newUserFunc(obj, method, params);
+    return Dispatcher.getInstance()
+            .newUserFunc(obj, method, params);
   }
   
   /**
@@ -171,7 +172,8 @@ public final class Dispatcher implements ThreadFactory {
     final String method, 
     final Object... params
   ) {
-    return Dispatcher.get().newUserStaticFunc(classOf, method, params);
+    return Dispatcher.getInstance()
+            .newUserStaticFunc(classOf, method, params);
   }
   
 
