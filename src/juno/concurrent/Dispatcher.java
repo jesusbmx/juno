@@ -92,15 +92,15 @@ public final class Dispatcher implements ThreadFactory {
     getExecutorDelivery().execute(runnable);
   }
   
-  public <V> AsyncCallable<V> newCallable(Callable<V> callable) {
+  public <V> Async<V> newCallable(Callable<V> callable) {
     return new AsyncCallable<V>(callable, this);
   }
   
-  public <V> AsyncSender<V> newSender(Sender.Executor<V> executorSender) {
+  public <V> Async<V> newSender(Sender.Executor<V> executorSender) {
     return new AsyncSender<V>(executorSender, this);
   }
 
-  public <V> AsyncCallable<V> newCallUserfunc(
+  public <V> Async<V> newUserFunc(
     final Object obj, 
     final String method, 
     final Object... params
@@ -109,10 +109,10 @@ public final class Dispatcher implements ThreadFactory {
         @Override
         public V call() throws Exception {
             Class<?>[] types = Types.getTypes(params);
-            final Method instanceMethod = obj.getClass()
+            final Method declaredMethod = obj.getClass()
                     .getDeclaredMethod(method, types);
 
-            return (V) instanceMethod.invoke(obj, params);
+            return (V) declaredMethod.invoke(obj, params);
         }
     });
   }
@@ -120,13 +120,13 @@ public final class Dispatcher implements ThreadFactory {
   /**
    * 
    * @param <V>
-   * @param clazz
+   * @param classOf
    * @param method
    * @param params
    * @return 
    */
-  public <V> AsyncCallable<V> newCallUserfunc(
-    final Class clazz, 
+  public <V> Async<V> newUserStaticFunc(
+    final Class classOf, 
     final String method, 
     final Object... params
   ) {
@@ -134,10 +134,10 @@ public final class Dispatcher implements ThreadFactory {
         @Override
         public V call() throws Exception {
             Class<?>[] types = Types.getTypes(params);
-            final Method instanceMethod = clazz
+            final Method declaredMethod = classOf
                     .getDeclaredMethod(method, types);
 
-            return (V) instanceMethod.invoke(null, params);
+            return (V) declaredMethod.invoke(null, params);
         }
     });
   }
@@ -150,28 +150,28 @@ public final class Dispatcher implements ThreadFactory {
    * @param params
    * @return 
    */
-  public static <V> AsyncCallable<V> callUserfunc(
+  public static <V> Async<V> userFunc(
     final Object obj, 
     final String method, 
     final Object... params
   ) { 
-    return Dispatcher.get().newCallUserfunc(obj, method, params);
+    return Dispatcher.get().newUserFunc(obj, method, params);
   }
   
   /**
    * 
    * @param <V>
-   * @param clazz
+   * @param classOf
    * @param method
    * @param params
    * @return 
    */
-  public static <V> AsyncCallable<V> callUserfunc(
-    final Class clazz, 
+  public static <V> Async<V> userStaticFunc(
+    final Class classOf, 
     final String method, 
     final Object... params
   ) {
-    return Dispatcher.get().newCallUserfunc(clazz, method, params);
+    return Dispatcher.get().newUserStaticFunc(classOf, method, params);
   }
   
 

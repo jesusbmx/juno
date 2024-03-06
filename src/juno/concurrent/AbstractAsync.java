@@ -53,11 +53,6 @@ public abstract class AbstractAsync<T>
         this.execute(new CallbackAdapter<T>(onResponse, onError));
     }
 
-    @Override
-    public synchronized T await() throws Exception {
-        return call();
-    }
-
     public void execute() {
         isRunning = true;
         future = this.dispatcher.submit(new Runnable() {
@@ -75,6 +70,11 @@ public abstract class AbstractAsync<T>
                 }
             }
         });
+    }
+    
+    @Override
+    public synchronized T await() throws Exception {
+        return call();
     }
 
     @Override
