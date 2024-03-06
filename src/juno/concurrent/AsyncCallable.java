@@ -4,11 +4,11 @@ import java.util.concurrent.Callable;
 
 public class AsyncCallable<T> extends AbstractAsync<T> {
 
-  public final Callable<T> task;
+  public final Callable<T> callable;
   
-  public AsyncCallable(Callable<T> task, Dispatcher dispatcher) {
+  public AsyncCallable(Callable<T> callable, Dispatcher dispatcher) {
     super(dispatcher);
-    this.task = task;
+    this.callable = callable;
   }
 
   public AsyncCallable(Callable<T> task) {
@@ -17,6 +17,6 @@ public class AsyncCallable<T> extends AbstractAsync<T> {
 
   @Override
   public T call() throws Exception {
-    return task != null ? task.call() : null;
+    return callable != null ? callable.call() : null;
   }
 }

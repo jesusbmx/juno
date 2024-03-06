@@ -61,7 +61,6 @@ public abstract class AbstractAsync<T>
     public void execute() {
         isRunning = true;
         future = this.dispatcher.submit(new Runnable() {
-
             @Override
             public void run() {
                 try {
@@ -117,7 +116,7 @@ public abstract class AbstractAsync<T>
      *
      * @param result
      */
-    protected void deliveryResponse(final T result) {
+    private void deliveryResponse(final T result) {
         delivery(new Runnable() {
             @Override
             public void run() {
@@ -135,7 +134,7 @@ public abstract class AbstractAsync<T>
      *
      * @param error
      */
-    protected void deliveryError(final Exception error) {
+    private void deliveryError(final Exception error) {
         delivery(new Runnable() {
             @Override
             public void run() {
