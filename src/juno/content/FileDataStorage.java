@@ -348,34 +348,34 @@ public class FileDataStorage implements DataStorage {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            DataStorage storage = new FileDataStorage("data.xml");
-            //for (int i = 0; i < 10; i++) {
-
-                storage.putString("clave1", "valor1");
-                
-                Set<String> set = new LinkedHashSet<String>();
-                set.add("A");
-                set.add("B");
-                storage.putStringSet("clave2", set);
-
-                storage.putInt("clave3", 10);
-                storage.putFloat("clave4", 10.2f);
-                storage.putDouble("clave5", 5.2d);
-                storage.putBoolean("clave6", true);
-                storage.commit();
-
-                System.out.println(storage.getString("clave1", ""));
-                System.out.println(storage.getStringSet("clave2", null));
-                System.out.println(storage.getInt("clave3", -1));
-                System.out.println(storage.getFloat("clave4", -1f));
-                System.out.println(storage.getDouble("clave5", -1d));
-                System.out.println(storage.getBoolean("clave6", false));
-            //}
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//        try {
+//            DataStorage storage = new FileDataStorage("data.xml");
+//            //for (int i = 0; i < 10; i++) {
+//
+//                storage.putString("clave1", "valor1");
+//                
+//                Set<String> set = new LinkedHashSet<String>();
+//                set.add("A");
+//                set.add("B");
+//                storage.putStringSet("clave2", set);
+//
+//                storage.putInt("clave3", 10);
+//                storage.putFloat("clave4", 10.2f);
+//                storage.putDouble("clave5", 5.2d);
+//                storage.putBoolean("clave6", true);
+//                storage.commit();
+//
+//                System.out.println(storage.getString("clave1", ""));
+//                System.out.println(storage.getStringSet("clave2", null));
+//                System.out.println(storage.getInt("clave3", -1));
+//                System.out.println(storage.getFloat("clave4", -1f));
+//                System.out.println(storage.getDouble("clave5", -1d));
+//                System.out.println(storage.getBoolean("clave6", false));
+//            //}
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
