@@ -1,8 +1,11 @@
 package juno.content;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import juno.tuple.Pair;
 
 public class MemoryDataStorage implements DataStorage {
 
@@ -27,5 +30,30 @@ public class MemoryDataStorage implements DataStorage {
     @Override
     public Set<String> getAllKeys() throws Exception {
         return values.keySet();
+    }
+
+    @Override
+    public List<String> multiGet(List<String> keys) throws Exception {
+        List<String> result = new ArrayList<String>(keys.size());
+        for (int i = 0; i < keys.size(); i++) {
+            String value = getItem(keys.get(i), null);
+            result.add(value);
+        }
+        return result;
+    }
+
+    @Override
+    public void multiSet(List<Pair<String, String>> keyValuePairs) throws Exception {
+        for (int i = 0; i < keyValuePairs.size(); i++) {
+            final Pair<String, String> pair = keyValuePairs.get(i);
+            values.put(pair.getFirst(), pair.getSecond());
+        }
+    }
+
+    @Override
+    public void multiRemove(List<String> keys) throws Exception {
+        for (int i = 0; i < keys.size(); i++) {
+            values.remove(keys.get(i));
+        }
     }
 }

@@ -3,9 +3,12 @@ package juno.content;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import juno.io.IOUtils;
+import juno.tuple.Pair;
 
 public class FileDataStorage implements DataStorage {
 
@@ -77,7 +80,36 @@ public class FileDataStorage implements DataStorage {
         return getProperties().stringPropertyNames();
     }
     
-//    public static void main(String[] args) throws Exception {
+    @Override
+    public List<String> multiGet(List<String> keys) throws Exception {
+        List<String> result = new ArrayList<String>(keys.size());
+        final Properties p = getProperties();
+        for (int i = 0; i < keys.size(); i++) {
+            result.add(p.getProperty(keys.get(i), null));
+        }
+        return result;
+    }
+
+    @Override
+    public void multiSet(List<Pair<String, String>> keyValuePairs) throws Exception {
+        final Properties p = getProperties();
+        for (int i = 0; i < keyValuePairs.size(); i++) {
+            final Pair<String, String> pair = keyValuePairs.get(i);
+            p.put(pair.getFirst(), pair.getSecond());
+        }
+        saveProperties(p);
+    }
+
+    @Override
+    public void multiRemove(List<String> keys) throws Exception {
+        final Properties p = getProperties();
+        for (int i = 0; i < keys.size(); i++) {
+            p.remove(keys.get(i));
+        }
+        saveProperties(p);
+    }
+    
+    //    public static void main(String[] args) throws Exception {
 //        DataStorage storage = new FileDataStorage("test.txt");
 //        storage.setItem("key1", "hola");
 //        System.out.println(storage.getItem("key1", null));
