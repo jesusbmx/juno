@@ -1,8 +1,8 @@
 package juno.content;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import juno.tuple.Pair;
 
 public interface DataStorage {
        
@@ -16,7 +16,7 @@ public interface DataStorage {
     
     List<String> multiGet(List<String> keys) throws Exception;
     
-    void multiSet(List<Pair<String, String>> keyValuePairs) throws Exception;
+    void multiSet(Map<String, String> keyValuePairs) throws Exception;
     
     void multiRemove(List<String> keys) throws Exception;
 }

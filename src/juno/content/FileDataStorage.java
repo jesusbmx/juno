@@ -5,10 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import juno.io.IOUtils;
-import juno.tuple.Pair;
 
 public class FileDataStorage implements DataStorage {
 
@@ -91,11 +91,10 @@ public class FileDataStorage implements DataStorage {
     }
 
     @Override
-    public void multiSet(List<Pair<String, String>> keyValuePairs) throws Exception {
+    public void multiSet(Map<String, String> keyValuePairs) throws Exception {
         final Properties p = getProperties();
-        for (int i = 0; i < keyValuePairs.size(); i++) {
-            final Pair<String, String> pair = keyValuePairs.get(i);
-            p.put(pair.getFirst(), pair.getSecond());
+        for (Map.Entry<String, String> entry : keyValuePairs.entrySet()) {
+            p.put(entry.getKey(), entry.getValue()); 
         }
         saveProperties(p);
     }

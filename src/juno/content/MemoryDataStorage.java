@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import juno.tuple.Pair;
 
 public class MemoryDataStorage implements DataStorage {
 
@@ -43,10 +42,9 @@ public class MemoryDataStorage implements DataStorage {
     }
 
     @Override
-    public void multiSet(List<Pair<String, String>> keyValuePairs) throws Exception {
-        for (int i = 0; i < keyValuePairs.size(); i++) {
-            final Pair<String, String> pair = keyValuePairs.get(i);
-            values.put(pair.getFirst(), pair.getSecond());
+    public void multiSet(Map<String, String> keyValuePairs) throws Exception {
+        for (Map.Entry<String, String> entry : keyValuePairs.entrySet()) {
+            values.put(entry.getKey(), entry.getValue()); 
         }
     }
 
