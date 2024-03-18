@@ -31,7 +31,7 @@ public class FileDataStorage implements DataStorage {
         return properties;
     }
     
-    private void loadProperties(Properties p) throws Exception {
+    private synchronized void loadProperties(Properties p) throws Exception {
         if (!file.exists()) {
             return;
         }
@@ -45,7 +45,7 @@ public class FileDataStorage implements DataStorage {
         }
     }
     
-    private void saveProperties(Properties p) throws Exception {
+    private synchronized void saveProperties(Properties p) throws Exception {
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(file);
@@ -84,10 +84,8 @@ public class FileDataStorage implements DataStorage {
     public Map<String, String> multiGet(List<String> keys) throws Exception {
         Map<String, String> result = new LinkedHashMap<String, String>(keys.size());
         final Properties p = getProperties();
-        for (int i = 0; i < keys.size(); i++) {
-            final String key = keys.get(i);
-            final String value = p.getProperty(key, null);
-            result.put(key, value);
+        for (String key : keys) {
+            result.put(key, p.getProperty(key));
         }
         return result;
     }
@@ -95,17 +93,15 @@ public class FileDataStorage implements DataStorage {
     @Override
     public void multiSet(Map<String, String> keyValuePairs) throws Exception {
         final Properties p = getProperties();
-        for (Map.Entry<String, String> entry : keyValuePairs.entrySet()) {
-            p.put(entry.getKey(), entry.getValue()); 
-        }
+        p.putAll(keyValuePairs);
         saveProperties(p);
     }
 
     @Override
     public void multiRemove(List<String> keys) throws Exception {
         final Properties p = getProperties();
-        for (int i = 0; i < keys.size(); i++) {
-            p.remove(keys.get(i));
+        for (String key : keys) {
+            p.remove(key);
         }
         saveProperties(p);
     }
