@@ -14,7 +14,7 @@ public interface DataStorage {
     
     Set<String> getAllKeys() throws Exception;
     
-    List<String> multiGet(List<String> keys) throws Exception;
+    Map<String, String> multiGet(List<String> keys) throws Exception;
     
     void multiSet(Map<String, String> keyValuePairs) throws Exception;
     

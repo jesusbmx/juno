@@ -3,7 +3,7 @@ package juno.content;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -81,11 +81,13 @@ public class FileDataStorage implements DataStorage {
     }
     
     @Override
-    public List<String> multiGet(List<String> keys) throws Exception {
-        List<String> result = new ArrayList<String>(keys.size());
+    public Map<String, String> multiGet(List<String> keys) throws Exception {
+        Map<String, String> result = new LinkedHashMap<String, String>(keys.size());
         final Properties p = getProperties();
         for (int i = 0; i < keys.size(); i++) {
-            result.add(p.getProperty(keys.get(i), null));
+            final String key = keys.get(i);
+            final String value = p.getProperty(key, null);
+            result.put(key, value);
         }
         return result;
     }

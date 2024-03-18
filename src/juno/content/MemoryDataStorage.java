@@ -1,7 +1,7 @@
 package juno.content;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,11 +32,12 @@ public class MemoryDataStorage implements DataStorage {
     }
 
     @Override
-    public List<String> multiGet(List<String> keys) throws Exception {
-        List<String> result = new ArrayList<String>(keys.size());
+    public Map<String, String>  multiGet(List<String> keys) throws Exception {
+        Map<String, String> result = new LinkedHashMap<String, String>(keys.size());
         for (int i = 0; i < keys.size(); i++) {
-            String value = getItem(keys.get(i), null);
-            result.add(value);
+            final String key = keys.get(i);
+            final String value = values.get(key);
+            result.put(key, value);
         }
         return result;
     }
