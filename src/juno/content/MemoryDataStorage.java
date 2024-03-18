@@ -2,6 +2,7 @@ package juno.content;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class MemoryDataStorage implements DataStorage {
 
@@ -23,5 +24,8 @@ public class MemoryDataStorage implements DataStorage {
         values.put(key, value);
     }
 
-    
+    @Override
+    public Set<String> getAllKeys() throws Exception {
+        return values.keySet();
+    }
 }

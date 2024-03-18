@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
+import java.util.Set;
 import juno.io.IOUtils;
 
 public class FileDataStorage implements DataStorage {
@@ -69,6 +70,11 @@ public class FileDataStorage implements DataStorage {
         final Properties p = getProperties();
         p.setProperty(key, value);
         saveProperties(p);
+    }
+    
+    @Override
+    public Set<String> getAllKeys() throws Exception {
+        return getProperties().stringPropertyNames();
     }
     
 //    public static void main(String[] args) throws Exception {
