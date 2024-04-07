@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -37,10 +40,6 @@ public class Dictionary implements Cloneable {
     }
     
     
-    public void setAll(Dictionary dict) {
-        values.putAll(dict.values);
-    }
-    
     @Override
     public Dictionary clone() {
         return new Dictionary(this);
@@ -61,11 +60,7 @@ public class Dictionary implements Cloneable {
     public void clear() {
         values.clear();
     }
-    
-    public Map<String, Object> getAll() {
-        return new LinkedHashMap<String, Object>(values);
-    }
-    
+        
     public Set<Map.Entry<String, Object>> entrySet() {
         return values.entrySet();
     }
@@ -152,6 +147,11 @@ public class Dictionary implements Cloneable {
         return getString(key, null);
     }
     
+    public List<String> getStringArray(String key, List<String> defValue) {
+        final List<String> value = (List<String>) values.get(key);
+        return value == null ? defValue : value;
+    }
+    
     public Dictionary getDictionary(String key, Dictionary defValue) {
         final Dictionary value = (Dictionary) values.get(key);
         return value == null ? defValue : value;
@@ -161,6 +161,10 @@ public class Dictionary implements Cloneable {
         return getDictionary(key, null);
     }
     
+    public Map<String, Object> getAll() {
+        return new LinkedHashMap<String, Object>(values);
+    }
+        
     
     public void setBoolean(String key, boolean value) {
         values.put(key, value);
@@ -181,6 +185,10 @@ public class Dictionary implements Cloneable {
     public void setString(String key, String value) {
         values.put(key, value);
     }
+    
+    public void setStringArray(String key, List<String> value) {
+        values.put(key, value);
+    }
 
     public void setDictionary(String key, Dictionary value) {
         if (value == this) {
@@ -189,21 +197,38 @@ public class Dictionary implements Cloneable {
         values.put(key, value);
     }
    
+    public void setAll(Dictionary dict) {
+        values.putAll(dict.values);
+    }
         
-    private static void write(StringBuilder out, Dictionary dict, int tab) {
+    
+    private static void writeIndentSpaces(StringBuilder out, int indentSpaces) {
+        if (indentSpaces > 0) {
+            final char[] tabs = new char[indentSpaces];
+            Arrays.fill(tabs, '\t');
+            out.append(new String(tabs));
+        }
+    }
+        
+    private static void write(StringBuilder out, Dictionary dict, int indentSpaces) {
         for (Map.Entry<String, Object> entry : dict.entrySet()) {
             final String key = entry.getKey();
             final Object value = entry.getValue();
-            
-            final char[] tabs = new char[tab];
-            Arrays.fill(tabs, '\t');
 
-            out.append(new String(tabs));
+            writeIndentSpaces(out, indentSpaces);
             out.append(key).append(": ");
             
             if (value instanceof Dictionary) {
                 out.append("\n");
-                write(out, (Dictionary) value, tab + 1);
+                write(out, (Dictionary) value, indentSpaces + 1);
+                
+            } else if (value instanceof List) {
+                out.append("\n");
+                List list = (List) value;
+                for (Object object : list) {
+                    writeIndentSpaces(out, indentSpaces + 1);
+                    out.append("- ").append(object).append("\n");
+                }
                 
             } else  {
                 out.append(value).append("\n");
@@ -211,9 +236,9 @@ public class Dictionary implements Cloneable {
         }
     }
 
-    public String toString(int tab) {
+    public String toString(int indentSpaces) {
         final StringBuilder sb = new StringBuilder();
-        write(sb, this, tab);
+        write(sb, this, indentSpaces);
         return sb.toString();
     }
     
@@ -274,6 +299,16 @@ public class Dictionary implements Cloneable {
                         final Dictionary subDict = new Dictionary();
                         parseNode(childNode, subDict);
                         dictionary.setDictionary(key, subDict);
+                        
+                    } else if ("String-Array".equals(nodeName)) {
+                        final String key = element.getAttribute("key");
+                        final NodeList itemNodes = element.getElementsByTagName("item");
+                        List<String> stringArray = new ArrayList<String>(itemNodes.getLength());
+                        for (int j = 0; j < itemNodes.getLength(); j++) {
+                            Node itemNode = itemNodes.item(j);
+                            stringArray.add(itemNode.getTextContent());
+                        }
+                        dictionary.setStringArray(key, stringArray);
                     }
                 }
             }
@@ -295,6 +330,11 @@ public class Dictionary implements Cloneable {
 
             final TransformerFactory transformerFactory = TransformerFactory.newInstance();
             final Transformer transformer = transformerFactory.newTransformer();
+            
+            // Agregamos formato al XML
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
             final DOMSource source = new DOMSource(doc);
             final StreamResult result = new StreamResult(out);
             
@@ -319,6 +359,15 @@ public class Dictionary implements Cloneable {
                 element.setAttribute("key", key);
                 writeDictionaryToXML((Dictionary) value, doc, element);
                 
+            } else if (value instanceof List && !((List<?>) value).isEmpty() && ((List<?>) value).get(0) instanceof String) {
+                // If the value is a non-empty list of strings
+                element = doc.createElement("String-Array");
+                element.setAttribute("key", key);
+                for (String item : (List<String>) value) {
+                    Element itemElement = doc.createElement("item");
+                    itemElement.setTextContent(item);
+                    element.appendChild(itemElement);
+                }
             } else {
                 element = doc.createElement(value.getClass().getSimpleName());
                 element.setAttribute("key", key);
@@ -329,41 +378,38 @@ public class Dictionary implements Cloneable {
     }
 
  
-
 //    public static void main(String[] args) throws IOException {
 //        final java.io.File file = new java.io.File("Dictionary.xml");
 //        
-//        final Dictionary dict = new Dictionary();
+//        final Dictionary dictionary = new Dictionary();
 //        if (file.exists()) {
-//            dict.load(new java.io.FileInputStream(file));
+//            dictionary.load(new java.io.FileInputStream(file));
 //        }
 //        
-//        dict.setString("null", null);
-//        dict.setString("string", "Hola mundo");
-//        dict.setInt("int", 10);
-//        dict.setFloat("float", 10.2f);
-//        dict.setLong("long", System.currentTimeMillis());
-//        dict.setBoolean("bool", true);
+//        dictionary.setString("null", null);
+//        dictionary.setString("text", "Hello, world");
+//        dictionary.setInt("integer_number", 10);
+//        dictionary.setFloat("float_number", 10.2f);
+//        dictionary.setLong("long_number", System.currentTimeMillis());
+//        dictionary.setBoolean("boolean", true);
 //        
-//        final Dictionary subdict1 = new Dictionary();
-//        subdict1.setString("null", null);
-//        subdict1.setString("string", "Hola mundo");
-//        subdict1.setInt("int", 10);
-//        subdict1.setFloat("float", 10.2f);
-//        subdict1.setLong("long", System.currentTimeMillis());
-//        subdict1.setBoolean("bool", true);
-//        dict.setDictionary("subdict1", subdict1);
+//        List<String> list = new ArrayList<String>();
+//        list.add("apple");
+//        list.add("banana");
+//        list.add("orange");
+//        dictionary.setStringArray("list", list);
+//                
+//        final Dictionary dictionary_1 = new Dictionary();
+//        dictionary_1.setString("name", "Juan");
+//        dictionary_1.setInt("age", 30);
+//        dictionary.setDictionary("dictionary", dictionary_1);
 //        
-//        final Dictionary subdict2 = new Dictionary();
-//        subdict2.setString("null", null);
-//        subdict2.setString("string", "Hola mundo");
-//        subdict2.setInt("int", 10);
-//        subdict2.setFloat("float", 10.2f);
-//        subdict2.setLong("long", System.currentTimeMillis());
-//        subdict2.setBoolean("bool", true);
-//        subdict1.setDictionary("subdict2", subdict2);
-//        
-//        dict.store(new java.io.FileOutputStream(file));
-//        System.out.println(dict);
+//        final Dictionary dictionary_2 = new Dictionary();
+//        dictionary_2.setString("key1", "value1");
+//        dictionary_2.setString("key2", "value2");
+//        dictionary_1.setDictionary("another_dictionary", dictionary_2);
+//
+//        dictionary.store(new java.io.FileOutputStream(file));
+//        System.out.println(dictionary);
 //    }
 }
