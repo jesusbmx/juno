@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -63,14 +62,10 @@ public class Dictionary implements Cloneable {
         values.clear();
     }
     
-    public Set<String> keySet() {
-        return values.keySet();
+    public Map<String, Object> getAll() {
+        return new LinkedHashMap<String, Object>(values);
     }
     
-    public Collection<Object> values() {
-        return values.values();
-    }
-        
     public Set<Map.Entry<String, Object>> entrySet() {
         return values.entrySet();
     }
@@ -202,25 +197,18 @@ public class Dictionary implements Cloneable {
     }
     
     private static void write(StringBuilder out, Dictionary dict, int tab) {
-        for (String key : dict.keySet()) {
+        for (Map.Entry<String, Object> entry : dict.entrySet()) {
+            final String key = entry.getKey();
+            final Object value = entry.getValue();
+            
             out.append(getTabs(tab));
             out.append(key).append(": ");
             
-            if (dict.isNull(key)) {
-                out.append("null").append("\n");
-            } else if (dict.isString(key)) {
-                out.append(dict.getString(key)).append("\n");
-            } else if (dict.isInt(key)) {
-                out.append(dict.getInt(key)).append("\n");
-            } else if (dict.isBoolean(key)) {
-                out.append(dict.getBoolean(key)).append("\n");
-            } else if (dict.isLong(key)) {
-                out.append(dict.getLong(key)).append("\n");
-            } else if (dict.isFloat(key)) {
-                out.append(dict.getFloat(key)).append("\n");
-            } else if (dict.isDictionary(key)) {
+            if (value instanceof Dictionary) {
                 out.append("\n");
-                write(out, dict.getDictionary(key, null), tab + 1);
+                write(out, (Dictionary) value, tab + 1);
+            } else  {
+                out.append(value).append("\n");
             }
         }
     }
@@ -339,11 +327,11 @@ public class Dictionary implements Cloneable {
  
 
 //    public static void main(String[] args) throws IOException {
-//        final File file = new File("Dictionary.xml");
+//        final java.io.File file = new java.io.File("Dictionary.xml");
 //        
 //        final Dictionary dict = new Dictionary();
 //        if (file.exists()) {
-//            dict.load(new FileInputStream(file));
+//            dict.load(new java.io.FileInputStream(file));
 //        }
 //        
 //        dict.setString("null", null);
@@ -371,7 +359,7 @@ public class Dictionary implements Cloneable {
 //        subdict2.setBoolean("bool", true);
 //        subdict1.setDictionary("subdict2", subdict2);
 //        
-//        dict.store(new FileOutputStream(file));
+//        dict.store(new java.io.FileOutputStream(file));
 //        System.out.println(dict);
 //    }
 }
