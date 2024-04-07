@@ -204,6 +204,7 @@ public class Dictionary implements Cloneable {
             if (value instanceof Dictionary) {
                 out.append("\n");
                 write(out, (Dictionary) value, tab + 1);
+                
             } else  {
                 out.append(value).append("\n");
             }
@@ -251,18 +252,23 @@ public class Dictionary implements Cloneable {
                     if ("String".equals(nodeName)) {
                         final String key = element.getAttribute("key");
                         dictionary.setString(key, value);
+                        
                     } else if ("Integer".equals(nodeName)) {
                         final String key = element.getAttribute("key");
                         dictionary.setInt(key, Integer.parseInt(value));
+                        
                     } else if ("Float".equals(nodeName)) {
                         final String key = element.getAttribute("key");
                         dictionary.setFloat(key, Float.parseFloat(value));
+                        
                     } else if ("Long".equals(nodeName)) {
                         final String key = element.getAttribute("key");
                         dictionary.setLong(key, Long.parseLong(value));
+                        
                     } else if ("Boolean".equals(nodeName)) {
                         final String key = element.getAttribute("key");
                         dictionary.setBoolean(key, Boolean.parseBoolean(value));
+                        
                     } else if ("Dictionary".equals(nodeName)) {
                         final String key = element.getAttribute("key");
                         final Dictionary subDict = new Dictionary();
@@ -312,6 +318,7 @@ public class Dictionary implements Cloneable {
                 element = doc.createElement("Dictionary");
                 element.setAttribute("key", key);
                 writeDictionaryToXML((Dictionary) value, doc, element);
+                
             } else {
                 element = doc.createElement(value.getClass().getSimpleName());
                 element.setAttribute("key", key);
