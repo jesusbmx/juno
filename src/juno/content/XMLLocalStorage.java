@@ -142,27 +142,27 @@ public class XMLLocalStorage implements LocalStorage {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        final LocalStorage localStorage = new XMLLocalStorage("Dictionary.xml");
-
-        final Dictionary dict = localStorage.get();
-        dict.setString("null", null);
-        dict.setString("string", "Hola mundo");
-        dict.setInt("int", 10);
-        dict.setFloat("float", 10.2f);
-        dict.setLong("long", System.currentTimeMillis());
-        dict.setBoolean("bool", true);
-
-        final Dictionary subdict1 = new Dictionary();
-        subdict1.setString("null", null);
-        subdict1.setString("string", "Hola mundo");
-        subdict1.setInt("int", 10);
-        subdict1.setFloat("float", 10.2f);
-        subdict1.setLong("long", System.currentTimeMillis());
-        subdict1.setBoolean("bool", true);
-        dict.setDictionary("subdict1", subdict1);
-
-        localStorage.set(dict);
-        System.out.println(dict);
-    }
+//    public static void main(String[] args) throws IOException {
+//        final LocalStorage localStorage = new XMLLocalStorage("Dictionary.xml");
+//
+//        final Dictionary dict = localStorage.get();
+//        dict.setString("null", null);
+//        dict.setString("string", "Hola mundo");
+//        dict.setInt("int", 10);
+//        dict.setFloat("float", 10.2f);
+//        dict.setLong("long", System.currentTimeMillis());
+//        dict.setBoolean("bool", true);
+//
+//        final Dictionary subdict1 = new Dictionary();
+//        subdict1.setString("null", null);
+//        subdict1.setString("string", "Hola mundo");
+//        subdict1.setInt("int", 10);
+//        subdict1.setFloat("float", 10.2f);
+//        subdict1.setLong("long", System.currentTimeMillis());
+//        subdict1.setBoolean("bool", true);
+//        dict.setDictionary("subdict1", subdict1);
+//
+//        localStorage.set(dict);
+//        System.out.println(dict);
+//    }
 }

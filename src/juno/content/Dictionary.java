@@ -221,24 +221,24 @@ public class Dictionary implements Cloneable {
     }
     
 
-    public static void main(String[] args) {
-        final Dictionary dict = new Dictionary();
-        dict.setString("null", null);
-        dict.setString("string", "Hola mundo");
-        dict.setInt("int", 10);
-        dict.setFloat("float", 10.2f);
-        dict.setLong("long", System.currentTimeMillis());
-        dict.setBoolean("bool", true);
-        final Dictionary clone = dict.clone();
-        
-        final Dictionary subdict1 = new Dictionary();
-        subdict1.putAll(clone);
-        dict.setDictionary("subdict1", subdict1);
-        
-        final Dictionary subdict2 = new Dictionary();
-        subdict2.putAll(clone);
-        subdict1.setDictionary("subdict2", subdict2);
-        
-        System.out.println(dict);
-    }
+//    public static void main(String[] args) {
+//        final Dictionary dict = new Dictionary();
+//        dict.setString("null", null);
+//        dict.setString("string", "Hola mundo");
+//        dict.setInt("int", 10);
+//        dict.setFloat("float", 10.2f);
+//        dict.setLong("long", System.currentTimeMillis());
+//        dict.setBoolean("bool", true);
+//        final Dictionary clone = dict.clone();
+//        
+//        final Dictionary subdict1 = new Dictionary();
+//        subdict1.putAll(clone);
+//        dict.setDictionary("subdict1", subdict1);
+//        
+//        final Dictionary subdict2 = new Dictionary();
+//        subdict2.putAll(clone);
+//        subdict1.setDictionary("subdict2", subdict2);
+//        
+//        System.out.println(dict);
+//    }
 }
