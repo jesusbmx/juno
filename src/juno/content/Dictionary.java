@@ -353,27 +353,32 @@ public class Dictionary implements Cloneable {
                 continue;
             }
 
-            final Element element;
             if (value instanceof Dictionary) {
-                element = doc.createElement("Dictionary");
+                final Element element = doc.createElement("Dictionary");
                 element.setAttribute("key", key);
                 writeDictionaryToXML((Dictionary) value, doc, element);
+                parentElement.appendChild(element);
                 
-            } else if (value instanceof List && !((List<?>) value).isEmpty() && ((List<?>) value).get(0) instanceof String) {
-                // If the value is a non-empty list of strings
-                element = doc.createElement("String-Array");
-                element.setAttribute("key", key);
-                for (String item : (List<String>) value) {
-                    Element itemElement = doc.createElement("item");
-                    itemElement.setTextContent(item);
-                    element.appendChild(itemElement);
+            } else if (value instanceof List && !((List<?>) value).isEmpty()) {
+                if (((List<?>) value).get(0) instanceof String) {
+                    // If the value is a non-empty list of strings
+                    final Element element = doc.createElement("String-Array");
+                    element.setAttribute("key", key);
+                    for (String item : (List<String>) value) {
+                        Element itemElement = doc.createElement("item");
+                        itemElement.setTextContent(item);
+                        element.appendChild(itemElement);
+                    }
+                    parentElement.appendChild(element);
                 }
+                
             } else {
-                element = doc.createElement(value.getClass().getSimpleName());
+                final Element element = doc.createElement(value.getClass().getSimpleName());
                 element.setAttribute("key", key);
                 element.setTextContent(value.toString());
+                parentElement.appendChild(element);
             }
-            parentElement.appendChild(element);
+            
         }
     }
 
