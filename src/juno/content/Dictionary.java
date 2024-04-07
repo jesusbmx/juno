@@ -189,19 +189,16 @@ public class Dictionary implements Cloneable {
         values.put(key, value);
     }
    
-    
-    private static String getTabs(int count) {
-        final char[] tabs = new char[count];
-        Arrays.fill(tabs, '\t');
-        return new String(tabs);
-    }
-    
+        
     private static void write(StringBuilder out, Dictionary dict, int tab) {
         for (Map.Entry<String, Object> entry : dict.entrySet()) {
             final String key = entry.getKey();
             final Object value = entry.getValue();
             
-            out.append(getTabs(tab));
+            final char[] tabs = new char[tab];
+            Arrays.fill(tabs, '\t');
+
+            out.append(new String(tabs));
             out.append(key).append(": ");
             
             if (value instanceof Dictionary) {
