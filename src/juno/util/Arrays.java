@@ -8,8 +8,31 @@ import java.util.List;
 public final class Arrays {
     
   private Arrays() {}
-    
-    /**
+  
+  /**
+   * Devuelve un arreglo con los elementos dados.
+   *
+   * @param <T> tipo de array
+   * @param elements `1, 2, 3, 4, 5, 6, 7`
+   * @return </T> 
+   */
+  public static <T> T[] arrayOf(T... elements) { return elements; }
+  
+  /**
+   * Devuelve una nueva lista de elementos dados.
+   *
+   * @param <T> tipo de lista
+   * @param elements `1, 2, 3, 4, 5, 6, 7`
+   * @return </T> 
+   */
+  public static <T> ArrayList<T> listOf(T... elements) {
+    if (Validate.isNull(elements)) return null;
+    ArrayList<T> list = new ArrayList<T>(elements.length);
+    Collect.add(list, elements);
+    return list;
+  }
+  
+  /**
    * Valida si una array esta vacia o es nulo.
    *
    * @param array a evaluar
@@ -61,29 +84,6 @@ public final class Arrays {
     return collection.isEmpty() ? null : collection.get(len - 1);
   }
   
-   /**
-   * Devuelve un arreglo con los elementos dados.
-   *
-   * @param <T> tipo de array
-   * @param elements `1, 2, 3, 4, 5, 6, 7`
-   * @return </T> 
-   */
-  public static <T> T[] arrayOf(T... elements) { return elements; }
-  
-  /**
-   * Devuelve una nueva lista de elementos dados.
-   *
-   * @param <T> tipo de lista
-   * @param elements `1, 2, 3, 4, 5, 6, 7`
-   * @return </T> 
-   */
-  public static <T> ArrayList<T> listOf(T... elements) {
-    if (Validate.isNull(elements)) return null;
-    ArrayList<T> list = new ArrayList<T>(elements.length);
-    Collect.add(list, elements);
-    return list;
-  }
-  
   /**
    * Corta una lista en sublistas segun la longitud establecida.
    * 
@@ -117,28 +117,9 @@ public final class Arrays {
       i++;
     }
   }
+  
   public static <V> void reverse(final V[] array) {
     reverse(array, 0, array.length);
-  }
-  
-  public static <I, R> List<R> map(Iterable<I> list, Func<I, R> func) {
-    if (Validate.isNull(list)) return null;
-    List<R> result = new ArrayList<R>();
-    for (I i : list) {
-      result.add(func.call(i));
-    }
-    return result;
-  }
-  
-  public static <I, R> R[] map(I[] array, Class<R> componentType, Func<I, R> func) {
-    if (Validate.isNull(array)) return null;
-    final List<R> result = new ArrayList<R>(array.length);
-    for (int i = 0; i < array.length; i++) {
-      I object = array[i];
-      result.add(func.call(object));
-    }
-    R[] a = (R[]) Array.newInstance(componentType, 0);
-    return result.toArray(a);
   }
   
   public static List<String> toListString(List list, Func<Object, String> func) {
@@ -339,5 +320,25 @@ public final class Arrays {
       }
     }
     return null;
+  }
+  
+  public static <I, R> List<R> map(Iterable<I> list, Func<I, R> func) {
+    if (Validate.isNull(list)) return null;
+    List<R> result = new ArrayList<R>();
+    for (I i : list) {
+      result.add(func.call(i));
+    }
+    return result;
+  }
+  
+  public static <I, R> R[] map(I[] array, Class<R> componentType, Func<I, R> func) {
+    if (Validate.isNull(array)) return null;
+    final List<R> result = new ArrayList<R>(array.length);
+    for (int i = 0; i < array.length; i++) {
+      I object = array[i];
+      result.add(func.call(object));
+    }
+    R[] a = (R[]) Array.newInstance(componentType, 0);
+    return result.toArray(a);
   }
 }
