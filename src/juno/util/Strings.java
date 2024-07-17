@@ -432,7 +432,7 @@ public final class Strings {
      * @param func función de conversión
      * @return cadena resultante
      */
-    public static <T> String joinArray(T[] elements, String separator, Func<T, String> func) {
+    public static <T> String join(T[] elements, String separator, Func<T, String> func) {
         final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < elements.length; i++) {
             if (i > 0) sb.append(separator);
@@ -449,8 +449,8 @@ public final class Strings {
      * @param separator delimitador entre elementos
      * @return cadena resultante
      */
-    public static <T> String joinArray(T[] elements, String separator) {
-        return joinArray(elements, separator, Func.OBJ_TO_STR);
+    public static <T> String join(T[] elements, String separator) {
+        return join(elements, separator, Func.OBJ_TO_STR);
     }
 
     /**
@@ -461,8 +461,8 @@ public final class Strings {
      * @param func función de conversión
      * @return cadena resultante
      */
-    public static <T> String joinArray(T[] elements, Func<Object, String> func) {
-        return joinArray(elements, ", ", func);
+    public static <T> String join(T[] elements, Func<Object, String> func) {
+        return join(elements, ", ", func);
     }
 
     /**
@@ -472,8 +472,8 @@ public final class Strings {
      * @param elements elementos a unir
      * @return cadena resultante
      */
-    public static <T> String joinArray(T[] elements) {
-        return joinArray(elements, ", ");
+    public static <T> String join(T[] elements) {
+        return join(elements, ", ");
     }
   
 }
