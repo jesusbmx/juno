@@ -2,6 +2,7 @@ package juno.util;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import juno.tuple.Pair;
 
 public class Maps {
     
@@ -14,13 +15,20 @@ public class Maps {
    * @param namesAndValues contenidos `"nombre", "jesus"`
    * @return HashMap</V></K> 
    */
-  public static <K, V> LinkedHashMap<K, V> mapOf(Object... namesAndValues) {
+  public static <K, V> LinkedHashMap<K, V> fromKeysAndValues(Object... namesAndValues) {
     if (Validate.isNull(namesAndValues)) return null;
     if (namesAndValues.length % 2 != 0) {
       throw new IllegalArgumentException("Expected alternating header names and values");
     }
     LinkedHashMap<K, V> map = new LinkedHashMap<K, V>(namesAndValues.length / 2);
-    put(map, namesAndValues);
+    putAll(map, namesAndValues);
+    return map;
+  }
+  
+  public static <K, V> LinkedHashMap<K, V> fromPairs(Pair<K, V>... pairs) {
+    if (Validate.isNull(pairs)) return null;
+    LinkedHashMap<K, V> map = new LinkedHashMap<K, V>(pairs.length);
+    putAll(map, pairs);
     return map;
   }
     
@@ -42,7 +50,7 @@ public class Maps {
   }
   
   
-  public static <K, V> void put(Map<K, V> out, Object... namesAndValues) {
+  public static <K, V> void putAll(Map<K, V> out, Object... namesAndValues) {
     if (Validate.isNull(namesAndValues)) return;
     for (int i = 0; i < namesAndValues.length; i += 2) {
       K name = (K) namesAndValues[i];
@@ -50,4 +58,22 @@ public class Maps {
       out.put(name, value);
     }
   }
+  
+  public static <K, V> void putAll(Map<K, V> out, Pair<K, V>... pairs) {
+    if (Validate.isNull(pairs)) return;
+    for (int i = 0; i < pairs.length; i++) {
+      final Pair<K, V> pair = pairs[i];
+      out.put(pair.getFirst(), pair.getSecond());
+    }
+  }
+  
+//    public static void main(String[] args) {
+//        final Map<String, Object> map = Maps.fromPairs(
+//            new Pair<String, Object>("name", "Jesus"),
+//            new Pair<String, Object>("age", 29),
+//            new Pair<String, Object>("color", "Green")
+//        );
+//        
+//        System.out.println(map);
+//    }
 }

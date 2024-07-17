@@ -28,7 +28,7 @@ public final class Arrays {
   public static <T> ArrayList<T> listOf(T... elements) {
     if (Validate.isNull(elements)) return null;
     ArrayList<T> list = new ArrayList<T>(elements.length);
-    Collect.add(list, elements);
+    Collect.addAll(list, elements);
     return list;
   }
   

@@ -12,7 +12,7 @@ public final class Collect {
     return Validate.isNull(it) || it.isEmpty();
   }
   
-  public static <T> void add(Collection<T> out, T... elements) { 
+  public static <T> void addAll(Collection<T> out, T... elements) { 
     if (Validate.isNotNull(elements)) {
       for (T e : elements) {
         out.add(e);
@@ -30,7 +30,7 @@ public final class Collect {
   public static <T> LinkedHashSet<T> setOf(T... elements) {
     if (Validate.isNull(elements)) return null;
     LinkedHashSet<T> list = new LinkedHashSet<T>(elements.length);
-    add(list, elements);
+    addAll(list, elements);
     return list;
   }
 
