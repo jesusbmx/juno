@@ -166,12 +166,12 @@ public final class Strings {
    */
   public static String concat(Object... elements) {
     StringBuilder sb = new StringBuilder();
-    Collect.append(sb, elements);
+    append(sb, elements);
     return sb.toString();
   }
   public static String concat(Collection elements) {
     StringBuilder sb = new StringBuilder();
-    Collect.append(sb, elements);
+    append(sb, elements);
     return sb.toString();
   }
   
@@ -350,4 +350,21 @@ public final class Strings {
 //        System.out.println(Strings.subStr(cd, "name=\"", "\""));
 //        System.out.println(Strings.subStrReturn(cd, "name=\"", "\""));
 //    }
+  
+    public static void append(StringBuilder out, Object... elements) {
+        if (Validate.isNotNull(elements)) {
+          for (Object e : elements) {
+            out.append(e);
+          }
+        }
+    }
+    
+    public static void append(StringBuilder out, Collection elements) {
+        if (Validate.isNotNull(elements)) {
+            for (Object e : elements) {
+                out.append(e);
+            }
+        }
+    }
+  
 }
