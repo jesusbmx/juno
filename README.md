@@ -117,10 +117,10 @@ if (Arrays.isEmpty(strList)) {
   System.out.println("list is empty");
 }
 
-System.out.println(Arrays.get(strList, 50, "defaultVal"));
+System.out.println(Arrays.getValueOrDefault(strList, 50, "defaultVal"));
 
-System.out.println(Arrays.join(strList));
-System.out.println(Arrays.join(strList, (String it) -> "\"" + it.toString() + "\"" ));
+System.out.println(Strings.join(strList));
+System.out.println(Strings.join(strList, (String it) -> "\"" + it.toString() + "\"" ));
 
 boolean some = Arrays.some(strList, (String it) -> t.equals("7") );
 System.out.println(some);
@@ -132,10 +132,10 @@ String find = Arrays.find(strList, (String it) -> t.equals("9") );
 System.out.println(find);
     
 List<Integer> filter = Arrays.filter(intList, (Integer it) -> it > 5 );
-System.out.println(Arrays.join(filter, ","));
+System.out.println(Strings.join(filter, ","));
 
 List<String> fill = Arrays.fill(strList, "z");
-System.out.println(Arrays.join(fill, ","));
+System.out.println(Strings.join(fill, ","));
 ```
 
 ```markdown

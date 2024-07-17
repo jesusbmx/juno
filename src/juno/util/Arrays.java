@@ -59,27 +59,27 @@ public final class Arrays {
     return index > -1 && list.size() > index;
   }
   
-  public static <T> T get(T[] array, int index, T defaultVal) {
+  public static <T> T getValueOrDefault(T[] array, int index, T defaultVal) {
     return hasIndex(array, index) ? array[index] : defaultVal;
   }
   
-  public static <T> T get(T[] array, int index) {
-    return get(array, index,  null);
+  public static <T> T getValue(T[] array, int index) {
+    return getValueOrDefault(array, index,  null);
   }
     
-  public static <T> T get(List<T> list, int index, T defaultVal) {
+  public static <T> T getValueOrDefault(List<T> list, int index, T defaultVal) {
     return hasIndex(list, index) ? list.get(index) : defaultVal;
   }
   
-  public static <T> T get(List<T> list, int index) {
-    return get(list, index,  null);
+  public static <T> T getValue(List<T> list, int index) {
+    return getValueOrDefault(list, index,  null);
   }
   
-  public static <V> V first(List<V> collection) {
+  public static <V> V getFirst(List<V> collection) {
     return collection.isEmpty() ? null : collection.get(0);
   }
   
-  public static <V> V last(List<V> collection) {
+  public static <V> V getLast(List<V> collection) {
     final int len = collection.size();
     return collection.isEmpty() ? null : collection.get(len - 1);
   }
@@ -122,83 +122,20 @@ public final class Arrays {
     reverse(array, 0, array.length);
   }
   
-  public static List<String> toListString(List list, Func<Object, String> func) {
+  public static List<String> convertListToString(List list, Func<Object, String> func) {
     return map(list, func);
   }
   
-  public static List<String> toListString(List list) {
+  public static List<String> convertListToString(List list) {
     return map(list, Func.OBJ_TO_STR);
   }
   
-  public static String[] toArrayString(Object[] array, Func<Object, String> func) {
+  public static String[] convertArrayToString(Object[] array, Func<Object, String> func) {
     return map(array, String.class, func);
   }
   
-  public static String[] toArrayString(Object... array) {
+  public static String[] convertArrayToString(Object... array) {
     return map(array, String.class, Func.OBJ_TO_STR);
-  }
-  
-    /**
-   * <p>Une todos los elementos de una colección en una cadena.</p>
-   * 
-   * @param <V>
-   * @param args elementos
-   * @param separator delimitador entre elementos
-   * @param func función ha aplicar para cada elemento
-   * @return String
-   */
-  public static <V> String join(Iterable<V> args, String separator, Func<V, String> func) {
-    final StringBuilder sb = new StringBuilder();
-    int i = 0;
-    for (V arg : args) {
-      if (i > 0) sb.append(separator);
-      sb.append(func.call(arg));
-      i++;
-    }
-    return sb.toString();
-  }
-  
-  public static <V> String join(Iterable<V> args, String separator) {
-    return join(args, separator, Func.OBJ_TO_STR);
-  }
-  
-  public static <V> String join(Iterable<V> args, Func<V, String> func) {
-    return join(args, ", ", func);
-  }
-  
-  public static <V> String join(Iterable<V> args) {
-    return join(args, ", ");
-  }
-  
-  
-  /**
-   * <p>Une todos los elementos de un arreglo en una cadena.</p>
-   * 
-   * @param <V>
-   * @param args elementos
-   * @param separator delimitador entre elementos
-   * @param func función ha aplicar para cada elemento
-   * @return String
-   */
-  public static <V> String join(V[] args, String separator, Func<V, String> func) {
-    final StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < args.length; i++) {
-      if (i > 0) sb.append(separator);
-      sb.append(func.call(args[i]));
-    }
-    return sb.toString();
-  }
-  
-  public static <V> String join(V[] args, String separator) {
-    return join(args, separator, Func.OBJ_TO_STR);
-  }
-  
-  public static <V> String join(V[] args, Func<Object, String> func) {
-    return join(args, ", ", func);
-  }
-  
-  public static <V> String join(V[] args) {
-    return join(args, ", ");
   }
   
   public static <V> List<V> fill(List<V> list, V value, int start, int end) {

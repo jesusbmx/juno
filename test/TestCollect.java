@@ -4,6 +4,7 @@ import juno.util.Arrays;
 import juno.util.Collect;
 import juno.util.Convert;
 import juno.util.Func;
+import juno.util.Strings;
 
 
 public class TestCollect {
@@ -26,9 +27,9 @@ public class TestCollect {
           System.out.println("array is empty");
         }
 
-        System.out.println(Arrays.get(strList, 50, "defaultVal"));
+        System.out.println(Arrays.getValueOrDefault(strList, 50, "defaultVal"));
 
-        System.out.println(Arrays.join(strList, ","));
+        System.out.println(Strings.join(strList, ","));
 
         boolean some = Arrays.some(strList, new Func<String, Boolean>() {
             @Override
@@ -60,9 +61,9 @@ public class TestCollect {
                 return t > 5;
             }
         });
-        System.out.println(Arrays.join(filter, ","));
+        System.out.println(Strings.join(filter, ","));
 
         List<String> fill = Arrays.fill(strList, "z");
-        System.out.println(Arrays.join(fill, ","));
+        System.out.println(Strings.join(fill, ","));
     }
 }

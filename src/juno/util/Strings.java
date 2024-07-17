@@ -367,4 +367,113 @@ public final class Strings {
         }
     }
   
+    
+   /**
+     * Une todos los elementos de una colección en una cadena.
+     *
+     * @param <T> tipo de la colección
+     * @param elements elementos a unir
+     * @param separator delimitador entre elementos
+     * @param func función de conversión
+     * @return cadena resultante
+     */
+    public static <T> String join(Iterable<T> elements, String separator, Func<T, String> func) {
+        final StringBuilder sb = new StringBuilder();
+        int i = 0;
+        for (T element : elements) {
+            if (i > 0) sb.append(separator);
+            sb.append(func.call(element));
+            i++;
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Une todos los elementos de una colección en una cadena usando la conversión por defecto.
+     *
+     * @param <T> tipo de la colección
+     * @param elements elementos a unir
+     * @param separator delimitador entre elementos
+     * @return cadena resultante
+     */
+    public static <T> String join(Iterable<T> elements, String separator) {
+        return join(elements, separator, Func.OBJ_TO_STR);
+    }
+
+    /**
+     * Une todos los elementos de una colección en una cadena usando la conversión por defecto.
+     *
+     * @param <T> tipo de la colección
+     * @param elements elementos a unir
+     * @param func función de conversión
+     * @return cadena resultante
+     */
+    public static <T> String join(Iterable<T> elements, Func<T, String> func) {
+        return join(elements, ", ", func);
+    }
+
+    /**
+     * Une todos los elementos de una colección en una cadena usando la conversión por defecto.
+     *
+     * @param <T> tipo de la colección
+     * @param elements elementos a unir
+     * @return cadena resultante
+     */
+    public static <T> String join(Iterable<T> elements) {
+        return join(elements, ", ");
+    }
+
+    /**
+     * Une todos los elementos de un array en una cadena.
+     *
+     * @param <T> tipo del array
+     * @param elements elementos a unir
+     * @param separator delimitador entre elementos
+     * @param func función de conversión
+     * @return cadena resultante
+     */
+    public static <T> String joinArray(T[] elements, String separator, Func<T, String> func) {
+        final StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < elements.length; i++) {
+            if (i > 0) sb.append(separator);
+            sb.append(func.call(elements[i]));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Une todos los elementos de un array en una cadena usando la conversión por defecto.
+     *
+     * @param <T> tipo del array
+     * @param elements elementos a unir
+     * @param separator delimitador entre elementos
+     * @return cadena resultante
+     */
+    public static <T> String joinArray(T[] elements, String separator) {
+        return joinArray(elements, separator, Func.OBJ_TO_STR);
+    }
+
+    /**
+     * Une todos los elementos de un array en una cadena usando la conversión por defecto.
+     *
+     * @param <T> tipo del array
+     * @param elements elementos a unir
+     * @param func función de conversión
+     * @return cadena resultante
+     */
+    public static <T> String joinArray(T[] elements, Func<Object, String> func) {
+        return joinArray(elements, ", ", func);
+    }
+
+    /**
+     * Une todos los elementos de un array en una cadena usando la conversión por defecto.
+     *
+     * @param <T> tipo del array
+     * @param elements elementos a unir
+     * @return cadena resultante
+     */
+    public static <T> String joinArray(T[] elements) {
+        return joinArray(elements, ", ");
+    }
+  
 }
