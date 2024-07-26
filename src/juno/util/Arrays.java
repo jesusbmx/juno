@@ -26,9 +26,11 @@ public final class Arrays {
    * @return </T> 
    */
   public static <T> ArrayList<T> listOf(T... elements) {
-    if (Validate.isNull(elements)) return null;
+    if (elements == null) return null;
     ArrayList<T> list = new ArrayList<T>(elements.length);
-    Collect.addAll(list, elements);
+    for (T element : elements) {
+        list.add(element);
+    }
     return list;
   }
   
@@ -39,7 +41,7 @@ public final class Arrays {
    * @return boolean
    */
   public static <T> boolean isEmpty(T[] array) {
-    return Validate.isNull(array) || array.length == 0;
+    return array == null || array.length == 0;
   }
   
   /**
@@ -50,21 +52,19 @@ public final class Arrays {
    * @return @true si el array contiene el indice.
    */
   public static <T> boolean hasIndex(T[] array, int index) {
-    if (Validate.isNull(array)) return false;
-    return index > -1 && array.length > index;
+    return array != null && index >= 0 && index < array.length;
   }
   
   public static <T> boolean hasIndex(List<T> list, int index) {
-    if (Validate.isNull(list)) return false;
-    return index > -1 && list.size() > index;
+    return list != null && index >= 0 && index < list.size();
   }
   
   public static <T> T getValueOrDefault(T[] array, int index, T defaultVal) {
-    return hasIndex(array, index) ? array[index] : defaultVal;
+   return hasIndex(array, index) ? array[index] : defaultVal;
   }
   
   public static <T> T getValue(T[] array, int index) {
-    return getValueOrDefault(array, index,  null);
+    return getValueOrDefault(array, index, null);
   }
     
   public static <T> T getValueOrDefault(List<T> list, int index, T defaultVal) {
@@ -139,7 +139,7 @@ public final class Arrays {
   }
   
   public static <V> List<V> fill(List<V> list, V value, int start, int end) {
-    if (Validate.isNull(list)) return null;
+    if (list == null) return null;
     for (int i = start; i < end; i++) {
       list.set(i, value);
     }
@@ -155,7 +155,7 @@ public final class Arrays {
   }
   
   public static <V> V[] fill(V[] array, V value, int start, int end) {
-    if (Validate.isNull(array)) return null;
+    if (array == null) return null;
     for (int i = start; i < end; i++) {
       array[i] = value;
     }
@@ -171,7 +171,7 @@ public final class Arrays {
   }
   
    public static <V> List<V> filter(Iterable<V> list, Func<V, Boolean> func) {
-    if (Validate.isNull(list)) return null;
+    if (list == null) return null;
     List<V> result = new ArrayList<V>();
     for (V v : list) {
       if (func.call(v)) {
@@ -182,7 +182,7 @@ public final class Arrays {
   }
   
   public static <V> V[] filter(V[] array, Func<V, Boolean> func) {
-    if (Validate.isNull(array)) return null;
+    if (array == null) return null;
     final List<V> result = new ArrayList<V>(array.length);
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
@@ -197,7 +197,7 @@ public final class Arrays {
   }
   
   public static <V> boolean every(Iterable<V> list, Func<V, Boolean> func) {
-    if (Validate.isNull(list)) return false;
+    if (list == null) return false;
     for (V v : list) {
       if (!func.call(v)) {
         return false;
@@ -207,7 +207,7 @@ public final class Arrays {
   }
   
   public static <V> boolean every(V[] array, Func<V, Boolean> func) {
-    if (Validate.isNull(array)) return false;
+    if (array == null) return false;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
       if (!func.call(object)) {
@@ -218,7 +218,7 @@ public final class Arrays {
   }
   
   public static <V> boolean some(Iterable<V> list, Func<V, Boolean> func) {
-    if (Validate.isNull(list)) return false;
+    if (list == null) return false;
     for (V v : list) {
       if (func.call(v)) {
         return true;
@@ -228,7 +228,7 @@ public final class Arrays {
   }
   
   public static <V> boolean some(V[] array, Func<V, Boolean> func) {
-    if (Validate.isNull(array)) return false;
+    if (array == null) return false;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
       if (func.call(object)) {
@@ -239,7 +239,7 @@ public final class Arrays {
   }
   
   public static <V> V find(Iterable<V> list, Func<V, Boolean> func) {
-    if (Validate.isNull(list)) return null;
+    if (list == null) return null;
     for (V v : list) {
       if (func.call(v)) {
         return v;
@@ -249,7 +249,7 @@ public final class Arrays {
   }
   
   public static <V> V find(V[] array, Func<V, Boolean> func) {
-    if (Validate.isNull(array)) return null;
+    if (array == null) return null;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
       if (func.call(object)) {
@@ -260,7 +260,7 @@ public final class Arrays {
   }
   
   public static <I, R> List<R> map(Iterable<I> list, Func<I, R> func) {
-    if (Validate.isNull(list)) return null;
+    if (list == null) return null;
     List<R> result = new ArrayList<R>();
     for (I i : list) {
       result.add(func.call(i));
@@ -269,7 +269,7 @@ public final class Arrays {
   }
   
   public static <I, R> R[] map(I[] array, Class<R> componentType, Func<I, R> func) {
-    if (Validate.isNull(array)) return null;
+    if (array == null) return null;
     final List<R> result = new ArrayList<R>(array.length);
     for (int i = 0; i < array.length; i++) {
       I object = array[i];

@@ -14,13 +14,15 @@ public class Maps {
      * @param keysAndValues alternados `"clave", "valor"`
      * @return LinkedHashMap con las claves y valores especificados
      */
-    public static <K, V> LinkedHashMap<K, V> createFromKeysAndValues(Object... keysAndValues) {
-        if (Validate.isNull(keysAndValues)) return null;
+    public static <K, V> LinkedHashMap<K, V> of(Object... keysAndValues) {
+        if (keysAndValues == null) return null;
         if (keysAndValues.length % 2 != 0) {
             throw new IllegalArgumentException("Se esperaban claves y valores alternados");
         }
         LinkedHashMap<K, V> map = new LinkedHashMap<K, V>(keysAndValues.length / 2);
-        putAll(map, keysAndValues);
+        for (int i = 0; i < keysAndValues.length; i += 2) {
+            map.put((K) keysAndValues[i], (V) keysAndValues[i + 1]);
+        }
         return map;
     }
 
@@ -32,10 +34,21 @@ public class Maps {
      * @param pairs pares de clave y valor
      * @return LinkedHashMap con los pares especificados
      */
-    public static <K, V> LinkedHashMap<K, V> createFromPairs(Pair<K, V>... pairs) {
-        if (Validate.isNull(pairs)) return null;
+    public static <K, V> LinkedHashMap<K, V> ofPairs(Pair<? extends K, ? extends V>... pairs) {
+        if (pairs == null) return null;
         LinkedHashMap<K, V> map = new LinkedHashMap<K, V>(pairs.length);
-        putAll(map, pairs);
+        for (Pair<? extends K, ? extends V> pair : pairs) {
+            map.put(pair.getFirst(), pair.getSecond());
+        }
+        return map;
+    }
+    
+    public static <K, V> Map<K, V> ofEntries(Map.Entry<? extends K, ? extends V>... entries) {
+        if (entries == null) return null;
+        LinkedHashMap<K, V> map = new LinkedHashMap<K, V>(entries.length);
+        for (Map.Entry<? extends K, ? extends V> entry : entries) {
+            map.put(entry.getKey(), entry.getValue());
+        }
         return map;
     }
 
@@ -46,7 +59,7 @@ public class Maps {
      * @return true si el mapa es nulo o está vacío, false de lo contrario
      */
     public static boolean isEmpty(Map<?, ?> map) {
-        return Validate.isNull(map) || map.isEmpty();
+        return map == null || map.isEmpty();
     }
 
     /**
@@ -59,8 +72,7 @@ public class Maps {
      * @return true si el mapa contiene la clave, false de lo contrario
      */
     public static <K, V> boolean containsKey(Map<K, V> map, K key) {
-        if (Validate.isNull(map)) return false;
-        return map.containsKey(key);
+        return map != null && map.containsKey(key);
     }
 
     /**
@@ -91,38 +103,6 @@ public class Maps {
     }
 
     /**
-     * Añade pares de claves y valores a un mapa.
-     *
-     * @param <K> tipo de clave
-     * @param <V> tipo de valor
-     * @param map mapa al que añadir los pares
-     * @param keysAndValues pares alternados de clave y valor
-     */
-    public static <K, V> void putAll(Map<K, V> map, Object... keysAndValues) {
-        if (Validate.isNull(keysAndValues)) return;
-        for (int i = 0; i < keysAndValues.length; i += 2) {
-            K key = (K) keysAndValues[i];
-            V value = (V) keysAndValues[i + 1];
-            map.put(key, value);
-        }
-    }
-
-    /**
-     * Añade pares de clave y valor a un mapa.
-     *
-     * @param <K> tipo de clave
-     * @param <V> tipo de valor
-     * @param map mapa al que añadir los pares
-     * @param pairs pares de clave y valor
-     */
-    public static <K, V> void putAll(Map<K, V> map, Pair<K, V>... pairs) {
-        if (Validate.isNull(pairs)) return;
-        for (Pair<K, V> pair : pairs) {
-            map.put(pair.getFirst(), pair.getSecond());
-        }
-    }
-
-    /**
      * Elimina una clave de un mapa y devuelve el valor asociado.
      *
      * @param <K> tipo de clave
@@ -132,8 +112,7 @@ public class Maps {
      * @return el valor asociado a la clave eliminada, o null si no estaba presente
      */
     public static <K, V> V remove(Map<K, V> map, K key) {
-        if (Validate.isNull(map)) return null;
-        return map.remove(key);
+        return map != null ? map.remove(key) : null;
     }
 
     /**
@@ -147,14 +126,13 @@ public class Maps {
      * @return el valor anterior asociado a la clave, o null si no estaba presente
      */
     public static <K, V> V replace(Map<K, V> map, K key, V newValue) {
-        if (Validate.isNull(map)) return null;
-        return map.replace(key, newValue);
+         return map != null ? map.replace(key, newValue) : null;
     }
   
     public static void main(String[] args) {
-        final Map<String, Object> map = Maps.createFromPairs(
-            new Pair<String, Object>("name", "Jesus"),
-            new Pair<String, Object>("age", 29),
+        final Map<String, Object> map = Maps.ofPairs(
+           Pair.of("name", "Jesus"),
+           Pair.of("age", 29),
             new Pair<String, Object>("color", "Green")
         );
         
