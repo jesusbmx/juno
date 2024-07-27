@@ -272,30 +272,30 @@ sender.send("status", 200);
 
 ### Paths
 ```java
-String path = "/home";
+String basePath = "/home";
 
 System.out.println(Paths.join('/', Arrays.of(
-        path, "User/Desktop", "file.txt"
+    basePath, "User/Desktop", "file.txt"
 )));
 
-path = "/home/User/Documents/";
+basePath = "/home/User/Documents/";
 
 System.out.println(Paths.join('/', Arrays.of(
-        path, "file.txt"
+    basePath, "file.txt"
 )));
 
-path = "/home/User";
+basePath = "/home/User";
 
 System.out.println(Paths.join('/', Arrays.of(
-        path, "Downloads", "file.txt"
-)));
-
-System.out.println(Paths.join('/', Arrays.of(
-        "/home", "User2", "Downloads", "file.txt"
+    basePath, "Downloads", "file.txt"
 )));
 
 System.out.println(Paths.join('/', Arrays.of(
-        "/home", "User2", "Downloads"
+    "/home", "User2", "Downloads", "file.txt"
+)));
+
+System.out.println(Paths.join('/', Arrays.of(
+    "/home", "User2", "Downloads"
 )));
 ```
 
