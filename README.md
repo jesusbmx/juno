@@ -88,7 +88,6 @@ System.out.println(round);
 ```
 
 ### Lists, Arrays
-
 ```java
 List<String> strList = Lists.listOf("1", "2", "3", "7", "9");
 List<Integer> intList = Lists.map(strList, (String it) -> Convert.toInt(it) );
@@ -190,7 +189,6 @@ System.out.println(Dates.dateTimeFormat(date_iso_8601)); // 2023-06-20 13:18:11
 
 
 ### Async Await
-
 ```java
 Async<String> read(final File file) {
   return new AsyncCallable<>(() -> {
@@ -227,7 +225,6 @@ try {
 ```
 
 ### Async Sender
-
 ```java
 Async<String> read(final File file) {
   return new AsyncSender<>((sender) -> {
@@ -239,7 +236,6 @@ Async<String> read(final File file) {
 ```
 
 ### Abstract Async
-
 ```java
 Async<String> read(final File file) {
   return new AbstractAsync<String>() {
@@ -254,7 +250,6 @@ Async<String> read(final File file) {
 
 
 ### EventManager
-
 ```java
 EventManager receiver = EventManager.get("MyHandler");
 receiver.on("log", (EventMessage<String> evt) -> {
@@ -275,6 +270,19 @@ EventManager sender = EventManager.get("MyHandler");
 sender.send("status", 200);
 ```
 
+### Paths
+```java
+String path = "C:\\";
+        
+System.out.println(Paths.join(path, "User\\Desktop", "file.txt"));
+```
+
+```markdown
+> C:\Users\MyUser\Desktop\file.txt
+> C:\Users\MyUser\Downloads\file.txt
+```
+
+C:\User\Desktop\file.txt
 
 ### IO
 ```java

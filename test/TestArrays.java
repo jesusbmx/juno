@@ -5,7 +5,7 @@ import juno.util.Func;
 import juno.util.Lists;
 import juno.util.Strings;
 
-public class TestCollect {
+public class TestArrays {
     
     public static void main(String[] args) {
         // Arrays
