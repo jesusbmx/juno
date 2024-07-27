@@ -103,7 +103,7 @@ System.out.println(Validate.isNotNull(null));
 > false
 ```
 
-### Lists
+### Lists, Arrays
 
 ```java
 List<String> strList = Lists.listOf("1", "2", "3", "7", "9");
