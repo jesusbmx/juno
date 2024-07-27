@@ -145,19 +145,16 @@ final Map<String, Integer> map = Maps.of(
 
 Maps.getValueOrDefault(map, "one", -1);
 
-Map<Integer, String> convertedMap1 = Maps.convert(
-    map,
-    entry -> new AbstractMap.SimpleImmutableEntry<Integer, String>(
-        entry.getValue(),
-        entry.getKey() + "-" + entry.getValue()
-    )
-);
-
 Map<Integer, String> convertedMap2 = Maps.convert(
     map,
     entry -> entry.getValue(),
     entry -> entry.getKey() + "-" + entry.getValue()
 );
+```
+
+```markdown
+> 1
+> {1=one-1, 2=two-2, 3=three-3}
 ```
 
 
