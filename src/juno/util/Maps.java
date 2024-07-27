@@ -1,5 +1,6 @@
 package juno.util;
 
+import java.util.AbstractMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import juno.tuple.Pair;
@@ -128,6 +129,19 @@ public class Maps {
     public static <K, V> V replace(Map<K, V> map, K key, V newValue) {
          return map != null ? map.replace(key, newValue) : null;
     }
+    
+    public static <Key1, Value1, Key2, Value2> Map<Key2, Value2> convert(
+            Map<Key1, Value1> originalMap,
+            Func<Map.Entry<Key1, Value1>, Map.Entry<Key2, Value2>> func) {
+        
+        if (originalMap == null) return null;
+        LinkedHashMap<Key2, Value2> result = new LinkedHashMap<Key2, Value2>(originalMap.size());
+        for (Map.Entry<Key1, Value1> it : originalMap.entrySet()) {
+          final Map.Entry<Key2, Value2> entry = func.call(it);
+          result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
   
     public static void main(String[] args) {
 //        final Map<String, Object> map2 = Maps.ofPairs(
@@ -143,5 +157,14 @@ public class Maps {
         );
         
         System.out.println(Maps.getValueOrDefault(map, "name", "None"));
+        
+        final Map<String, String> newMap = Maps.convert(map, new Func<Map.Entry<String, Object>, Map.Entry<String, String>>() {
+            @Override
+            public Map.Entry<String, String> call(Map.Entry<String, Object> it) {
+                return new AbstractMap.SimpleImmutableEntry<String, String>(it.getKey(), it.getValue().toString());
+            }
+        });
+        
+        System.out.println(newMap);
     }
 }

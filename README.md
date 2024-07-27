@@ -144,6 +144,14 @@ final Map<String, Object> map = Maps.of(
 );
 
 Maps.getValueOrDefault(map, "name", "None");
+
+Map<String, String> newMap = Maps.convert(
+    originalMap,
+    it -> new AbstractMap.SimpleImmutableEntry<String, String>(
+            it.getKey(),
+            it.getValue().toString()
+    )
+);
 ```
 
 
