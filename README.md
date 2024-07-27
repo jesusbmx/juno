@@ -19,13 +19,13 @@ boolean bool = Convert.toBool("true"); // true
 ### Base64
 Encoding and decoding in Base64:
 ```java
-String encodeBase64 = Convert.toBase64("Hola mundo");
-System.out.println(encodeBase64); // SG9sYSBtdW5kbw==
+String encodeBase64 = Convert.toBase64("Hello world");
+System.out.println(encodeBase64); // SGVsbG8gd29ybGQ=
 ```
 
 ```java
 String decodeBase64 = Convert.fromBase64(encodeBase64);
-System.out.println(decodeBase64); // Hola mundo
+System.out.println(decodeBase64); // Hello world
 ```
 
 ### Strings
@@ -39,7 +39,7 @@ if (Strings.isEmpty(txt)) {
     
 Assign default value if null:
 ```java
-txt = Validate.ifNull(txt, "hola mundo");
+txt = Validate.ifNull(txt, "Hello world");
 System.out.printf("txt = '%s'\n", txt); // txt = 'hello world'
 ```
 
@@ -59,37 +59,37 @@ System.out.printf("name = '%s'\n", name);  // name = 'John'
 
 Get a substring between two characters:
 ```java
-System.out.println(Strings.subStr("[Hola mundo]", "[", "]"));
+System.out.println(Strings.subStr("[Hello world]", "[", "]")); // Hello world
 ```
 
 ### Numbers
-Conversión de valores numéricos
+Validate if a value is numeric and convert it:
 ```java
 String number = "-892768237.50";
 if (Numbers.isNumber(number)) {
-  System.out.printf("'%f' is number\n", Convert.toDouble(number));
+  System.out.printf("'%f' is number\n", Convert.toDouble(number)); // '-892768237.500000' is number
 } else {
   System.out.printf("'%s' not is number\n", number);
 }
-   
+```
+
+Convert numeric strings to integers and floats:
+```java   
 String str = "10.80";
-    
+
 int i = Convert.toInt(str);
-System.out.printf("i = '%s'\n", i);
-    
+System.out.printf("i = '%d'\n", i); // i = '10'
+
 float f = Convert.toFloat(str);
-System.out.printf("f = '%f'\n", f);
+System.out.printf("f = '%f'\n", f); // f = '10.800000'
+```
 
+Round a number to a specified number of decimal places:
+```java
 double round = Numbers.roundAvoid(948.856099955012, 2);
-System.out.println(round);
+System.out.println(round); // 948.86
 ```
 
-```markdown
-> '-892768237.500000' is number
-> i = '0'
-> f = '10.800000'
-> 948.86
-```
 
 ### Lists, Arrays
 ```java
