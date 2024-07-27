@@ -130,10 +130,16 @@ public class Maps {
     }
   
     public static void main(String[] args) {
-        final Map<String, Object> map = Maps.ofPairs(
-           Pair.of("name", "Jesus"),
-           Pair.of("age", 29),
-            new Pair<String, Object>("color", "Green")
+//        final Map<String, Object> map2 = Maps.ofPairs(
+//           Pair.of("name", "Jesus"),
+//           Pair.of("age", 29),
+//            new Pair<String, Object>("color", "Green")
+//        );
+
+        final Map<String, Object> map = Maps.of(
+            "name", "Jesus",
+            "age", 29,
+            "color", "Green"
         );
         
         System.out.println(Maps.getValueOrDefault(map, "name", "None"));

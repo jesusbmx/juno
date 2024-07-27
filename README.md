@@ -137,10 +137,10 @@ System.out.println(Strings.join(fill, ","));
 
 ### Maps
 ```java
-final Map<String, Object> map = Maps.ofPairs(
-    new Pair<String, Object>("name", "Jesus"),
-    new Pair<String, Object>("age", 29),
-    new Pair<String, Object>("color", "Green")
+final Map<String, Object> map = Maps.of(
+    "name", "Jesus",
+    "age", 29,
+    "color", "Green"
 );
 
 Maps.getValueOrDefault(map, "name", "None");
