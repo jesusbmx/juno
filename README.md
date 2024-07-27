@@ -288,8 +288,6 @@ System.out.println(Paths.join('/', Arrays.of(
 ))); // /home/User2/Downloads
 ```
 
-C:\User\Desktop\file.txt
-
 ### IO
 ```java
 String path = "/etc/hola.txt";
