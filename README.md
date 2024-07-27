@@ -272,9 +272,9 @@ sender.send("status", 200);
 
 ### Paths
 ```java
-String path = "C:\\";
-        
-System.out.println(Paths.join(path, "User\\Desktop", "file.txt"));
+String path = "C:\\Users";
+System.out.println(Paths.join(path, "MyUser\\Desktop", "file.txt"));
+System.out.println(Paths.join(path, "MyUser", "Downloads", "file.txt"));
 ```
 
 ```markdown
