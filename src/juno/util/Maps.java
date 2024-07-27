@@ -136,6 +136,6 @@ public class Maps {
             new Pair<String, Object>("color", "Green")
         );
         
-        System.out.println(map);
+        System.out.println(Maps.getValueOrDefault(map, "name", "None"));
     }
 }

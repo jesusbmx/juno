@@ -87,22 +87,6 @@ System.out.println(round);
 > 948.86
 ```
 
-### Validate
-```java
-
-String a = null;
-String b = "b";
-System.out.println(Validate.eq(a, b));
-System.out.println(Validate.isNull(null));
-System.out.println(Validate.isNotNull(null));
-```
-
-```markdown
-> false
-> true
-> false
-```
-
 ### Lists, Arrays
 
 ```java
@@ -149,6 +133,19 @@ System.out.println(Strings.join(fill, ","));
 > 7,9
 > z,z,z,z,z
 ```
+
+
+### Maps
+```java
+final Map<String, Object> map = Maps.ofPairs(
+    new Pair<String, Object>("name", "Jesus"),
+    new Pair<String, Object>("age", 29),
+    new Pair<String, Object>("color", "Green")
+);
+
+Maps.getValueOrDefault(map, "name", "None");
+```
+
 
 ### Date
 ```java
@@ -314,6 +311,22 @@ try {
   Files.closeQuietly(in);
   Files.closeQuietly(out);
 }
+```
+
+### Validate
+```java
+
+String a = null;
+String b = "b";
+System.out.println(Validate.eq(a, b));
+System.out.println(Validate.isNull(null));
+System.out.println(Validate.isNotNull(null));
+```
+
+```markdown
+> false
+> true
+> false
 ```
 
 License
