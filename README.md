@@ -103,38 +103,38 @@ System.out.println(Validate.isNotNull(null));
 > false
 ```
 
-### Arrays
+### Lists
 
 ```java
-List<String> strList = Arrays.listOf("1", "2", "3", "7", "9");
-List<Integer> intList = Arrays.map(strList, (String it) -> Convert.toInt(it) );
+List<String> strList = Lists.listOf("1", "2", "3", "7", "9");
+List<Integer> intList = Lists.map(strList, (String it) -> Convert.toInt(it) );
 
-if (Arrays.hasIndex(strList, 2)) {
+if (Lists.hasIndex(strList, 2)) {
   System.out.printf("list[2] = '%s'\n", strList.get(2));
 }
 
-if (Arrays.isEmpty(strList)) {
+if (Lists.isEmpty(strList)) {
   System.out.println("list is empty");
 }
 
-System.out.println(Arrays.getValueOrDefault(strList, 50, "defaultVal"));
+System.out.println(Lists.getValueOrDefault(strList, 50, "defaultVal"));
 
 System.out.println(Strings.join(strList));
 System.out.println(Strings.join(strList, (String it) -> "\"" + it.toString() + "\"" ));
 
-boolean some = Arrays.some(strList, (String it) -> t.equals("7") );
+boolean some = Lists.some(strList, (String it) -> t.equals("7") );
 System.out.println(some);
 
-boolean every = Arrays.every(intList, (Integer it) -> it % 2 == 0 );
+boolean every = Lists.every(intList, (Integer it) -> it % 2 == 0 );
 System.out.println(every);
 
-String find = Arrays.find(strList, (String it) -> t.equals("9") );
+String find = Lists.find(strList, (String it) -> t.equals("9") );
 System.out.println(find);
     
-List<Integer> filter = Arrays.filter(intList, (Integer it) -> it > 5 );
+List<Integer> filter = Lists.filter(intList, (Integer it) -> it > 5 );
 System.out.println(Strings.join(filter, ","));
 
-List<String> fill = Arrays.fill(strList, "z");
+List<String> fill = Lists.fill(strList, "z");
 System.out.println(Strings.join(fill, ","));
 ```
 

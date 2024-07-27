@@ -3,7 +3,9 @@ package juno.io;
 
 import java.io.File;
 
-public class Paths {
+public final class Paths {
+    
+    private Paths() {}
     
     public static String join(char separator, Object[] args) {
         final StringBuilder sb = new StringBuilder();
