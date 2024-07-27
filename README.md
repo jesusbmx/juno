@@ -147,9 +147,9 @@ Maps.getValueOrDefault(map, "name", "None");
 
 Map<String, String> newMap = Maps.convert(
     originalMap,
-    it -> new AbstractMap.SimpleImmutableEntry<String, String>(
-            it.getKey(),
-            it.getValue().toString()
+    entry -> new AbstractMap.SimpleImmutableEntry<String, String>(
+            entry.getKey(),
+            entry.getValue().toString()
     )
 );
 ```

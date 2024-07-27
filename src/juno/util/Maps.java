@@ -160,8 +160,8 @@ public class Maps {
         
         final Map<String, String> newMap = Maps.convert(map, new Func<Map.Entry<String, Object>, Map.Entry<String, String>>() {
             @Override
-            public Map.Entry<String, String> call(Map.Entry<String, Object> it) {
-                return new AbstractMap.SimpleImmutableEntry<String, String>(it.getKey(), it.getValue().toString());
+            public Map.Entry<String, String> call(Map.Entry<String, Object> entry) {
+                return new AbstractMap.SimpleImmutableEntry<String, String>(entry.getKey(), entry.getValue().toString());
             }
         });
         
