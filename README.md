@@ -1,8 +1,10 @@
 Juno
 ========
-Herramientas de desarrollo para java y Android
+Development tools for Java and Android.
 
-Descargar [juno.jar](https://github.com/jesusbmx/juno/raw/master/dist/juno.jar)
+Download [juno.jar](https://github.com/jesusbmx/juno/raw/master/dist/juno.jar)
+
+## Documentation
 
 ### Convert
 ```java
@@ -15,47 +17,49 @@ boolean bool = Convert.toBool("true"); // true
 ```
 
 ### Base64
+Encoding and decoding in Base64:
 ```java
 String encodeBase64 = Convert.toBase64("Hola mundo");
-System.out.println(encodeBase64);
-
-String decodeBase64 = Convert.fromBase64(encodeBase64);
-System.out.println(decodeBase64);
+System.out.println(encodeBase64); // SG9sYSBtdW5kbw==
 ```
 
-```markdown
-> SG9sYSBtdW5kbw==
-> Hola mundo
+```java
+String decodeBase64 = Convert.fromBase64(encodeBase64);
+System.out.println(decodeBase64); // Hola mundo
 ```
 
 ### Strings
-Validación para cadenas.
+Validate if a string is empty:
 ```java
 String txt = null;
 if (Strings.isEmpty(txt)) {
   System.out.println("txt is empty");
 }
+```
     
+Assign default value if null:
+```java
 txt = Validate.ifNull(txt, "hola mundo");
-System.out.printf("txt = '%s'\n", txt);
+System.out.printf("txt = '%s'\n", txt); // txt = 'hello world'
+```
 
+Abbreviate a string:
+```java
 txt = Strings.abbreviate(txt, 7);
-System.out.printf("txt = '%s'\n", txt);
+System.out.printf("txt = '%s'\n", txt); // txt = 'hello...'
+```
 
+Trim and capitalize a string:
+```java
 String name = "jesus   ";
 name = Strings.trim(name);
 name = Strings.capitalize(name);
-System.out.printf("name = '%s'\n", name);
-
-System.out.println(Strings.subStr("[Hola mundo]", "[", "]"));
+System.out.printf("name = '%s'\n", name);  // name = 'John'
 ```
 
-```markdown
-> txt is empty
-> txt = 'hola mundo'
-> txt = 'hola...'
-> name = 'Jesus'
-> Hola mundo
+Get a substring between two characters:
+```java
+System.out.println(Strings.subStr("[Hola mundo]", "[", "]"));
 ```
 
 ### Numbers
