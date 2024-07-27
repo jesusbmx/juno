@@ -265,35 +265,27 @@ String basePath = "/home";
 
 System.out.println(Paths.join('/', Arrays.of(
     basePath, "User/Desktop", "file.txt"
-)));
+))); // /home/User/Desktop/file.txt
 
 basePath = "/home/User/Documents/";
 
 System.out.println(Paths.join('/', Arrays.of(
     basePath, "file.txt"
-)));
+))); // /home/User/Documents/file.txt
 
 basePath = "/home/User";
 
 System.out.println(Paths.join('/', Arrays.of(
     basePath, "Downloads", "file.txt"
-)));
+))); // /home/User/Downloads/file.txt
 
 System.out.println(Paths.join('/', Arrays.of(
     "/home", "User2", "Downloads", "file.txt"
-)));
+))); // /home/User2/Downloads/file.txt
 
 System.out.println(Paths.join('/', Arrays.of(
     "/home", "User2", "Downloads"
-)));
-```
-
-```markdown
-> /home/User/Desktop/file.txt
-> /home/User/Documents/file.txt
-> /home/User/Downloads/file.txt
-> /home/User2/Downloads/file.txt
-> /home/User2/Downloads
+))); // /home/User2/Downloads
 ```
 
 C:\User\Desktop\file.txt
