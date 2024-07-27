@@ -137,26 +137,26 @@ System.out.println(Strings.join(fill, ","));
 
 ### Maps
 ```java
-final Map<String, Object> map = Maps.of(
-    "name", "Jesus",
-    "age", 29,
-    "color", "Green"
+final Map<String, Integer> map = Maps.of(
+    "one", 1, 
+    "two", 2, 
+    "three", 3
 );
 
-Maps.getValueOrDefault(map, "name", "None");
+Maps.getValueOrDefault(map, "one", -1);
 
-Map<String, String> convertedMap1 = Maps.convert(
+Map<Integer, String> convertedMap1 = Maps.convert(
     map,
-    entry -> new AbstractMap.SimpleImmutableEntry<String, String>(
-            entry.getKey(),
-            entry.getValue().toString()
+    entry -> new AbstractMap.SimpleImmutableEntry<Integer, String>(
+        entry.getValue(),
+        entry.getKey() + "-" + entry.getValue()
     )
 );
 
 Map<Integer, String> convertedMap2 = Maps.convert(
     map,
-    entry -> entry.getKey(),
-    entry -> entry.getValue().toString()
+    entry -> entry.getValue(),
+    entry -> entry.getKey() + "-" + entry.getValue()
 );
 ```
 

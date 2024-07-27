@@ -157,24 +157,27 @@ public class Maps {
     }
   
     public static void main(String[] args) {
-//        final Map<String, Object> map2 = Maps.ofPairs(
-//           Pair.of("name", "Jesus"),
-//           Pair.of("age", 29),
-//            new Pair<String, Object>("color", "Green")
+//        final Map<String, Integer> map2 = Maps.ofPairs(
+//           Pair.of("one", 1),
+//           Pair.of("two", 2),
+//            new Pair<String, Object>("three", 3)
 //        );
 
-        final Map<String, Object> map = Maps.of(
-            "name", "Jesus",
-            "age", 29,
-            "color", "Green"
+        final Map<String, Integer> map = Maps.of(
+                "one", 1, 
+                "two", 2, 
+                "three", 3
         );
         
-        System.out.println(Maps.getValueOrDefault(map, "name", "None"));
+        System.out.println(Maps.getValueOrDefault(map, "one", -1));
         
-        final Map<String, String> newMap = Maps.convert(map, new Func<Map.Entry<String, Object>, Map.Entry<String, String>>() {
+        final Map<Integer, String> newMap = Maps.convert(map, new Func<Map.Entry<String, Integer>, Map.Entry<Integer, String>>() {
             @Override
-            public Map.Entry<String, String> call(Map.Entry<String, Object> entry) {
-                return new AbstractMap.SimpleImmutableEntry<String, String>(entry.getKey(), entry.getValue().toString());
+            public Map.Entry<Integer, String> call(Map.Entry<String, Integer> entry) {
+                return new AbstractMap.SimpleImmutableEntry<Integer, String>(
+                  entry.getValue(),
+                    entry.getKey() + "-" + entry.getValue()
+                );
             }
         });
         
