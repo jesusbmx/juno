@@ -153,6 +153,7 @@ Map<Integer, String> convertedMap2 = Maps.convert(
 ```
 
 ```markdown
+> {one=1, two=2, three=3}
 > 1
 > {1=one-1, 2=two-2, 3=three-3}
 ```
