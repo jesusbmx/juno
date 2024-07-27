@@ -145,12 +145,18 @@ final Map<String, Object> map = Maps.of(
 
 Maps.getValueOrDefault(map, "name", "None");
 
-Map<String, String> newMap = Maps.convert(
-    originalMap,
+Map<String, String> convertedMap1 = Maps.convert(
+    map,
     entry -> new AbstractMap.SimpleImmutableEntry<String, String>(
             entry.getKey(),
             entry.getValue().toString()
     )
+);
+
+Map<Integer, String> convertedMap2 = Maps.convert(
+    map,
+    entry -> entry.getKey(),
+    entry -> entry.getValue().toString()
 );
 ```
 

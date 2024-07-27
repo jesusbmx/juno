@@ -142,6 +142,19 @@ public class Maps {
         }
         return result;
     }
+    
+    public static <Key1, Value1, Key2, Value2> Map<Key2, Value2> convert(
+            Map<Key1, Value1> originalMap,
+            Func<Map.Entry<Key1, Value1>, Key2> keyMapper,
+            Func<Map.Entry<Key1, Value1>, Value2> valueMapper) {
+        
+        if (originalMap == null) return null;
+        LinkedHashMap<Key2, Value2> result = new LinkedHashMap<Key2, Value2>(originalMap.size());
+        for (Map.Entry<Key1, Value1> it : originalMap.entrySet()) {
+          result.put(keyMapper.call(it), valueMapper.call(it));
+        }
+        return result;
+    }
   
     public static void main(String[] args) {
 //        final Map<String, Object> map2 = Maps.ofPairs(
