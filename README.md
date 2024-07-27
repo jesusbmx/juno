@@ -97,48 +97,37 @@ List<String> strList = Lists.listOf("1", "2", "3", "7", "9");
 List<Integer> intList = Lists.map(strList, (String it) -> Convert.toInt(it) );
 
 if (Lists.hasIndex(strList, 2)) {
-  System.out.printf("list[2] = '%s'\n", strList.get(2));
+    System.out.printf("list[2] = '%s'\n", strList.get(2)); // list[2] = '3'
 }
 
 if (Lists.isEmpty(strList)) {
-  System.out.println("list is empty");
+    System.out.println("list is empty");
 }
 
-System.out.println(Lists.getValueOrDefault(strList, 50, "defaultVal"));
+System.out.println(Lists.getValueOrDefault(strList, 50, "defaultVal")); // defaultVal
 
-System.out.println(Strings.join(strList));
-System.out.println(Strings.join(strList, (String it) -> "\"" + it.toString() + "\"" ));
+System.out.println(Strings.join(strList)); // 1,2,3,7,9
+System.out.println(Strings.join(strList, (String it) -> "\"" + it.toString() + "\"" )); // "1","2","3","7","9"
 
-boolean some = Lists.some(strList, (String it) -> t.equals("7") );
-System.out.println(some);
+boolean some = Lists.some(strList, (String it) -> it.equals("7") );
+System.out.println(some); // true
 
 boolean every = Lists.every(intList, (Integer it) -> it % 2 == 0 );
-System.out.println(every);
+System.out.println(every); // false
 
-String find = Lists.find(strList, (String it) -> t.equals("9") );
-System.out.println(find);
-    
+String find = Lists.find(strList, (String it) -> it.equals("9") );
+System.out.println(find); // 9
+
 List<Integer> filter = Lists.filter(intList, (Integer it) -> it > 5 );
-System.out.println(Strings.join(filter, ","));
+System.out.println(Strings.join(filter, ",")); // 7,9
 
 List<String> fill = Lists.fill(strList, "z");
-System.out.println(Strings.join(fill, ","));
-```
-
-```markdown
-> list[2] = '3'
-> defaultVal
-> 1,2,3,7,9
-> "1", "2", "3", "7", "9"
-> true
-> false
-> 9
-> 7,9
-> z,z,z,z,z
+System.out.println(Strings.join(fill, ",")); // z,z,z,z,z
 ```
 
 
 ### Maps
+Create and manipulate maps:
 ```java
 final Map<String, Integer> map = Maps.of(
     "one", 1, 
@@ -146,19 +135,15 @@ final Map<String, Integer> map = Maps.of(
     "three", 3
 );
 
-Maps.getValueOrDefault(map, "one", -1);
+System.out.println(map); // {one=1, two=2, three=3}
+System.out.println(Maps.getValueOrDefault(map, "one", -1)); // 1
 
 Map<Integer, String> convertedMap2 = Maps.convert(
     map,
     entry -> entry.getValue(),
     entry -> entry.getKey() + "-" + entry.getValue()
 );
-```
-
-```markdown
-> {one=1, two=2, three=3}
-> 1
-> {1=one-1, 2=two-2, 3=three-3}
+System.out.println(convertedMap2); // {1=one-1, 2=two-2, 3=three-3}
 ```
 
 
