@@ -45,4 +45,6 @@ public interface Async<T> {
    * @return Devuelve <tt>true</tt> si esta tarea se completó. 
    */
   boolean isDone();
+  
+  boolean isAlive();
 }

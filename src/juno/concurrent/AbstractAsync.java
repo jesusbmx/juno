@@ -9,8 +9,7 @@ public abstract class AbstractAsync<T>
     Dispatcher dispatcher;
     Callback<T> callback;
     Future future;
-    volatile boolean isCancel;
-    volatile boolean isRunning = false;
+    volatile boolean isAlive;
 
     public AbstractAsync() {
         this(Dispatcher.getInstance());
@@ -30,7 +29,7 @@ public abstract class AbstractAsync<T>
 
     @Override
     public boolean isCancelled() {
-        return (future != null) ? future.isCancelled() : isCancel;
+        return (future != null) ? future.isCancelled() : false;
     }
 
     @Override
@@ -38,8 +37,9 @@ public abstract class AbstractAsync<T>
         return (future != null) ? future.isDone() : false;
     }
 
-    public boolean isRunning() {
-        return isRunning;
+    @Override
+    public boolean isAlive() {
+        return isAlive && !isCancelled();
     }
 
     @Override
@@ -54,20 +54,19 @@ public abstract class AbstractAsync<T>
     }
 
     public void execute() {
-        isRunning = true;
+        isAlive = true; // Marca la tarea como "viva" al inicio
         future = this.dispatcher.submit(new Runnable() {
             @Override
             public void run() {
                 try {
                     final T result = call();
+                    isAlive = false; // Se marca como no "viva" al finalizar la ejecución
                     deliveryResponse(result);
 
                 } catch (final Exception error) {
+                    isAlive = false; // Se marca como no "viva" al finalizar la ejecución
                     deliveryError(error);
-
-                } finally {
-                    isRunning = false;
-                }
+                } 
             }
         });
     }
@@ -79,11 +78,13 @@ public abstract class AbstractAsync<T>
 
     @Override
     public boolean cancel(boolean mayInterruptIfRunning) {
-        isRunning = false;
         if (future != null) {
-            return future.cancel(mayInterruptIfRunning);
+            boolean cancelled = future.cancel(mayInterruptIfRunning);
+            if (cancelled) {
+                isAlive = false;
+            }
+            return cancelled;
         } else {
-            isCancel = true;
             return false;
         }
     }
