@@ -102,6 +102,56 @@ public class Maps {
         return getValueOrDefault(map, key, null);
     }
 
+    // Función existente para getString
+    public static <K, V> String getString(Map<K, V> map, K key, String defaultValue) {
+        if (map == null || key == null) {
+            return defaultValue;
+        }
+        V value = map.get(key);
+        return Convert.toString(value, defaultValue);
+    }
+
+    // Nueva función para getInt
+    public static <K, V> int getInt(Map<K, V> map, K key, int defaultValue) {
+        if (map == null || key == null) {
+            return defaultValue;
+        }
+        V value = map.get(key);
+        return Convert.toInt(value, defaultValue);
+    }
+
+    // Nueva función para getFloat
+    public static <K, V> float getFloat(Map<K, V> map, K key, float defaultValue) {
+        if (map == null || key == null) {
+            return defaultValue;
+        }
+        V value = map.get(key);
+        return Convert.toFloat(value, defaultValue);
+    }
+
+    // Nueva función para getDouble
+    public static <K, V> double getDouble(Map<K, V> map, K key, double defaultValue) {
+        if (map == null || key == null) {
+            return defaultValue;
+        }
+        V value = map.get(key);
+        return Convert.toDouble(value, defaultValue);
+    }
+
+    // Nueva función para getBoolean
+    public static <K, V> boolean getBoolean(Map<K, V> map, K key, boolean defaultValue) {
+        if (map == null || key == null) {
+            return defaultValue;
+        }
+        V value = map.get(key);
+        if (value instanceof Boolean) {
+            return (Boolean) value;
+        } else if (value instanceof String) {
+            return Boolean.parseBoolean((String) value);
+        }
+        return defaultValue;
+    }
+    
     /**
      * Elimina una clave de un mapa y devuelve el valor asociado.
      *
