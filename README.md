@@ -146,6 +146,21 @@ Map<Integer, String> convertedMap2 = Maps.convert(
 System.out.println(convertedMap2); // {1=one-1, 2=two-2, 3=three-3}
 ```
 
+Get values from a map with default values:
+```java
+int intValue = Maps.getInt(map, "one", 0);
+System.out.println(intValue); // 1
+
+float floatValue = Maps.getFloat(map, "nonexistentKey", 0.0f);
+System.out.println(floatValue); // 0.0
+
+double doubleValue = Maps.getDouble(map, "two", 2.5);
+System.out.println(doubleValue); // 2.0
+
+boolean boolValue = Maps.getBoolean(map, "nonexistentKey", false);
+System.out.println(boolValue); // false
+
+```
 
 ### Date
 ```java
