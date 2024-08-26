@@ -76,12 +76,12 @@ public final class Arrays {
     reverse(array, 0, array.length);
   }
    
-  public static String[] convertArrayToString(Object[] array, Func<Object, String> func) {
+  public static String[] convertArrayToString(Object[] array, IndexedFunction<Object, String> func) {
     return map(array, String.class, func);
   }
   
   public static String[] convertArrayToString(Object... array) {
-    return map(array, String.class, Func.OBJ_TO_STR);
+    return map(array, String.class, IndexedFunction.OBJ_TO_STR);
   }
   
   public static <V> V[] fill(V[] array, V value, int start, int end) {
@@ -100,12 +100,12 @@ public final class Arrays {
     return fill(array, value, 0, array.length);
   }
   
-  public static <V> V[] filter(V[] array, Func<V, Boolean> func) {
+  public static <V> V[] filter(V[] array, IndexedFunction<V, Boolean> func) {
     if (array == null) return null;
     final List<V> result = new ArrayList<V>(array.length);
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
-      if (func.call(object)) {
+      if (func.call(object, i)) {
         result.add(object);
       }
     }
@@ -115,45 +115,45 @@ public final class Arrays {
     return result.toArray(a);
   }
   
-  public static <V> boolean every(V[] array, Func<V, Boolean> func) {
+  public static <V> boolean every(V[] array, IndexedFunction<V, Boolean> func) {
     if (array == null) return false;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
-      if (!func.call(object)) {
+      if (!func.call(object, i)) {
         return false;
       }
     }
     return true;
   }
   
-  public static <V> boolean some(V[] array, Func<V, Boolean> func) {
+  public static <V> boolean some(V[] array, IndexedFunction<V, Boolean> func) {
     if (array == null) return false;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
-      if (func.call(object)) {
+      if (func.call(object, i)) {
         return true;
       }
     }
     return false;
   }
   
-  public static <V> V find(V[] array, Func<V, Boolean> func) {
+  public static <V> V find(V[] array, IndexedFunction<V, Boolean> func) {
     if (array == null) return null;
     for (int i = 0; i < array.length; i++) {
       V object = array[i];
-      if (func.call(object)) {
+      if (func.call(object, i)) {
         return object;
       }
     }
     return null;
   }
   
-  public static <I, R> R[] map(I[] array, Class<R> componentType, Func<I, R> func) {
+  public static <I, R> R[] map(I[] array, Class<R> componentType, IndexedFunction<I, R> func) {
     if (array == null) return null;
     final List<R> result = new ArrayList<R>(array.length);
     for (int i = 0; i < array.length; i++) {
       I object = array[i];
-      result.add(func.call(object));
+      result.add(func.call(object, i));
     }
     R[] a = (R[]) Array.newInstance(componentType, 0);
     return result.toArray(a);

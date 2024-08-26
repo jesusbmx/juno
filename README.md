@@ -107,15 +107,15 @@ if (Lists.isEmpty(strList)) {
 System.out.println(Lists.getValueOrDefault(strList, 50, "defaultVal")); // defaultVal
 
 System.out.println(Strings.join(strList)); // 1,2,3,7,9
-System.out.println(Strings.join(strList, (String it) -> "\"" + it.toString() + "\"" )); // "1","2","3","7","9"
+System.out.println(Strings.join(strList, (String it, int index) -> "\"" + it.toString() + "\"" )); // "1","2","3","7","9"
 
-boolean some = Lists.some(strList, (String it) -> it.equals("7") );
+boolean some = Lists.some(strList, (String element, int index) -> element.equals("7") );
 System.out.println(some); // true
 
-boolean every = Lists.every(intList, (Integer it) -> it % 2 == 0 );
+boolean every = Lists.every(intList, (Integer element, int index) -> element % 2 == 0 );
 System.out.println(every); // false
 
-String find = Lists.find(strList, (String it) -> it.equals("9") );
+String find = Lists.find(strList, (String element, int index) -> element.equals("9") );
 System.out.println(find); // 9
 
 List<Integer> filter = Lists.filter(intList, (Integer it) -> it > 5 );

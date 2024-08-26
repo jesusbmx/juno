@@ -1,7 +1,7 @@
 
 import java.util.List;
 import juno.util.Convert;
-import juno.util.Func;
+import juno.util.IndexedFunction;
 import juno.util.Lists;
 import juno.util.Strings;
 
@@ -10,9 +10,9 @@ public class TestArrays {
     public static void main(String[] args) {
         // Arrays
         List<String> strList = Lists.of("1", "2", "3", "7", "9");
-        List<Integer> intList = Lists.map(strList, new Func<String, Integer>() {
+        List<Integer> intList = Lists.map(strList, new IndexedFunction<String, Integer>() {
             @Override
-            public Integer call(String it) {
+            public Integer call(String it, int index) {
                 return Convert.toInt(it);
             }
         });
@@ -29,33 +29,33 @@ public class TestArrays {
 
         System.out.println(Strings.join(strList, ","));
 
-        boolean some = Lists.some(strList, new Func<String, Boolean>() {
+        boolean some = Lists.some(strList, new IndexedFunction<String, Boolean>() {
             @Override
-            public Boolean call(String t) {
+            public Boolean call(String t, int i) {
                 return t.equals("7");
             }
         });
         System.out.println(some);
 
-        boolean every = Lists.every(intList, new Func<Integer, Boolean>() {
+        boolean every = Lists.every(intList, new IndexedFunction<Integer, Boolean>() {
             @Override
-            public Boolean call(Integer t) {
+            public Boolean call(Integer t, int index) {
                 return t % 2 == 0;
             }
         });
         System.out.println(every);
 
-        String find = Lists.find(strList, new Func<String, Boolean>() {
+        String find = Lists.find(strList, new IndexedFunction<String, Boolean>() {
             @Override
-            public Boolean call(String t) {
+            public Boolean call(String t, int index) {
                 return t.equals("9");
             }
         });
         System.out.println(find);
 
-        List<Integer> filter = Lists.filter(intList, new Func<Integer, Boolean>() {
+        List<Integer> filter = Lists.filter(intList, new IndexedFunction<Integer, Boolean>() {
             @Override
-            public Boolean call(Integer t) {
+            public Boolean call(Integer t, int index) {
                 return t > 5;
             }
         });

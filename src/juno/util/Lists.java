@@ -72,12 +72,12 @@ public final class Lists {
     return parts;
   }
   
-  public static List<String> convertListToString(List list, Func<Object, String> func) {
+  public static List<String> convertListToString(List list, IndexedFunction<Object, String> func) {
     return map(list, func);
   }
   
   public static List<String> convertListToString(List list) {
-    return map(list, Func.OBJ_TO_STR);
+    return map(list, IndexedFunction.OBJ_TO_STR);
   }
   
   public static <V> List<V> fill(List<V> list, V value, int start, int end) {
@@ -96,52 +96,62 @@ public final class Lists {
     return fill(list, value, 0, list.size());
   }
   
-  public static <V> List<V> filter(Iterable<V> list, Func<V, Boolean> func) {
+  public static <V> List<V> filter(Iterable<V> list, IndexedFunction<V, Boolean> func) {
     if (list == null) return null;
     List<V> result = new ArrayList<V>();
+    int i = 0;
     for (V v : list) {
-      if (func.call(v)) {
+      if (func.call(v, i)) {
         result.add(v);
       } 
+      i++;
     }
     return result;
   }
   
-  public static <V> boolean every(Iterable<V> list, Func<V, Boolean> func) {
+  public static <V> boolean every(Iterable<V> list, IndexedFunction<V, Boolean> func) {
     if (list == null) return false;
+    int i = 0;
     for (V v : list) {
-      if (!func.call(v)) {
+      if (!func.call(v, i)) {
         return false;
       }   
+      i++;
     }
     return true;
   }
   
-   public static <V> boolean some(Iterable<V> list, Func<V, Boolean> func) {
+   public static <V> boolean some(Iterable<V> list, IndexedFunction<V, Boolean> func) {
     if (list == null) return false;
+    int i = 0;
     for (V v : list) {
-      if (func.call(v)) {
+      if (func.call(v, i)) {
         return true;
       }   
+      i++;
     }
     return false;
   }
    
-   public static <V> V find(Iterable<V> list, Func<V, Boolean> func) {
+   public static <V> V find(Iterable<V> list, IndexedFunction<V, Boolean> func) {
     if (list == null) return null;
+    int i = 0;
     for (V v : list) {
-      if (func.call(v)) {
+      if (func.call(v, i)) {
         return v;
       }
+      i++;
     }
     return null;
   }
    
-  public static <I, R> List<R> map(Iterable<I> list, Func<I, R> func) {
+  public static <I, R> List<R> map(Iterable<I> list, IndexedFunction<I, R> func) {
     if (list == null) return null;
     List<R> result = new ArrayList<R>();
-    for (I i : list) {
-      result.add(func.call(i));
+    int i = 0;
+    for (I it : list) {
+      result.add(func.call(it, i));
+      i++;
     }
     return result;
   }
