@@ -461,7 +461,7 @@ public final class Strings {
      * @param func función de conversión
      * @return cadena resultante
      */
-    public static <T> String join(T[] elements, IndexedFunction<Object, String> func) {
+    public static <T> String join(T[] elements, IndexedFunction<T, String> func) {
         return join(elements, ", ", func);
     }
 
