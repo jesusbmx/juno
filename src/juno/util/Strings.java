@@ -377,12 +377,12 @@ public final class Strings {
      * @param func función de conversión
      * @return cadena resultante
      */
-    public static <T> String join(Iterable<T> elements, String separator, IndexedFunction<T, String> func) {
+    public static <T> String join(Iterable<T> elements, String separator, Func<T, String> func) {
         final StringBuilder sb = new StringBuilder();
         int i = 0;
         for (T element : elements) {
             if (i > 0) sb.append(separator);
-            sb.append(func.call(element, i));
+            sb.append(func.call(element));
             i++;
         }
         return sb.toString();
@@ -397,7 +397,7 @@ public final class Strings {
      * @return cadena resultante
      */
     public static <T> String join(Iterable<T> elements, String separator) {
-        return join(elements, separator, IndexedFunction.OBJ_TO_STR);
+        return join(elements, separator, Func.OBJ_TO_STR);
     }
 
     /**
@@ -408,7 +408,7 @@ public final class Strings {
      * @param func función de conversión
      * @return cadena resultante
      */
-    public static <T> String join(Iterable<T> elements, IndexedFunction<T, String> func) {
+    public static <T> String join(Iterable<T> elements, Func<T, String> func) {
         return join(elements, ", ", func);
     }
 
@@ -432,11 +432,11 @@ public final class Strings {
      * @param func función de conversión
      * @return cadena resultante
      */
-    public static <T> String join(T[] elements, String separator, IndexedFunction<T, String> func) {
+    public static <T> String join(T[] elements, String separator, Func<T, String> func) {
         final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < elements.length; i++) {
             if (i > 0) sb.append(separator);
-            sb.append(func.call(elements[i], i));
+            sb.append(func.call(elements[i]));
         }
         return sb.toString();
     }
@@ -450,7 +450,7 @@ public final class Strings {
      * @return cadena resultante
      */
     public static <T> String join(T[] elements, String separator) {
-        return join(elements, separator, IndexedFunction.OBJ_TO_STR);
+        return join(elements, separator, Func.OBJ_TO_STR);
     }
 
     /**
@@ -461,7 +461,7 @@ public final class Strings {
      * @param func función de conversión
      * @return cadena resultante
      */
-    public static <T> String join(T[] elements, IndexedFunction<T, String> func) {
+    public static <T> String join(T[] elements, Func<T, String> func) {
         return join(elements, ", ", func);
     }
 
