@@ -8,8 +8,16 @@ import java.util.Set;
 
 public class MemoryDataStorage implements DataStorage {
 
-    final Map<String, String> values = new HashMap<String, String>();
+    final Map<String, String> values;
 
+    public MemoryDataStorage(Map<String, String> values) {
+        this.values = values;
+    }
+
+    public MemoryDataStorage() {
+        this(new HashMap<String, String>());
+    }
+    
     @Override
     public void removeItem(String key) throws Exception {
         values.remove(key);
