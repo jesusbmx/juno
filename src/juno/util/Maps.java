@@ -1,5 +1,6 @@
 package juno.util;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -56,7 +57,7 @@ public class Maps {
         return map;
     }
     
-    public static Map<String, Object> fromObject(Object bean) {
+    public static Map<String, Object> fromObjectMethods(Object bean) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         
         Class<?> type = bean.getClass();
@@ -85,6 +86,31 @@ public class Maps {
             }
         }
         
+        return map;
+    }
+    
+    public static Map<String, Object> fromObjectFields(Object bean) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+        Class<?> type = bean.getClass();
+        boolean includeSuperClass = type.getClassLoader() != null;
+        Field[] fields = includeSuperClass ? type.getFields() : type.getDeclaredFields();
+
+        for (final Field field : fields) {
+            final int modifiers = field.getModifiers();
+
+            if (Modifier.isPublic(modifiers) && !Modifier.isStatic(modifiers)) {
+                try {
+                    Object value = field.get(bean);
+                    if (value != null) {
+                        map.put(field.getName(), value);
+                    }
+                } catch (IllegalAccessException ignore) {
+                    // Maneja la excepción si ocurre
+                }
+            }
+        }
+
         return map;
     }
 
