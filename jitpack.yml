@@ -1,0 +1,6 @@
+before_install:
+  - echo "Before install"
+install:
+  - ant clean
+build:
+  - ant jar
