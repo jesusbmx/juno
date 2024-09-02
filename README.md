@@ -3,6 +3,7 @@ Juno
 Development tools for Java and Android.
 
 Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/0.0.7/juno-0.0.7.jar)
+
 [JitPack](https://jitpack.io/#jesusbmx/juno/0.0.7)
 ```
 dependencies {
