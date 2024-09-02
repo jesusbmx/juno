@@ -1,15 +1,20 @@
 Juno
 ========
-Development tools for Java and Android.
+Juno is a utility library designed to simplify common tasks in Java and Android development. It provides a set of helpful methods for data conversion, string manipulation, collections handling, file I/O, and more.
 
-Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/0.0.8/juno-0.0.8.jar)
+## Installation
 
-[JitPack](https://jitpack.io/#jesusbmx/juno)
+To include Juno in your project using Gradle, add the following dependency:
 ```
 dependencies {
   implementation 'com.github.jesusbmx:juno:0.0.8'
 }
 ```
+
+Alternatively, you can download the JAR file directly from [JitPack](https://jitpack.io/#jesusbmx/juno):
+
+    Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/0.0.8/juno-0.0.8.jar)
+
 
 ## Documentation
 
