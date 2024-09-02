@@ -4,3 +4,6 @@ install:
   - ant clean
 build:
   - ant jar
+after_success:
+  - mkdir -p build
+  - cp dist/*.jar build/
