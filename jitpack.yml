@@ -4,9 +4,6 @@ install:
   - ant clean
 build:
   - ant jar
-after_success:
-  - mkdir -p build/libs
-  - cp dist/*.jar build/libs/
 artifacts:
   paths:
-    - build/libs/*.jar
+    - dist/*.jar
