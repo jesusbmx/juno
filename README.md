@@ -13,7 +13,7 @@ dependencies {
 
 Alternatively, you can download the JAR file directly from [JitPack](https://jitpack.io/#jesusbmx/juno):
 
-    Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/0.0.8/juno-0.0.8.jar)
+Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/0.0.8/juno-0.0.8.jar)
 
 
 ## Documentation
