@@ -2,12 +2,12 @@ Juno
 ========
 Development tools for Java and Android.
 
-Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/0.0.7/juno-0.0.7.jar)
+Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/0.0.8/juno-0.0.8.jar)
 
-[JitPack](https://jitpack.io/#jesusbmx/juno/0.0.7)
+[JitPack](https://jitpack.io/#jesusbmx/juno)
 ```
 dependencies {
-    implementation 'com.github.jesusbmx:juno:0.0.7'
+  implementation 'com.github.jesusbmx:juno:0.0.8'
 }
 ```
 

@@ -10,50 +10,40 @@ public class Platform implements Executor {
   }
 
   private static Platform findPlatform() {
-    if (isAndroid()) {
-      return new Android();
-    } else if (isJavaSwing()) {
+    try {
+      Class.forName("android.os.Build");
+      if (android.os.Build.VERSION.SDK_INT != 0) {
+        return new Android();
+      }
+    } catch (Exception ignored) {
+    }
+    try {
+      Class.forName("javax.swing.SwingUtilities");
       return new JavaSwing();
+    } catch (Exception ignored) {
     }
     return new Platform();
   }
-
-  private static boolean isAndroid() {
-    try {
-      // Verifica si la clase android.os.Build está presente
-      Class<?> buildClass = Class.forName("android.os.Build");
-      return buildClass.getField("VERSION.SDK_INT") != null;
-    } catch (ClassNotFoundException | NoSuchFieldException e) {
-      return false;
-    }
-  }
-
-  private static boolean isJavaSwing() {
-    try {
-      // Verifica si la clase javax.swing.SwingUtilities está presente
-      Class.forName("javax.swing.SwingUtilities");
-      return true;
-    } catch (ClassNotFoundException e) {
-      return false;
-    }
-  }
-
+  
   @Override public void execute(Runnable command) {
     command.run();
   }
-
+  
   public static class Android extends Platform {
-    // Aquí puedes manejar la ejecución específica para Android si es necesario
+    final android.os.Handler mHandler = new android.os.Handler(
+            android.os.Looper.getMainLooper());
     @Override public void execute(Runnable command) {
-      // Handler Android
-      new Thread(command).start();  // Simplificación para evitar Handler de Android
+      mHandler.post(command);
     }
   }
-
+  
   public static class JavaSwing extends Platform {
     @Override public void execute(Runnable command) {
-      // SwingUtilities.invokeLater en Swing
-      new Thread(command).start();  // Simplificación para evitar dependencias de Swing
+      javax.swing.SwingUtilities.invokeLater(command);
     }
   }
+  
+//    public static void main(String[] args) {
+//        System.out.println(Platform.get().getClass().getCanonicalName());
+//    }
 }
