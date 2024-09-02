@@ -1,3 +1,6 @@
-/build/
+#/build/
 /nbproject/private/
-/build
+
+git add -f build/libs/*.jar
+git commit -m "Incluyendo archivos de build para JitPack"
+git push origin master
