@@ -4,11 +4,17 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class Maps {
+public final class Maps {
+    
+    private Maps() {
+        
+    }
     
    /**
      * Crea un mapa a partir de una lista de claves y valores alternados.
@@ -56,7 +62,32 @@ public class Maps {
         return map;
     }
     
-    public static Map<String, Object> fromObjectMethods(Object bean) {
+    public static Map<String, Object> getPublicFields(Object bean) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+        Class<?> type = bean.getClass();
+        boolean includeSuperClass = type.getClassLoader() != null;
+        Field[] fields = includeSuperClass ? type.getFields() : type.getDeclaredFields();
+
+        for (final Field field : fields) {
+            final int modifiers = field.getModifiers();
+
+            if (Modifier.isPublic(modifiers) && !Modifier.isStatic(modifiers)) {
+                try {
+                    Object value = field.get(bean);
+                    if (value != null) {
+                        map.put(field.getName(), value);
+                    }
+                } catch (IllegalAccessException ignore) {
+                    // Maneja la excepción si ocurre
+                }
+            }
+        }
+
+        return map;
+    }
+    
+    public static Map<String, Object> getMethodValues(Object bean) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         
         Class<?> type = bean.getClass();
@@ -88,31 +119,16 @@ public class Maps {
         return map;
     }
     
-    public static Map<String, Object> fromObjectFields(Object bean) {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-
-        Class<?> type = bean.getClass();
-        boolean includeSuperClass = type.getClassLoader() != null;
-        Field[] fields = includeSuperClass ? type.getFields() : type.getDeclaredFields();
-
-        for (final Field field : fields) {
-            final int modifiers = field.getModifiers();
-
-            if (Modifier.isPublic(modifiers) && !Modifier.isStatic(modifiers)) {
-                try {
-                    Object value = field.get(bean);
-                    if (value != null) {
-                        map.put(field.getName(), value);
-                    }
-                } catch (IllegalAccessException ignore) {
-                    // Maneja la excepción si ocurre
-                }
-            }
+    public static <K, V> List<Pair<K, V>> toList(Map<K, V> map) {
+        List<Pair<K, V>> result = new ArrayList<>(map.size());
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            K key = entry.getKey();
+            V value = entry.getValue();
+            result.add(new Pair<K, V>(key, value));
         }
-
-        return map;
+        return result;
     }
-
+    
     /**
      * Verifica si un mapa está vacío o es nulo.
      *
@@ -239,7 +255,7 @@ public class Maps {
     public static <K, V> V replace(Map<K, V> map, K key, V newValue) {
          return map != null ? map.replace(key, newValue) : null;
     }
-    
+        
     public static <Key1, Value1, Key2, Value2> Map<Key2, Value2> convert(
             Map<Key1, Value1> originalMap,
             Func<Map.Entry<Key1, Value1>, Map.Entry<Key2, Value2>> func) {
