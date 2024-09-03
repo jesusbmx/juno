@@ -1,5 +1,5 @@
 
-package juno.tuple;
+package juno.util;
 
 public class Pair<A, B> {
     

@@ -1,10 +1,10 @@
 
 import java.util.concurrent.Callable;
+import juno.concurrent.Async;
 import juno.concurrent.AsyncCallable;
+import juno.concurrent.AsyncSender;
 import juno.concurrent.OnError;
 import juno.concurrent.OnResponse;
-import juno.concurrent.Async;
-import juno.concurrent.AsyncSender;
 import juno.concurrent.Sender;
 
 

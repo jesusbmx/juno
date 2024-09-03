@@ -7,7 +7,6 @@ import java.lang.reflect.Modifier;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import juno.tuple.Pair;
 
 public class Maps {
     

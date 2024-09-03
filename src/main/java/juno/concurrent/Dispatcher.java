@@ -1,6 +1,5 @@
 package juno.concurrent;
 
-import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -10,7 +9,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import juno.Platform;
-import juno.util.Types;
 
 public final class Dispatcher implements ThreadFactory {
   private static Dispatcher instance;
@@ -32,7 +30,7 @@ public final class Dispatcher implements ThreadFactory {
   
   public synchronized static Dispatcher getInstance() {
     if (instance == null) {
-      instance = new Dispatcher("Juno-Dispatcher", 4);
+      instance = new Dispatcher("juno.concurrent.Dispatcher", 4);
     }
     return instance;
   }
@@ -99,82 +97,4 @@ public final class Dispatcher implements ThreadFactory {
   public <V> Async<V> newAsync(Sender.Executor<V> executorSender) {
     return new AsyncSender<V>(executorSender, this);
   }
-
-  public <V> Async<V> newUserFunc(
-    final Object obj, 
-    final String method, 
-    final Object... params
-  ) { 
-    return newAsync(new Callable<V>() {
-        @Override
-        public V call() throws Exception {
-            Class<?>[] types = Types.getTypes(params);
-            final Method declaredMethod = obj.getClass()
-                    .getDeclaredMethod(method, types);
-
-            return (V) declaredMethod.invoke(obj, params);
-        }
-    });
-  }
-    
-  /**
-   * 
-   * @param <V>
-   * @param classOf
-   * @param method
-   * @param params
-   * @return 
-   */
-  public <V> Async<V> newUserStaticFunc(
-    final Class classOf, 
-    final String method, 
-    final Object... params
-  ) {
-    return newAsync(new Callable<V>() {
-        @Override
-        public V call() throws Exception {
-            Class<?>[] types = Types.getTypes(params);
-            final Method declaredMethod = classOf
-                    .getDeclaredMethod(method, types);
-
-            return (V) declaredMethod.invoke(null, params);
-        }
-    });
-  }
-  
-  /**
-   * 
-   * @param <V>
-   * @param obj
-   * @param method
-   * @param params
-   * @return 
-   */
-  public static <V> Async<V> userFunc(
-    final Object obj, 
-    final String method, 
-    final Object... params
-  ) { 
-    return Dispatcher.getInstance()
-            .newUserFunc(obj, method, params);
-  }
-  
-  /**
-   * 
-   * @param <V>
-   * @param classOf
-   * @param method
-   * @param params
-   * @return 
-   */
-  public static <V> Async<V> userStaticFunc(
-    final Class classOf, 
-    final String method, 
-    final Object... params
-  ) {
-    return Dispatcher.getInstance()
-            .newUserStaticFunc(classOf, method, params);
-  }
-  
-
 }

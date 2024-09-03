@@ -1,6 +1,6 @@
 
-import juno.util.Validate;
 import juno.util.Strings;
+import juno.util.Validate;
 
 public class TestStrings {
     
