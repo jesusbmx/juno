@@ -2,7 +2,6 @@ C:\GitHub\juno\src\main\java\juno\util\Arrays.java
 C:\GitHub\juno\src\main\java\juno\concurrent\CallbackAdapter.java
 C:\GitHub\juno\src\main\java\juno\content\Dictionary.java
 C:\GitHub\juno\src\main\java\juno\util\IndexingIterable.java
-C:\GitHub\juno\src\main\java\juno\util\IndexingIterator.java
 C:\GitHub\juno\src\main\java\juno\concurrent\EventManager.java
 C:\GitHub\juno\src\main\java\juno\util\ArrayIterator.java
 C:\GitHub\juno\src\main\java\juno\util\TransformedCollect.java
@@ -12,17 +11,18 @@ C:\GitHub\juno\src\main\java\juno\util\IndexedValue.java
 C:\GitHub\juno\src\main\java\juno\util\Convert.java
 C:\GitHub\juno\src\main\java\juno\io\Paths.java
 C:\GitHub\juno\src\main\java\juno\concurrent\AsyncSender.java
-C:\GitHub\juno\src\main\java\juno\tuple\Pair.java
 C:\GitHub\juno\src\main\java\juno\concurrent\Dispatcher.java
 C:\GitHub\juno\src\main\java\juno\concurrent\EventListener.java
 C:\GitHub\juno\src\main\java\juno\util\Base64.java
 C:\GitHub\juno\src\main\java\juno\concurrent\OnMessage.java
+C:\GitHub\juno\src\main\java\juno\util\Pair.java
 C:\GitHub\juno\src\main\java\juno\io\PoolingByteArrayOutputStream.java
 C:\GitHub\juno\src\main\java\juno\io\CharArrayPool.java
 C:\GitHub\juno\src\main\java\juno\util\Sets.java
 C:\GitHub\juno\src\main\java\juno\util\Func.java
 C:\GitHub\juno\src\main\java\juno\content\FileDataStorage.java
 C:\GitHub\juno\src\main\java\juno\concurrent\Sender.java
+C:\GitHub\juno\src\main\java\juno\lang\Reflection.java
 C:\GitHub\juno\src\main\java\juno\concurrent\Callback.java
 C:\GitHub\juno\src\main\java\juno\Platform.java
 C:\GitHub\juno\src\main\java\juno\concurrent\AbstractAsync.java
@@ -32,7 +32,6 @@ C:\GitHub\juno\src\main\java\juno\util\Maps.java
 C:\GitHub\juno\src\main\java\juno\concurrent\OnResponse.java
 C:\GitHub\juno\src\main\java\juno\util\Numbers.java
 C:\GitHub\juno\src\main\java\juno\util\Strings.java
-C:\GitHub\juno\src\main\java\juno\util\Types.java
 C:\GitHub\juno\src\main\java\juno\content\DataStorage.java
 C:\GitHub\juno\src\main\java\juno\io\Files.java
 C:\GitHub\juno\src\main\java\juno\concurrent\EventMessage.java

@@ -1,5 +1,4 @@
 juno\concurrent\EventManager$1$1.class
-juno\tuple\Pair.class
 juno\util\Func$Throws.class
 juno\util\Base64$Encoder.class
 juno\util\TransformedCollect.class
@@ -31,7 +30,6 @@ juno\content\FileDataStorage.class
 juno\util\Strings.class
 juno\io\PoolingByteArrayOutputStream.class
 juno\concurrent\AbstractAsync$1.class
-juno\util\IndexingIterator.class
 juno\concurrent\EventManager$2.class
 juno\util\Base64$1.class
 juno\util\Func$1.class
@@ -41,7 +39,6 @@ juno\Platform$JavaSwing.class
 juno\util\TransformedCollect$TransformedIterator.class
 juno\concurrent\AbstractAsync$2.class
 juno\concurrent\AsyncCallable.class
-juno\util\Types.class
 juno\io\IOUtils.class
 juno\Platform$Android.class
 juno\concurrent\OnResponse.class
@@ -49,10 +46,8 @@ juno\util\Callback.class
 juno\io\ByteArrayPool.class
 juno\util\Callback$Throws.class
 juno\Platform.class
-juno\concurrent\Dispatcher$1.class
 juno\concurrent\EventMessage.class
 juno\io\CharArrayPool$1.class
-juno\concurrent\Dispatcher$2.class
 juno\concurrent\AbstractAsync$3.class
 juno\content\DataStorage.class
 juno\util\Base64$DecInputStream.class
