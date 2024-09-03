@@ -7,13 +7,13 @@ Juno is a utility library designed to simplify common tasks in Java and Android 
 To include Juno in your project using Gradle, add the following dependency:
 ```
 dependencies {
-  implementation 'com.github.jesusbmx:juno:1.0.0'
+  implementation 'com.github.jesusbmx:juno:1.0.1'
 }
 ```
 
 Alternatively, you can download the JAR file directly from [JitPack](https://jitpack.io/#jesusbmx/juno):
 
-Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/1.0.0/juno-1.0.0.jar)
+Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/1.0.1/juno-1.0.1.jar)
 
 
 ## Documentation
