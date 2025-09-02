@@ -1,13 +1,13 @@
 
 package juno.concurrent;
 
-public interface Async<T> {
+public interface Task<T> {
   /**
    * Executa la tarea de manera asíncrona y notifica su respuesta al callback
    * 
    * @param callback devolución de llamada
    */
-  void execute(Callback<T> callback);
+  void async(Callback<T> callback);
   
   /**
    * Executa la tarea de manera asíncrona y notifica su respuesta al callback
@@ -15,15 +15,15 @@ public interface Async<T> {
    * @param onResponse
    * @param onError
    */
-  void execute(OnResponse<T> onResponse, OnError onError);
+  void async(OnResponse<T> onResponse, OnError onError);
   
   /**
-   * Executa la tarea de manera síncrona
+   * Executa la tarea de manera síncrona (bloquea hasta devolver el resultado).
    * 
    * @return resultado obtenido
    * @throws Exception 
    */
-  T await() throws Exception;
+  T sync() throws Exception;
   
   /**
    * Trata de cancelar la ejecución de esta tarea.

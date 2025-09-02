@@ -3,27 +3,27 @@ package juno.concurrent;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
-public abstract class AbstractAsync<T>
-        implements Async<T>, Callback<T>, Callable<T> {
+public abstract class AbstractTask<T>
+        implements Task<T>, Callback<T>, Callable<T> {
 
-    Dispatcher dispatcher;
+    TaskDispatcher dispatcher;
     Callback<T> callback;
     Future future;
     volatile boolean isAlive;
 
-    public AbstractAsync() {
-        this(Dispatcher.getInstance());
+    public AbstractTask() {
+        this(TaskDispatcher.getInstance());
     }
 
-    public AbstractAsync(Dispatcher dispatcher) {
+    public AbstractTask(TaskDispatcher dispatcher) {
         this.dispatcher = dispatcher;
     }
 
-    public Dispatcher getDispatcher() {
+    public TaskDispatcher getDispatcher() {
         return dispatcher;
     }
 
-    public void setDispatcher(Dispatcher dispatcher) {
+    public void setDispatcher(TaskDispatcher dispatcher) {
         this.dispatcher = dispatcher;
     }
 
@@ -43,14 +43,14 @@ public abstract class AbstractAsync<T>
     }
 
     @Override
-    public void execute(Callback<T> callback) {
+    public void async(Callback<T> callback) {
         this.callback = callback;
         execute();
     }
 
     @Override
-    public void execute(final OnResponse<T> onResponse, final OnError onError) {
-        this.execute(new CallbackAdapter<T>(onResponse, onError));
+    public void async(final OnResponse<T> onResponse, final OnError onError) {
+        this.async(new CallbackAdapter<T>(onResponse, onError));
     }
 
     public void execute() {
@@ -72,7 +72,7 @@ public abstract class AbstractAsync<T>
     }
     
     @Override
-    public synchronized T await() throws Exception {
+    public synchronized T sync() throws Exception {
         return call();
     }
 

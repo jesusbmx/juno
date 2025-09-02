@@ -2,17 +2,17 @@ package juno.concurrent;
 
 import java.util.concurrent.Callable;
 
-public class AsyncCallable<T> extends AbstractAsync<T> {
+public class AsyncTask<T> extends AbstractTask<T> {
 
   public final Callable<T> callable;
   
-  public AsyncCallable(Callable<T> callable, Dispatcher dispatcher) {
+  public AsyncTask(Callable<T> callable, TaskDispatcher dispatcher) {
     super(dispatcher);
     this.callable = callable;
   }
 
-  public AsyncCallable(Callable<T> task) {
-    this(task, Dispatcher.getInstance());
+  public AsyncTask(Callable<T> task) {
+    this(task, TaskDispatcher.getInstance());
   }
 
   @Override

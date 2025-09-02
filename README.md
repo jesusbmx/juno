@@ -204,10 +204,12 @@ System.out.println(Dates.dateTimeFormat(date_iso_8601)); // 2023-06-20 13:18:11
 ```
 
 
-### Async Await
+### Async / Sync
+
+Defining a task
 ```java
-Async<String> read(final File file) {
-  return new AsyncCallable<>(() -> {
+Task<String> read(final File file) {
+  return new AsyncTask<>(() -> {
     //throw new Exception("error");
     return Files.readString(file);
   });
@@ -215,24 +217,31 @@ Async<String> read(final File file) {
 ```
 
 Run tasks asynchronously
+
+It runs in the background and reports the result via callbacks:
+
 ```java
 File file = new File("/home/user/a.txt");
 
-read(file).execute((String result) -> {
-  System.out.println(result);
-
-}, (Exception error) -> {
-  System.err.println(error);
-
-});
+read(file).async(
+  (String result) -> {
+    System.out.println(result);
+  }, 
+  (Exception error) -> {
+    System.err.println(error);
+  }
+);
 ```
 
 Run tasks synchronously
+
+It runs in a blocking manner and returns the result directly or throws an exception:
+
 ```java
 try {
   File file = new File("/home/user/a.txt");
 
-  String result = read(file).await();
+  String result = read(file).sync();
   System.out.println(result);
 
 } catch(Exception error) {
@@ -241,8 +250,11 @@ try {
 ```
 
 ### Async Sender
+
+AsyncSender allows you to implement a task by manually resolving or rejecting its result:
+
 ```java
-Async<String> read(final File file) {
+Task<String> read(final File file) {
   return new AsyncSender<>((sender) -> {
     //sender.reject(throw new Exception("error"));
     String result = Files.readString(file);
@@ -253,8 +265,8 @@ Async<String> read(final File file) {
 
 ### Abstract Async
 ```java
-Async<String> read(final File file) {
-  return new AbstractAsync<String>() {
+Task<String> read(final File file) {
+  return new AbstractTask<String>() {
     @Override
     public String call() throws Exception {
       //throw new Exception("error");

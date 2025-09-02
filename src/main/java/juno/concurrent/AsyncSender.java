@@ -1,19 +1,19 @@
 package juno.concurrent;
 
-public class AsyncSender<T> extends AbstractAsync<T> implements Sender<T> {
+public class AsyncSender<T> extends AbstractTask<T> implements Sender<T> {
 
     protected volatile T result;
     protected volatile Exception error;
 
     public final Sender.Executor<T> executor;
 
-    public AsyncSender(Sender.Executor<T> executor, Dispatcher dispatcher) {
+    public AsyncSender(Sender.Executor<T> executor, TaskDispatcher dispatcher) {
         super(dispatcher);
         this.executor = executor;
     }
     
     public AsyncSender(Sender.Executor<T> executor) {
-        this(executor, Dispatcher.getInstance());
+        this(executor, TaskDispatcher.getInstance());
     }
 
     @Override

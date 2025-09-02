@@ -19,7 +19,7 @@ public class EventManager {
     private final List<EventListener> listeners = 
             new ArrayList<EventListener>();
     
-    private Executor executorDelivery = Dispatcher.getInstance()
+    private Executor executorDelivery = TaskDispatcher.getInstance()
             .getExecutorDelivery();
     
     private EventManager(String name) {
@@ -143,7 +143,7 @@ public class EventManager {
      * @param listenerName
      * @return 
      */
-    public <V> Async<V> sync(final String listenerName) {
+    public <V> Task<V> sync(final String listenerName) {
         return new AsyncSender<V>(new Sender.Executor<V>() {
             
             @Override

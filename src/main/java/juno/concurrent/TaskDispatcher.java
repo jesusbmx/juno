@@ -10,8 +10,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import juno.Platform;
 
-public final class Dispatcher implements ThreadFactory {
-  private static Dispatcher instance;
+public final class TaskDispatcher implements ThreadFactory {
+  private static TaskDispatcher instance;
   
   public final String poolName;
   public final int threadLimit;
@@ -23,20 +23,20 @@ public final class Dispatcher implements ThreadFactory {
   /** Ejecuta las llamadas "Call". */
   private ExecutorService executorService;
   
-  public Dispatcher(String poolName, int threadLimit) {
+  public TaskDispatcher(String poolName, int threadLimit) {
     this.poolName = poolName;
     this.threadLimit = threadLimit;
   }
   
-  public synchronized static Dispatcher getInstance() {
+  public synchronized static TaskDispatcher getInstance() {
     if (instance == null) {
-      instance = new Dispatcher("juno.concurrent.Dispatcher", 4);
+      instance = new TaskDispatcher("juno.concurrent.Dispatcher", 4);
     }
     return instance;
   }
 
-  public synchronized static void setInstance(Dispatcher instance) {
-    Dispatcher.instance = instance;
+  public synchronized static void setInstance(TaskDispatcher instance) {
+    TaskDispatcher.instance = instance;
   }
   
   @Override public Thread newThread(Runnable runnable) {
@@ -90,11 +90,11 @@ public final class Dispatcher implements ThreadFactory {
     getExecutorDelivery().execute(runnable);
   }
   
-  public <V> Async<V> newAsync(Callable<V> callable) {
-    return new AsyncCallable<V>(callable, this);
+  public <V> Task<V> newAsync(Callable<V> callable) {
+    return new AsyncTask<V>(callable, this);
   }
   
-  public <V> Async<V> newAsync(Sender.Executor<V> executorSender) {
+  public <V> Task<V> newAsync(Sender.Executor<V> executorSender) {
     return new AsyncSender<V>(executorSender, this);
   }
 }
