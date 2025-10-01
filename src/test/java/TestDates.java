@@ -27,8 +27,9 @@ public class TestDates {
         System.out.println(Dates.dateTimeFormat(cDateTime)); // 2023-05-03 12:31:47
         
         // ISO_8601_24H_FULL_FORMAT
-        Date date_iso_8601 = Dates.parseDate("2023-06-20T19:18:11.000Z", 
-                "yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        /*Date date_iso_8601 = Dates.parseDate("2023-06-20T19:18:11.000Z", 
+                "yyyy-MM-dd'T'HH:mm:ss.SSSXXX");*/
+        Date date_iso_8601 = Dates.parseIso8601Compat("2023-06-20T19:18:11.000Z");
         
         System.out.println(Dates.dateTimeFormat(date_iso_8601)); // 2023-06-20 13:18:11
   }

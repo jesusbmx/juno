@@ -7,13 +7,13 @@ Juno is a utility library designed to simplify common tasks in Java and Android 
 To include Juno in your project using Gradle, add the following dependency:
 ```
 dependencies {
-  implementation 'com.github.jesusbmx:juno:1.0.5'
+  implementation 'com.github.jesusbmx:juno:1.0.6'
 }
 ```
 
 Alternatively, you can download the JAR file directly from [JitPack](https://jitpack.io/#jesusbmx/juno):
 
-Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/1.0.5/juno-1.0.5.jar)
+Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/1.0.6/juno-1.0.6.jar)
 
 
 ## Documentation
@@ -196,9 +196,9 @@ System.out.println(Dates.dateTimeFormat(cDate)); // 2023-05-03 00:00:00
 Calendar cDateTime = Dates.calendarWithTime(); // get date and time
 System.out.println(Dates.dateTimeFormat(cDateTime)); // 2023-05-03 12:31:47
 
-// ISO_8601_24H_FULL_FORMAT
-Date date_iso_8601 = Dates.parseDate("2023-06-20T19:18:11.000Z", 
-        "yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+/*Date date_iso_8601 = Dates.parseDate("2023-06-20T19:18:11.000Z", 
+                "yyyy-MM-dd'T'HH:mm:ss.SSSXXX");*/
+Date date_iso_8601 = Dates.parseIso8601Compat("2023-06-20T19:18:11.000Z");
 
 System.out.println(Dates.dateTimeFormat(date_iso_8601)); // 2023-06-20 13:18:11
 ```
