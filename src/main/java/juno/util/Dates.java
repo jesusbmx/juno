@@ -108,6 +108,22 @@ public final class Dates {
         return parseDate(source, format, Locale.getDefault());
     }
 
+    /**
+     * Convierte un string en una fecha (compat con versiones anteriores a 1.0.6).
+     * @param source "2023-04-30"
+     */
+    public static Date toDate(String source) throws ParseException {
+        return parseDate(source, "yyyy-MM-dd");
+    }
+
+    /**
+     * Convierte un string en una fecha y hora (compat con versiones anteriores a 1.0.6).
+     * @param source "2023-04-30 19:10:02"
+     */
+    public static Date toDateTime(String source) throws ParseException {
+        return parseDate(source, "yyyy-MM-dd HH:mm:ss");
+    }
+
     /** Devuelve Calendar parseado (bugfix: retornamos el Calendar que seteamos). */
     public static Calendar parseCalendar(String source, String format, Locale locale) throws ParseException {
         if (source == null) return null;
