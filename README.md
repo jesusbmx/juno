@@ -7,13 +7,13 @@ Juno is a utility library designed to simplify common tasks in Java and Android 
 To include Juno in your project using Gradle, add the following dependency:
 ```
 dependencies {
-  implementation 'com.github.jesusbmx:juno:1.0.6'
+  implementation 'com.github.jesusbmx:juno:1.0.7'
 }
 ```
 
 Alternatively, you can download the JAR file directly from [JitPack](https://jitpack.io/#jesusbmx/juno):
 
-Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/1.0.6/juno-1.0.6.jar)
+Download [juno.jar](https://jitpack.io/com/github/jesusbmx/juno/1.0.7/juno-1.0.7.jar)
 
 
 ## Documentation
@@ -296,6 +296,26 @@ receiver.once("status", (EventMessage<Integer> evt) -> {
 
 EventManager sender = EventManager.get("MyHandler");
 sender.send("status", 200);
+```
+
+### Timers
+`setTimeout` / `setInterval` al estilo JavaScript:
+```java
+Timers.Timeout timeout = Timers.setTimeout(() -> {
+    System.out.println("Hola mundo");
+}, 1000);
+
+Timers.clearTimeout(timeout); // cancela el timeout si aun no se ejecuto
+```
+
+```java
+final Timers.Timeout interval = Timers.setInterval(() -> {
+    System.out.println("tick");
+}, 500);
+
+Timers.setTimeout(() -> {
+    Timers.clearInterval(interval); // detiene el intervalo
+}, 3000);
 ```
 
 ### Paths
